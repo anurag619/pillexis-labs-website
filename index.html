@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pillexis Labs — Building intelligent software products</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange: #e8622a;
+      --orange-light: #f28c5a;
+      --peach: #f5c6a0;
+      --warm-bg: #f7e8d5;
+      --warm-bg-2: #eedcc8;
+      --cream: #faf6f1;
+      --white: #ffffff;
+      --dark: #1a1a1a;
+      --dark-surface: #2a2a2a;
+      --text-dark: #1a1a1a;
+      --text-body: #4a4a4a;
+      --text-light: #7a7a7a;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--text-dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0.9rem 2rem;
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.85);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--serif); font-size: 1.4rem; color: var(--text-dark);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-body); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta {
+      background: var(--orange); color: #fff !important; padding: 0.55rem 1.5rem;
+      border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #d4551f; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; padding: 7rem 2rem 4rem;
+      background: linear-gradient(180deg, #f28c5a 0%, #e8622a 40%, #d4551f 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to top, var(--white), transparent);
+    }
+    .hero-grid {
+      max-width: 700px; margin: 0 auto;
+    }
+    .hero-center { position: relative; z-index: 2; }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 400; color: #fff; line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; }
+    .hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,0.85);
+      max-width: 500px; margin: 0 auto 2rem; line-height: 1.7;
+    }
+    .hero-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 2.5rem; background: var(--dark); color: #fff;
+      text-decoration: none; border-radius: 100px; font-weight: 600;
+      font-size: 0.95rem; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      padding: 3.5rem 2rem; background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .stats-quote {
+      font-family: var(--serif); font-size: 1.5rem; font-style: italic;
+      color: var(--text-dark); max-width: 650px; margin: 0 auto 2.5rem;
+      line-height: 1.5;
+    }
+    .stats-row {
+      display: flex; justify-content: center; gap: 4rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-item h3 {
+      font-family: var(--serif); font-size: 2.5rem; color: var(--text-dark);
+    }
+    .stat-item p { font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem; }
+
+    /* ── SECTION HELPERS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; color: var(--text-dark); margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .section-title em { font-style: italic; }
+
+    /* ── ABOUT (warm bg) ── */
+    .about {
+      background: var(--warm-bg); padding: 5rem 2rem;
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-text p { color: var(--text-body); margin-bottom: 1.25rem; font-size: 1.05rem; }
+    .about-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .about-card {
+      background: var(--white); border-radius: 16px; padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: transform 0.2s;
+    }
+    .about-card:hover { transform: translateY(-3px); }
+    .about-card .card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 0.75rem;
+    }
+    .about-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .about-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works { background: var(--white); }
+    .how-header { text-align: center; margin-bottom: 3rem; }
+    .how-header p { color: var(--text-body); max-width: 550px; margin: 0 auto; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    }
+    .step {
+      text-align: center; padding: 2rem 1.5rem;
+      background: var(--cream); border-radius: 20px;
+      position: relative;
+    }
+    .step-number {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--orange); color: #fff; font-weight: 700;
+      font-size: 1.1rem; display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 1.25rem;
+    }
+    .step h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.9rem; color: var(--text-body); }
+
+    /* ── BENTO GRID (What makes different) ── */
+    .bento-section { background: var(--cream); }
+    .bento-header { text-align: center; margin-bottom: 2.5rem; }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1.25rem;
+    }
+    .bento-card {
+      background: var(--white); border-radius: 20px; padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: transform 0.2s;
+    }
+    .bento-card:hover { transform: translateY(-3px); }
+    .bento-card.span-2 { grid-column: span 2; }
+    .bento-card.orange-bg {
+      background: var(--orange); color: #fff;
+    }
+    .bento-card.orange-bg p { color: rgba(255,255,255,0.8); }
+    .bento-card.warm-bg { background: var(--warm-bg); }
+    .bento-card.has-img {
+      padding: 0; overflow: hidden; display: flex;
+      align-items: center; justify-content: center;
+      min-height: 200px; background: linear-gradient(135deg, var(--peach), var(--warm-bg));
+    }
+    .bento-card .bento-icon {
+      font-size: 2rem; margin-bottom: 0.75rem;
+    }
+    .bento-card h3 {
+      font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.5rem;
+    }
+    .bento-card .big-stat {
+      font-family: var(--serif); font-size: 3rem; margin-bottom: 0.5rem;
+    }
+    .bento-card p { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
+
+    /* ── PRODUCTS (profile cards like therapists) ── */
+    .products-section { background: var(--white); }
+    .products-header { text-align: center; margin-bottom: 1rem; }
+    .products-header p { color: var(--text-body); max-width: 600px; margin: 0.5rem auto 2.5rem; }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--cream); border-radius: 20px; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    .product-card-img {
+      width: 100%; aspect-ratio: 4/3; display: flex;
+      align-items: center; justify-content: center; font-size: 4rem;
+      position: relative;
+    }
+    .product-card-img.pc-orange { background: linear-gradient(135deg, #f28c5a, #e8622a); }
+    .product-card-img.pc-amber { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .product-card-img.pc-teal { background: linear-gradient(135deg, #5eead4, #14b8a6); }
+    .product-card-body { padding: 1.5rem; }
+    .product-card-body h3 { font-family: var(--serif); font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .product-card-body .tagline {
+      color: var(--orange); font-size: 0.85rem; font-weight: 500; margin-bottom: 0.75rem;
+    }
+    .product-card-body p { font-size: 0.88rem; color: var(--text-body); margin-bottom: 1rem; }
+    .product-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .product-tags span {
+      font-size: 0.75rem; padding: 0.3rem 0.7rem;
+      background: var(--white); border-radius: 100px; color: var(--text-body);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .product-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1rem; color: var(--orange); text-decoration: none;
+      font-size: 0.88rem; font-weight: 600; transition: gap 0.2s;
+    }
+    .product-link:hover { gap: 0.7rem; }
+
+    /* ── COMPARISON TABLE (dark) ── */
+    .comparison {
+      background: var(--dark); color: #fff; padding: 5rem 2rem;
+    }
+    .comparison .section-label { color: var(--orange-light); }
+    .comparison .section-title { color: #fff; }
+    .comparison-header { text-align: center; margin-bottom: 3rem; }
+    .comparison-table {
+      max-width: 800px; margin: 0 auto; border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .comp-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-cell {
+      padding: 1rem 1.5rem; font-size: 0.9rem;
+    }
+    .comp-head {
+      background: rgba(255,255,255,0.05); font-weight: 700; font-size: 0.85rem;
+    }
+    .comp-head.highlight {
+      background: var(--orange); color: #fff;
+    }
+    .comp-cell.feature { color: rgba(255,255,255,0.7); }
+    .comp-cell.check { text-align: center; font-size: 1.1rem; }
+    .comp-cell.highlight-col { background: rgba(232,98,42,0.08); }
+
+    /* ── VALUES / PHILOSOPHY (warm bg) ── */
+    .philosophy {
+      background: var(--warm-bg); padding: 5rem 2rem;
+    }
+    .philosophy-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .philosophy-text h2 { margin-bottom: 1.5rem; }
+    .philosophy-text p { color: var(--text-body); font-size: 1.05rem; margin-bottom: 1.25rem; }
+    .philosophy-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .phil-card {
+      background: var(--white); border-radius: 16px; padding: 1.75rem;
+      text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .phil-card .phil-icon {
+      font-size: 2rem; margin-bottom: 0.75rem;
+    }
+    .phil-card h4 { font-family: var(--serif); font-size: 1rem; margin-bottom: 0.35rem; }
+    .phil-card p { font-size: 0.82rem; color: var(--text-light); }
+    .phil-card.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+
+    /* ── TEAM ── */
+    .team-section { background: var(--white); }
+    .team-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .team-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .team-img {
+      aspect-ratio: 1; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 3rem;
+    }
+    .team-img:nth-child(1) { background: linear-gradient(135deg, var(--peach), var(--warm-bg)); }
+    .team-img:nth-child(2) { background: linear-gradient(135deg, var(--orange-light), var(--orange)); border-radius: 20px 20px 20px 60px; }
+    .team-img:nth-child(3) { background: linear-gradient(135deg, var(--warm-bg-2), var(--peach)); border-radius: 20px 20px 60px 20px; }
+    .team-img:nth-child(4) { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .team-text h2 { margin-bottom: 1rem; }
+    .team-text p { color: var(--text-body); font-size: 1.05rem; margin-bottom: 1.25rem; }
+    .team-chips { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+    .team-chip {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.25rem; background: var(--cream); border-radius: 100px;
+      font-size: 0.88rem; font-weight: 500;
+    }
+
+    /* ── FAQ ── */
+    .faq { background: var(--cream); }
+    .faq-header { text-align: center; margin-bottom: 2.5rem; }
+    .faq-header p { color: var(--text-body); max-width: 500px; margin: 0.5rem auto 0; }
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.25rem 0; display: flex; justify-content: space-between;
+      align-items: center; font-family: var(--sans); font-size: 1rem;
+      font-weight: 600; color: var(--text-dark); text-align: left;
+    }
+    .faq-question .faq-icon {
+      font-size: 1.5rem; color: var(--orange); transition: transform 0.3s;
+      flex-shrink: 0; margin-left: 1rem;
+    }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-answer-inner {
+      padding-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-body); line-height: 1.7;
+    }
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+    .faq-item.active .faq-answer { max-height: 300px; }
+
+    /* ── CTA (sky) ── */
+    .cta-section {
+      padding: 6rem 2rem; text-align: center; position: relative;
+      background: linear-gradient(180deg, #87CEEB 0%, #b8dff0 40%, #e8f4f8 100%);
+      overflow: hidden;
+    }
+    .cta-section::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 80px; background: linear-gradient(to top, var(--dark), transparent);
+    }
+    .cta-section h2 {
+      font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.1;
+    }
+    .cta-section h2 em { font-style: italic; color: var(--orange); }
+    .cta-section p {
+      font-size: 1.1rem; color: var(--text-body); max-width: 500px;
+      margin: 1rem auto 2rem;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.5rem; background: var(--orange); color: #fff;
+      text-decoration: none; border-radius: 100px; font-weight: 600;
+      font-size: 1rem; transition: transform 0.2s, background 0.2s;
+    }
+    .cta-btn:hover { background: #d4551f; transform: translateY(-2px); }
+
+    /* ── CONTACT ── */
+    .contact-bar {
+      background: var(--dark); padding: 3rem 2rem; text-align: center;
+    }
+    .contact-inner {
+      max-width: 600px; margin: 0 auto;
+    }
+    .contact-bar h3 {
+      font-family: var(--serif); font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem;
+    }
+    .contact-bar p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 2rem; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 100px;
+      color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .contact-email:hover { background: rgba(255,255,255,0.15); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); padding: 3rem 2rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .footer-logo {
+      font-family: var(--serif); font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem;
+    }
+    .footer-left p { color: rgba(255,255,255,0.4); font-size: 0.82rem; }
+    .footer-links { display: flex; gap: 3rem; }
+    .footer-col h4 {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.4); margin-bottom: 0.75rem;
+    }
+    .footer-col a {
+      display: block; color: rgba(255,255,255,0.6); text-decoration: none;
+      font-size: 0.9rem; margin-bottom: 0.4rem; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-grid { max-width: 100%; }
+      .about-grid, .philosophy-inner, .team-split { grid-template-columns: 1fr; gap: 2rem; }
+      .steps-grid, .products-grid { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card.span-2 { grid-column: span 1; }
+      .philosophy-visual { grid-template-columns: 1fr 1fr; }
+      .phil-card.tall { grid-row: span 1; }
+      .team-visual { grid-template-columns: 1fr 1fr; }
+      .stats-row { flex-direction: column; gap: 1.5rem; }
+      .comp-cell { padding: 0.75rem; font-size: 0.8rem; }
+      .footer-inner { flex-direction: column; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">Pillexis Labs</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#products" class="nav-cta">Explore Products</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-center">
+        <h1>Build <em>smarter.</em><br>Ship faster.</h1>
+        <p>Pillexis Labs is a product studio creating AI-powered software, productivity tools, and creator platforms that help people work smarter and build faster.</p>
+        <a href="#products" class="hero-btn">
+          Explore Products
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <p class="stats-quote">"Pillexis Labs builds the tools we wished we had — focused, intelligent, and effortless to use."</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <h3>2+</h3>
+          <p>Products Shipped</p>
+        </div>
+        <div class="stat-item">
+          <h3>AI-First</h3>
+          <p>Product Approach</p>
+        </div>
+        <div class="stat-item">
+          <h3>Global</h3>
+          <p>User Base</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="section-label">About Us</span>
+          <h2 class="section-title">Focused products,<br><em>real impact.</em></h2>
+          <p>Pillexis Labs Pvt Ltd is a software product studio focused on building modern digital products powered by artificial intelligence.</p>
+          <p>Instead of building one large platform, we create focused software tools that do one thing extremely well.</p>
+        </div>
+        <div class="about-cards">
+          <div class="about-card">
+            <div class="card-icon">&#x1F916;</div>
+            <h4>AI-Assisted</h4>
+            <p>Intelligent features powered by modern AI</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon">&#x1F3AF;</div>
+            <h4>Simple & Focused</h4>
+            <p>Tools that do one thing extremely well</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon">&#x1F465;</div>
+            <h4>For Small Teams</h4>
+            <p>Designed for individuals and small teams</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon">&#x1F527;</div>
+            <h4>Real Problems</h4>
+            <p>Built to solve problems people actually have</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="how-header">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">From <em>idea</em> to product,<br>powered by AI</h2>
+        <p>Our products follow a simple philosophy: identify a real problem, build an AI-powered solution, and make it effortless to use.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Identify</h3>
+          <p>We spot real friction points that individuals and small teams face every day.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Build with AI</h3>
+          <p>We design focused tools with AI at the core to simplify complex workflows.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Ship & Iterate</h3>
+          <p>We launch quickly, learn from users, and continuously improve our products.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO GRID -->
+  <section class="bento-section">
+    <div class="container">
+      <div class="bento-header">
+        <span class="section-label">Why Pillexis Labs</span>
+        <h2 class="section-title">What makes Pillexis Labs <em>different?</em></h2>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <div class="bento-icon">&#x1F3AF;</div>
+          <h3>Focus over Feature Creep</h3>
+          <p>Each product does one thing exceptionally well. No bloat, no unnecessary complexity.</p>
+        </div>
+        <div class="bento-card orange-bg">
+          <div class="big-stat">24/7</div>
+          <h3>AI-Powered Intelligence</h3>
+          <p>Our products work for you around the clock with intelligent automation and insights.</p>
+        </div>
+        <div class="bento-card has-img">
+          <span style="font-size: 4rem;">&#x1F9E9;</span>
+        </div>
+        <div class="bento-card has-img">
+          <span style="font-size: 4rem;">&#x1F310;</span>
+        </div>
+        <div class="bento-card warm-bg">
+          <div class="bento-icon">&#x26A1;</div>
+          <h3>Ship Fast, Learn Faster</h3>
+          <p>Small team. Quick iterations. We launch early, listen to users, and improve relentlessly.</p>
+        </div>
+        <div class="bento-card">
+          <div class="bento-icon">&#x1F512;</div>
+          <h3>Privacy First</h3>
+          <p>Your data belongs to you. We build products that respect user privacy by default.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="products-header">
+        <span class="section-label">Our Products</span>
+        <h2 class="section-title">Built for founders, creators,<br>and <em>product teams</em></h2>
+        <p>Our products are used by founders, creators, and product teams worldwide.</p>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card">
+          <div class="product-card-img pc-orange">
+            <span style="font-size:3.5rem; filter: brightness(0) invert(1);">&#x1F4CA;</span>
+          </div>
+          <div class="product-card-body">
+            <h3>Productlogz</h3>
+            <div class="tagline">AI-powered feedback management</div>
+            <p>Collect customer feedback, analyze feature requests, and prioritize product development using data and AI.</p>
+            <div class="product-tags">
+              <span>Feedback Boards</span>
+              <span>Public Roadmap</span>
+              <span>AI Insights</span>
+              <span>Slack</span>
+            </div>
+            <a href="https://productlogz.com" class="product-link" target="_blank">
+              Visit productlogz.com &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-img pc-amber">
+            <span style="font-size:3.5rem; filter: brightness(0) invert(1);">&#x2728;</span>
+          </div>
+          <div class="product-card-body">
+            <h3>Quotesmatic</h3>
+            <div class="tagline">AI quote & visual content</div>
+            <p>Generate meaningful quotes and convert them into beautiful shareable visuals for social media instantly.</p>
+            <div class="product-tags">
+              <span>AI Quotes</span>
+              <span>Visual Templates</span>
+              <span>Typography</span>
+              <span>Social Ready</span>
+            </div>
+            <a href="#" class="product-link">
+              Available on iOS &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-img pc-teal">
+            <span style="font-size:3.5rem; filter: brightness(0) invert(1);">&#x1F9EA;</span>
+          </div>
+          <div class="product-card-body">
+            <h3>Experimental</h3>
+            <div class="tagline">Private beta & early access</div>
+            <p>Experimental tools in AI workflow automation, voice-first apps, productivity, and developer utilities.</p>
+            <div class="product-tags">
+              <span>AI Automation</span>
+              <span>Voice Apps</span>
+              <span>Productivity</span>
+              <span>Dev Tools</span>
+            </div>
+            <a href="#contact" class="product-link">
+              Get early access &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="comparison">
+    <div class="container">
+      <div class="comparison-header">
+        <span class="section-label">The Pillexis Difference</span>
+        <h2 class="section-title">Pillexis Labs vs Traditional<br>Software Studios</h2>
+      </div>
+      <div class="comparison-table">
+        <div class="comp-row">
+          <div class="comp-cell comp-head">Feature</div>
+          <div class="comp-cell comp-head highlight">Pillexis Labs</div>
+          <div class="comp-cell comp-head">Traditional Studios</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">AI-First Products</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x274C;</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Focused Single-Purpose Tools</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x274C;</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Rapid Iteration Cycles</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x274C;</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Built for Individuals & Small Teams</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x274C;</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Privacy-First Approach</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x2796;</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Multi-Platform (Web, iOS)</div>
+          <div class="comp-cell check highlight-col">&#x2705;</div>
+          <div class="comp-cell check">&#x2705;</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy" id="philosophy">
+    <div class="container">
+      <div class="philosophy-inner">
+        <div class="philosophy-text">
+          <span class="section-label">Our Philosophy</span>
+          <h2 class="section-title">Powerful but <em>simple.</em></h2>
+          <p>We believe great software should remove friction, simplify complex workflows, and empower individuals to build and create.</p>
+          <p>Pillexis Labs focuses on building software that feels powerful but simple to use.</p>
+        </div>
+        <div class="philosophy-visual">
+          <div class="phil-card">
+            <div class="phil-icon">&#x26A1;</div>
+            <h4>Remove Friction</h4>
+            <p>Get out of your way</p>
+          </div>
+          <div class="phil-card tall" style="background: linear-gradient(180deg, var(--orange), #d4551f); color: #fff;">
+            <div class="phil-icon" style="filter: brightness(0) invert(1);">&#x1F680;</div>
+            <h4 style="color:#fff;">Empower Creators</h4>
+            <p style="color:rgba(255,255,255,0.7);">Build, create, and ship faster with AI-powered tools</p>
+          </div>
+          <div class="phil-card">
+            <div class="phil-icon">&#x1F4A1;</div>
+            <h4>Simplify Workflows</h4>
+            <p>Intuitive & effortless</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="team-split">
+        <div class="team-visual">
+          <div class="team-img">&#x1F468;&#x200D;&#x1F4BB;</div>
+          <div class="team-img">&#x1F3A8;</div>
+          <div class="team-img">&#x1F4F1;</div>
+          <div class="team-img">&#x1F4E1;</div>
+        </div>
+        <div class="team-text">
+          <span class="section-label">Our Team</span>
+          <h2 class="section-title">Built by <em>independent</em> builders</h2>
+          <p>Pillexis Labs is built by a small group of engineers and product builders who believe great products come from small, focused teams.</p>
+          <p>We ship quickly, learn from users, and continuously improve our products.</p>
+          <div class="team-chips">
+            <div class="team-chip">&#x1F3C3; Ship Fast</div>
+            <div class="team-chip">&#x1F50D; Learn from Users</div>
+            <div class="team-chip">&#x1F504; Iterate Always</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq-header">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+        <p>Got a question? We've got answers for the most common ones.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item active">
+          <button class="faq-question">
+            What is Pillexis Labs?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Pillexis Labs Pvt Ltd is a software product studio focused on building modern digital products powered by artificial intelligence. We create focused tools that do one thing extremely well.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What products does Pillexis Labs offer?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              We currently offer Productlogz (AI-powered feedback management for SaaS companies) and Quotesmatic (AI-powered quote generation and visual content creation for iOS). We also have several experimental products in development.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Can I get early access to experimental products?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes! Reach out to us at contact@pillexislabs.com and let us know which area interests you — AI workflow automation, voice-first apps, personal productivity, or developer utilities. We'll add you to the waitlist.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Is there a free trial for Productlogz?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, Productlogz offers a free plan to get started. Visit productlogz.com to sign up and start collecting feedback from your users right away.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How can I partner with Pillexis Labs?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              For partnerships, product inquiries, or collaborations, reach out to us at contact@pillexislabs.com. We'd love to hear from you and explore how we can work together.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Build <em>smarter.</em><br>Ship faster.</h2>
+    <p>Discover AI-powered tools built for founders, creators, and product teams worldwide.</p>
+    <a href="#products" class="cta-btn">
+      Explore Our Products
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-bar" id="contact">
+    <div class="contact-inner">
+      <h3>Still have questions?</h3>
+      <p>For partnerships, product inquiries, or collaborations — we'd love to hear from you.</p>
+      <a href="mailto:contact@pillexislabs.com" class="contact-email">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        contact@pillexislabs.com
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">Pillexis Labs</div>
+        <p>&copy; 2026 Pillexis Labs Pvt Ltd</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="https://productlogz.com" target="_blank">Productlogz</a>
+          <a href="#">Quotesmatic</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#about">About</a>
+          <a href="#philosophy">Philosophy</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!wasActive) item.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
