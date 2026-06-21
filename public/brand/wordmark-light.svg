@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" width="1600" height="400">
+  <!-- Wordmark for LIGHT backgrounds. Use on white / cream contexts. -->
+
+  <!-- Logomark — same red+white mark works on light bg -->
+  <g transform="translate(40, 40) scale(0.3125)">
+    <rect width="1024" height="1024" rx="180" fill="#FF6363"/>
+    <path fill="#FFFFFF" fill-rule="evenodd" d="
+      M290 180
+      H470
+      a270 270 0 0 1 0 540
+      V844
+      H290
+      Z
+      M470 310
+      H540
+      a140 140 0 0 1 0 280
+      H470
+      Z
+    "/>
+  </g>
+
+  <!-- Wordmark text — near-black for light backgrounds -->
+  <text x="420" y="250"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="180"
+        font-weight="800"
+        fill="#0a0a0a"
+        letter-spacing="-6">Pillexis Labs</text>
+</svg>

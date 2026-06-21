@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Background: brand red rounded square -->
+  <rect width="1024" height="1024" rx="180" fill="#FF6363"/>
+
+  <!--
+    P letterform — hand-tuned paths so it renders identically without
+    needing the Inter font installed.
+
+    Geometry (viewBox 1024):
+      stem:    x=290..470 (180 wide), y=180..844
+      bowl:    arc from (470,180) to (470,720), radius 270, peaks x=740
+      counter: x=470..610, y=310..590, radius 140
+
+    Cap height: 664. Stem width / cap height ≈ 27% — chunky display weight.
+    Bowl height ≈ 540 (81% of cap), lower stem extension ≈ 124 (19%).
+    Counter is vertically centered in the bowl with even ink margin.
+  -->
+  <path fill="#FFFFFF" fill-rule="evenodd" d="
+    M290 180
+    H470
+    a270 270 0 0 1 0 540
+    V844
+    H290
+    Z
+    M470 310
+    H540
+    a140 140 0 0 1 0 280
+    H470
+    Z
+  "/>
+</svg>

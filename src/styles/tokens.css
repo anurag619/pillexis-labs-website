@@ -1,0 +1,81 @@
+/* Shared design tokens used across all pages. */
+
+:root {
+  --bg: #0a0a0a;
+  --bg-elev: #111114;
+  --surface: #141417;
+  --surface-2: #18181c;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+
+  --red: #FF6363;
+  --red-hot: #FF4D4D;
+  --red-dim: rgba(255, 99, 99, 0.18);
+  --red-faint: rgba(255, 99, 99, 0.08);
+  --peach: #FFA48A;
+
+  --text: #F5F5F7;
+  --text-muted: #A1A1A6;
+  --text-dim: #6E6E73;
+
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4);
+  --glow-red: 0 0 80px 0 rgba(255, 99, 99, 0.35);
+  --glow-red-soft: 0 0 40px 0 rgba(255, 99, 99, 0.18);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--red-dim);
+  color: #fff;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
+
+a { color: var(--text); text-decoration: none; }
+
+/* SVG icon utility shared across pages */
+.icon-svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

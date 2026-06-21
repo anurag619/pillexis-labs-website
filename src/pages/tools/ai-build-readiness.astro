@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Quiz from '../../components/tools/Quiz.astro';
+import BookingScripts from '../../components/BookingScripts.astro';
+import data from '../../data/tools/ai-build-readiness.json';
+
+const title = `${data.title} · Pillexis Labs`;
+const description = data.metaDescription;
+const path = '/tools/ai-build-readiness';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: data.title,
+    description: data.metaDescription,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    url: `https://pillexislabs.com${path}`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@type': 'Organization', name: 'Pillexis Labs', url: 'https://pillexislabs.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Quiz',
+    name: data.title,
+    about: data.tagline,
+    url: `https://pillexislabs.com${path}`,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} path={path} jsonLd={jsonLd}>
+  <Quiz data={data} />
+
+  <!-- Quiz JSON is embedded so the client island can read it without a fetch. -->
+  <script type="application/json" data-quiz-data={data.slug} set:html={JSON.stringify(data)} />
+
+  <footer class="tool-footer">
+    <div class="tool-footer-inner">
+      <a href="/" class="tool-footer-link">
+        <span class="dot"></span>
+        Pillexis Labs
+      </a>
+      <div class="tool-footer-meta">
+        <a href="/tools">All free tools →</a>
+        <span class="sep">·</span>
+        <a href="/">Studio</a>
+        <span class="sep">·</span>
+        <a href="/work-with-us">Work with us</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .tool-footer {
+      background: var(--bg);
+      border-top: 1px solid var(--hairline);
+      padding: 2.5rem 1.5rem;
+    }
+    .tool-footer-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .tool-footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: -0.01em;
+    }
+    .tool-footer-link .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: var(--red);
+      box-shadow: 0 0 10px rgba(255, 99, 99, 0.4);
+    }
+    .tool-footer-meta {
+      display: flex;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .tool-footer-meta a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .tool-footer-meta a:hover { color: var(--text); }
+    .tool-footer-meta .sep { color: var(--hairline-strong); }
+  </style>
+
+  <BookingScripts />
+</BaseLayout>

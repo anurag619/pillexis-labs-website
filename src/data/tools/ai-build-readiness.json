@@ -1,0 +1,231 @@
+{
+  "slug": "ai-build-readiness",
+  "title": "AI Build Readiness Score",
+  "tagline": "How ready are you to ship real products with AI?",
+  "description": "A 3-minute assessment for founders and operators. Find out where you sit on the AI build maturity curve, what's blocking your next ship, and the one move to make this week. Free, no email required.",
+  "metaDescription": "Free 3-minute assessment. Find out how ready you are to ship real products with AI, what's actually blocking you, and the one move to make next.",
+  "base": 4,
+  "questions": [
+    {
+      "id": "shipped",
+      "text": "How many real products have you shipped with AI in the loop?",
+      "options": [
+        { "label": "Zero so far", "w": 0 },
+        { "label": "One toy project, never used by anyone else", "w": 1 },
+        { "label": "One real product with at least a handful of users", "w": 2 },
+        { "label": "Multiple, ongoing, with real users", "w": 3 }
+      ]
+    },
+    {
+      "id": "build_speed",
+      "text": "When you have an idea, how fast can you get to a working prototype?",
+      "options": [
+        { "label": "I can't, I'd need someone to build it for me", "w": 0 },
+        { "label": "A week or two of fumbling", "w": 1 },
+        { "label": "A weekend if I focus", "w": 2 },
+        { "label": "A few hours, sometimes the same day", "w": 3 }
+      ]
+    },
+    {
+      "id": "tools_used",
+      "text": "Which AI build tools have you actually shipped something with?",
+      "options": [
+        { "label": "None yet, only seen demos", "w": 0 },
+        { "label": "One — ChatGPT or similar, basic prompting", "w": 1 },
+        { "label": "Two or three — Cursor, Claude Code, v0, Lovable, Bolt", "w": 2 },
+        { "label": "I have a stack I trust, and I know what each is for", "w": 3 }
+      ]
+    },
+    {
+      "id": "debug",
+      "text": "When AI-generated code breaks in production, what do you usually do?",
+      "options": [
+        { "label": "Panic. I don't know how to read most of it", "w": 0 },
+        { "label": "Paste the error back into the AI and hope", "w": 1 },
+        { "label": "Read the relevant files myself, then ask the AI a targeted question", "w": 2 },
+        { "label": "I can isolate the bug, write a failing test, and direct the AI to fix it", "w": 3 }
+      ]
+    },
+    {
+      "id": "spec",
+      "text": "Before you start building, how clear is your spec?",
+      "options": [
+        { "label": "I just start prompting and see what happens", "w": 0 },
+        { "label": "I have a rough idea in my head", "w": 1 },
+        { "label": "I write a one-pager: who it's for, what it does, what success looks like", "w": 2 },
+        { "label": "I have a structured PRD-ish doc plus example outputs the AI can grade itself against", "w": 3 }
+      ]
+    },
+    {
+      "id": "scope_control",
+      "text": "How do you handle the AI suggesting more than you asked for?",
+      "options": [
+        { "label": "I usually take whatever it gives me", "w": 0 },
+        { "label": "I push back sometimes, but I lose the thread", "w": 1 },
+        { "label": "I cut features aggressively to stay focused", "w": 2 },
+        { "label": "Scope is the contract. I instruct the AI on what NOT to do as much as what to do", "w": 3 }
+      ]
+    },
+    {
+      "id": "iteration",
+      "text": "Once something is built, how do you ship updates?",
+      "options": [
+        { "label": "I don't, the codebase scares me now", "w": 0 },
+        { "label": "Slowly. Every change risks breaking something else", "w": 1 },
+        { "label": "Regular small changes, I have a deploy flow", "w": 2 },
+        { "label": "Daily-to-weekly releases with tests, observability, rollback", "w": 3 }
+      ]
+    },
+    {
+      "id": "feedback_loop",
+      "text": "How fast does real user feedback reach your decisions?",
+      "options": [
+        { "label": "I have no users yet", "w": 0 },
+        { "label": "I read messages but I don't change much based on them", "w": 1 },
+        { "label": "Weekly: I review feedback and prioritize", "w": 2 },
+        { "label": "Continuously: feedback is tagged, scored, and feeds the roadmap", "w": 3 }
+      ]
+    },
+    {
+      "id": "taste",
+      "text": "How confident are you in deciding what to NOT build?",
+      "options": [
+        { "label": "Not confident at all, I build whatever is asked", "w": 0 },
+        { "label": "I cut sometimes but I second-guess it", "w": 1 },
+        { "label": "I cut often, I trust the call", "w": 2 },
+        { "label": "Saying no is a muscle. I cut more than I ship", "w": 3 }
+      ]
+    },
+    {
+      "id": "distribution",
+      "text": "How do you get users for what you build?",
+      "options": [
+        { "label": "I haven't tried, building is enough work already", "w": 0 },
+        { "label": "I shared it once on Twitter / WhatsApp and hoped", "w": 1 },
+        { "label": "I have one channel that works, but it's a grind", "w": 2 },
+        { "label": "I have a repeatable distribution playbook across two or more channels", "w": 3 }
+      ]
+    },
+    {
+      "id": "positioning",
+      "text": "Can you describe in one sentence what your last shipped product is, who it's for, and what it replaces?",
+      "options": [
+        { "label": "No, it's hard to explain in one sentence", "w": 0 },
+        { "label": "I can describe what it does, but not who or what it replaces", "w": 1 },
+        { "label": "Mostly yes, it takes me two or three tries", "w": 2 },
+        { "label": "Yes. The sentence is on the homepage and people repeat it back to me", "w": 3 }
+      ]
+    },
+    {
+      "id": "monetization",
+      "text": "Have you ever charged money for an AI-built product?",
+      "options": [
+        { "label": "Never", "w": 0 },
+        { "label": "Once, but I didn't get paid", "w": 1 },
+        { "label": "Yes, a few customers", "w": 2 },
+        { "label": "Yes, recurring revenue I can rely on", "w": 3 }
+      ]
+    },
+    {
+      "id": "mental_model",
+      "text": "When AI fails at a task, do you usually know why before debugging?",
+      "options": [
+        { "label": "No, I have no intuition for it", "w": 0 },
+        { "label": "Sometimes, after the fact", "w": 1 },
+        { "label": "Often. I can guess what the model is missing", "w": 2 },
+        { "label": "Almost always. I know which tasks AI handles well and which it can't", "w": 3 }
+      ]
+    },
+    {
+      "id": "judgment",
+      "text": "Where do you spend your hardest thinking these days?",
+      "options": [
+        { "label": "Getting the code to run at all", "w": 0 },
+        { "label": "Wiring things up and avoiding regressions", "w": 1 },
+        { "label": "Deciding what to build next and what's actually worth it", "w": 2 },
+        { "label": "Distribution, pricing, and earning trust, the build is the easy part now", "w": 3 }
+      ]
+    },
+    {
+      "id": "next_block",
+      "text": "If you had to name the single biggest thing blocking your next ship, it would be:",
+      "options": [
+        { "label": "I don't know how to start", "w": 0 },
+        { "label": "I get stuck halfway and can't unblock myself", "w": 1 },
+        { "label": "I can build but I don't know what to build", "w": 2 },
+        { "label": "I can build and decide, but nobody finds what I ship", "w": 3 }
+      ]
+    }
+  ],
+  "tiers": [
+    {
+      "name": "Curious",
+      "max": 12,
+      "headline": "You're at the starting line.",
+      "diagnosis": "You've seen what AI can do, but you haven't yet shipped something real with it. That's normal. The gap between 'I tried ChatGPT' and 'I shipped a product' is mostly about reps, not talent. Your bottleneck right now is starting and finishing one small thing.",
+      "nextStep": {
+        "label": "The one move this week",
+        "body": "Pick one boring problem you have. Ship a single-page tool that solves it for yourself. Use Lovable, Bolt, or v0. Time-box to 4 hours. Don't show anyone. Just finish."
+      },
+      "studioLink": {
+        "label": "How we think about shipping AI products",
+        "href": "/#philosophy"
+      }
+    },
+    {
+      "name": "Tinkerer",
+      "max": 24,
+      "headline": "You've shipped. You're not yet a builder.",
+      "diagnosis": "You've put real things into the world, but they break, and you can't always tell why. You're moving by AI vibes, not by mental model. The gap to 'Builder' is judgment about what to cut, what to debug, and what to write down before prompting.",
+      "nextStep": {
+        "label": "The one move this week",
+        "body": "Before your next build, write a one-page spec: who it's for, what it does, what done looks like, and three things it will NOT do. Give that to your AI tool of choice. Compare the result to your usual prompting approach."
+      },
+      "studioLink": {
+        "label": "Read the studio's method",
+        "href": "/#how-it-works"
+      }
+    },
+    {
+      "name": "Builder",
+      "max": 36,
+      "headline": "You ship. The wall now is distribution.",
+      "diagnosis": "You can take an idea to a working product. You debug deliberately, you cut scope, you have a stack you trust. You're not stuck on the build anymore. What stops you now is the same thing that stops most people at your level: nobody finds what you ship. AI gave you leverage on the build. It gave you almost none on the launch.",
+      "nextStep": {
+        "label": "The one move this week",
+        "body": "Take your last shipped product. Write down the single sentence: 'This is for [who], who currently uses [what], and switches to me when [trigger].' If you can't, that's the work. The rest of distribution flows from that sentence."
+      },
+      "studioLink": {
+        "label": "What we're studying about distribution",
+        "href": "/#products"
+      },
+      "book": {
+        "label": "Book a 20-min call",
+        "subtext": "Free, no pitch. We'll walk through what's actually blocking your distribution and whether a sprint fits."
+      }
+    },
+    {
+      "name": "Shipper",
+      "max": 99,
+      "headline": "You're past where most people are stuck.",
+      "diagnosis": "You build, you cut, you ship updates, you have users, you've charged money. You're inside the small group that's converted AI into real leverage. The wall ahead isn't building anymore, it's that distribution still hasn't been touched by AI the way the build was. That's the next frontier, and it's the one we're working on.",
+      "nextStep": {
+        "label": "The one move this month",
+        "body": "Audit your last 5 launches. For each one, separate 'time spent building' from 'time spent reaching people.' If the second number is bigger than the first, you've found the gap that defines this era. That's also the gap we're building software around."
+      },
+      "studioLink": {
+        "label": "Follow our work on the distribution problem",
+        "href": "/work-with-us"
+      },
+      "book": {
+        "label": "Book a 20-min call",
+        "subtext": "Free, no pitch. You're the kind of operator we want to talk to. Pick a slot and we'll trade notes."
+      }
+    }
+  ],
+  "share": {
+    "twitterText": "I scored {tier} on Pillexis Labs' AI Build Readiness Score. Take it: ",
+    "linkedinText": "Took the AI Build Readiness Score by Pillexis Labs. Came out as {tier}. Useful 3-minute check on where you actually are with AI-built products.",
+    "copyText": "{tier} on Pillexis Labs' AI Build Readiness Score"
+  }
+}

@@ -1,0 +1,706 @@
+---
+/**
+ * Quiz island — JSON-driven assessment.
+ *
+ * Props:
+ *   data: parsed quiz JSON (see src/data/tools/*.json)
+ *
+ * URL state: ?r=<encoded>#<tier-slug>
+ * If ?r is present on load → skip directly to result.
+ * Otherwise → start at intro, walk questions, encode + show result.
+ */
+export interface Props {
+  data: any;
+}
+
+const { data } = Astro.props;
+---
+
+<section
+  class="quiz"
+  data-quiz
+  data-slug={data.slug}
+  data-base={String(data.base ?? 4)}
+>
+  <div class="quiz-shell">
+    <!-- Intro screen -->
+    <div class="quiz-intro" data-screen="intro">
+      <span class="quiz-eyebrow">{data.tagline}</span>
+      <h1 class="quiz-title">{data.title}</h1>
+      <p class="quiz-blurb">{data.description}</p>
+      <button class="quiz-btn-primary" data-action="start">
+        Start the 3-minute assessment
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </button>
+      <div class="quiz-meta">
+        <span><strong>{data.questions.length}</strong> questions</span>
+        <span class="dot">·</span>
+        <span>No email required</span>
+        <span class="dot">·</span>
+        <span>Share your result</span>
+      </div>
+    </div>
+
+    <!-- Question screen (one at a time) -->
+    <div class="quiz-question-screen" data-screen="question" hidden>
+      <div class="quiz-progress">
+        <span class="quiz-step" data-progress-step>1</span>
+        <span class="quiz-step-of">of</span>
+        <span class="quiz-step-total">{data.questions.length}</span>
+        <div class="quiz-progress-bar"><span data-progress-bar></span></div>
+      </div>
+      <h2 class="quiz-q" data-question-text>—</h2>
+      <div class="quiz-options" data-options></div>
+      <div class="quiz-back-row">
+        <button class="quiz-btn-ghost" data-action="back" hidden>
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- Result screen -->
+    <div class="quiz-result-screen" data-screen="result" hidden>
+      <div class="quiz-result-badge">
+        <span class="dot"></span>
+        <span>Your tier</span>
+      </div>
+      <h2 class="quiz-result-tier" data-result-tier>—</h2>
+      <p class="quiz-result-headline" data-result-headline>—</p>
+      <p class="quiz-result-body" data-result-body>—</p>
+
+      <div class="quiz-next">
+        <div class="quiz-next-label" data-next-label>—</div>
+        <p class="quiz-next-body" data-next-body>—</p>
+      </div>
+
+      {/* Booking CTA — only rendered when the tier defines a `book` field. */}
+      <a
+        class="quiz-book"
+        data-book-cta
+        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+        target="_blank"
+        rel="noopener"
+        data-cal-link="pillexislabs/pillexis-labs-intro-call"
+        data-cal-namespace="pillexis-labs-intro-call"
+        data-cal-config='{"layout":"month_view"}'
+        hidden
+      >
+        <div class="quiz-book-inner">
+          <div class="quiz-book-icon">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z" />
+            </svg>
+          </div>
+          <div class="quiz-book-text">
+            <div class="quiz-book-label" data-book-label>Book a 20-min call</div>
+            <div class="quiz-book-sub" data-book-sub>—</div>
+          </div>
+          <svg class="quiz-book-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </a>
+
+      <div class="quiz-result-actions">
+        <button class="quiz-btn-primary" data-action="copy-share">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2M16 8h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2" />
+          </svg>
+          <span data-share-label>Copy share link</span>
+        </button>
+        <a class="quiz-btn-ghost" data-share-twitter target="_blank" rel="noopener noreferrer">
+          Share on X →
+        </a>
+        <a class="quiz-btn-ghost" data-share-linkedin target="_blank" rel="noopener noreferrer">
+          Share on LinkedIn →
+        </a>
+      </div>
+
+      <a class="quiz-studio-link" data-studio-link>
+        <span data-studio-link-label>—</span>
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+
+      <div class="quiz-restart">
+        <button class="quiz-text-link" data-action="restart">↻ Retake from scratch</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quiz {
+    padding: 7rem 1.5rem 6rem;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .quiz::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 99, 99, 0.22), transparent 60%),
+      radial-gradient(ellipse 80% 50% at 30% 30%, rgba(255, 140, 80, 0.12), transparent 75%);
+  }
+  .quiz-shell {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* INTRO */
+  .quiz-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-title {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 1.4rem;
+    max-width: 620px;
+  }
+  .quiz-blurb {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2.2rem;
+    max-width: 580px;
+  }
+  .quiz-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.95rem 1.6rem;
+    border-radius: 10px;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.98rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 1px 2px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(255, 99, 99, 0.35);
+    transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+  }
+  .quiz-btn-primary:hover {
+    background: var(--red-hot);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 50px rgba(255, 99, 99, 0.5);
+  }
+  .quiz-meta {
+    margin-top: 1.6rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .quiz-meta strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .quiz-meta .dot { color: var(--hairline-strong); }
+
+  /* QUESTION */
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .quiz-step {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .quiz-step-of, .quiz-step-total { }
+  .quiz-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--surface-2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-left: 0.8rem;
+  }
+  .quiz-progress-bar > span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red), var(--peach));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .quiz-q {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  /* These selectors target DOM nodes created by JS at runtime, so they
+     must be :global() — scoped CSS only matches elements present in the
+     Astro template. */
+  .quiz-options :global(.quiz-option) {
+    text-align: left;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 1.1rem 1.25rem;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.45;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .quiz-options :global(.quiz-option:hover) {
+    border-color: var(--red);
+    background: var(--surface-2);
+  }
+  .quiz-options :global(.quiz-option:active) { transform: translateY(1px); }
+  .quiz-options :global(.quiz-option-letter) {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+  }
+  .quiz-options :global(.quiz-option:hover .quiz-option-letter) {
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .quiz-options :global(.quiz-option.selected) {
+    border-color: var(--red);
+    background: var(--red-faint);
+  }
+  .quiz-options :global(.quiz-option.selected .quiz-option-letter) {
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .quiz-back-row {
+    margin-top: 1.8rem;
+  }
+  .quiz-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    border: 1px solid var(--hairline);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.18s, border-color 0.18s;
+  }
+  .quiz-btn-ghost:hover { color: var(--text); border-color: var(--hairline-strong); }
+
+  /* RESULT */
+  .quiz-result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    padding: 0.4rem 0.75rem;
+    background: rgba(255, 99, 99, 0.08);
+    border: 1px solid rgba(255, 99, 99, 0.25);
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-result-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 8px var(--red);
+  }
+  .quiz-result-tier {
+    font-family: var(--sans);
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 5.2rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1.4rem;
+  }
+  .quiz-result-headline {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+    max-width: 580px;
+  }
+  .quiz-result-body {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+  }
+  .quiz-next {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--red);
+  }
+  .quiz-next-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.6rem;
+  }
+  .quiz-next-body {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  /* Booking CTA — shown on Builder/Shipper tiers only. Distinctive
+     red-bordered card to read as a stronger action than the share row. */
+  .quiz-book {
+    display: block;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, rgba(255,99,99,0.10) 0%, rgba(255,99,99,0.04) 100%);
+    border: 1px solid rgba(255, 99, 99, 0.32);
+    border-radius: var(--r-lg);
+    padding: 1.1rem 1.25rem;
+    box-shadow: var(--glow-red-soft);
+    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+  .quiz-book:hover {
+    border-color: var(--red);
+    transform: translateY(-1px);
+    box-shadow: 0 0 60px rgba(255, 99, 99, 0.25);
+  }
+  .quiz-book-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .quiz-book-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(255, 99, 99, 0.16);
+    border: 1px solid rgba(255, 99, 99, 0.32);
+    color: var(--red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .quiz-book-text { flex: 1; min-width: 0; }
+  .quiz-book-label {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    margin-bottom: 0.2rem;
+  }
+  .quiz-book-sub {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .quiz-book-arrow {
+    flex-shrink: 0;
+    color: var(--red);
+    transition: transform 0.2s;
+  }
+  .quiz-book:hover .quiz-book-arrow { transform: translateX(3px); }
+
+  .quiz-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+  }
+  .quiz-studio-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: gap 0.18s, color 0.18s;
+    margin-bottom: 2rem;
+  }
+  .quiz-studio-link:hover {
+    color: var(--red);
+    gap: 0.65rem;
+  }
+  .quiz-restart {
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.4rem;
+  }
+  .quiz-text-link {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.3rem 0;
+    transition: color 0.18s;
+  }
+  .quiz-text-link:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .quiz { padding: 6rem 1.1rem 4rem; }
+    .quiz-q { font-size: 1.3rem; }
+    .quiz-result-tier { font-size: clamp(2.6rem, 14vw, 4rem); }
+  }
+</style>
+
+<script>
+  import { encodeAnswers, decodeAnswers, scoreAnswers, pickTier, tierSlug } from '../../lib/quiz.js';
+  import { quizEvents } from '../../lib/analytics.js';
+
+  type QuizData = {
+    slug: string;
+    title: string;
+    base: number;
+    questions: Array<{ id: string; text: string; options: Array<{ label: string; w: number }> }>;
+    tiers: Array<{ name: string; max: number; headline: string; diagnosis: string; nextStep: { label: string; body: string }; studioLink: { label: string; href: string }; book?: { label: string; subtext: string } }>;
+    share: { twitterText: string; linkedinText: string; copyText: string };
+  };
+
+  function init(root: HTMLElement) {
+    const slug = root.dataset.slug || 'quiz';
+    const base = parseInt(root.dataset.base || '4', 10);
+
+    // Pull the JSON data straight from the page — it's embedded as a JSON
+    // script tag by the page template (see tools/ai-build-readiness.astro).
+    const dataEl = document.querySelector<HTMLScriptElement>(`script[type="application/json"][data-quiz-data="${slug}"]`);
+    if (!dataEl) return;
+    const data: QuizData = JSON.parse(dataEl.textContent || '{}');
+
+    const screens = {
+      intro: root.querySelector<HTMLElement>('[data-screen="intro"]')!,
+      question: root.querySelector<HTMLElement>('[data-screen="question"]')!,
+      result: root.querySelector<HTMLElement>('[data-screen="result"]')!,
+    };
+
+    const optionsEl = root.querySelector<HTMLElement>('[data-options]')!;
+    const questionTextEl = root.querySelector<HTMLElement>('[data-question-text]')!;
+    const progressStepEl = root.querySelector<HTMLElement>('[data-progress-step]')!;
+    const progressBarEl = root.querySelector<HTMLElement>('[data-progress-bar]')!;
+    const backBtn = root.querySelector<HTMLButtonElement>('[data-action="back"]')!;
+
+    let answers: number[] = [];
+    let cursor = 0;
+
+    function showScreen(name: 'intro' | 'question' | 'result') {
+      for (const k of Object.keys(screens) as Array<keyof typeof screens>) {
+        screens[k].hidden = k !== name;
+      }
+    }
+
+    function renderQuestion() {
+      const q = data.questions[cursor];
+      questionTextEl.textContent = q.text;
+      progressStepEl.textContent = String(cursor + 1);
+      progressBarEl.style.width = `${((cursor + 1) / data.questions.length) * 100}%`;
+      backBtn.hidden = cursor === 0;
+
+      optionsEl.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.type = 'button';
+        btn.innerHTML = `<span class="quiz-option-letter">${String.fromCharCode(65 + idx)}</span><span>${opt.label}</span>`;
+        btn.addEventListener('click', () => choose(idx));
+        optionsEl.appendChild(btn);
+      });
+
+      // Pre-select if answer exists (when going back)
+      if (typeof answers[cursor] === 'number') {
+        const node = optionsEl.children[answers[cursor]] as HTMLElement | undefined;
+        node?.classList.add('selected');
+      }
+    }
+
+    function choose(idx: number) {
+      answers[cursor] = idx;
+      quizEvents.answered(slug, data.questions[cursor].id, idx);
+      if (cursor < data.questions.length - 1) {
+        cursor += 1;
+        renderQuestion();
+      } else {
+        finish();
+      }
+    }
+
+    function finish() {
+      const score = scoreAnswers(data.questions, answers);
+      const tier = pickTier(data.tiers, score);
+      const encoded = encodeAnswers(answers, base);
+      const slugHash = tierSlug(tier.name);
+      const newUrl = `${window.location.pathname}?r=${encoded}#${slugHash}`;
+      history.replaceState(null, '', newUrl);
+      quizEvents.completed(slug, tier.name, score);
+      renderResult(tier);
+    }
+
+    function renderResult(tier: QuizData['tiers'][number]) {
+      root.querySelector<HTMLElement>('[data-result-tier]')!.textContent = tier.name;
+      root.querySelector<HTMLElement>('[data-result-headline]')!.textContent = tier.headline;
+      root.querySelector<HTMLElement>('[data-result-body]')!.textContent = tier.diagnosis;
+      root.querySelector<HTMLElement>('[data-next-label]')!.textContent = tier.nextStep.label;
+      root.querySelector<HTMLElement>('[data-next-body]')!.textContent = tier.nextStep.body;
+
+      const studioLink = root.querySelector<HTMLAnchorElement>('[data-studio-link]')!;
+      studioLink.href = tier.studioLink.href;
+      root.querySelector<HTMLElement>('[data-studio-link-label]')!.textContent = tier.studioLink.label;
+      studioLink.addEventListener('click', () => quizEvents.ctaClicked(slug, tier.name, tier.studioLink.href), { once: true });
+
+      // Booking CTA — shown only if the tier defines a `book` field
+      // (currently Builder + Shipper). The Cal.com data-* attributes are
+      // already on the anchor in the template, so the global popup
+      // listener (BookingScripts.astro) picks it up automatically.
+      const bookEl = root.querySelector<HTMLAnchorElement>('[data-book-cta]');
+      if (bookEl) {
+        if (tier.book) {
+          root.querySelector<HTMLElement>('[data-book-label]')!.textContent = tier.book.label;
+          root.querySelector<HTMLElement>('[data-book-sub]')!.textContent = tier.book.subtext;
+          bookEl.setAttribute('data-book-call', `quiz_result_${tierSlug(tier.name)}`);
+          bookEl.hidden = false;
+        } else {
+          bookEl.hidden = true;
+        }
+      }
+
+      const url = window.location.href;
+      const twitterText = data.share.twitterText.replace('{tier}', tier.name);
+      const linkedinText = data.share.linkedinText.replace('{tier}', tier.name);
+      const copyText = data.share.copyText.replace('{tier}', tier.name);
+
+      const twBtn = root.querySelector<HTMLAnchorElement>('[data-share-twitter]')!;
+      twBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText + url)}`;
+      twBtn.addEventListener('click', () => quizEvents.shared(slug, tier.name, 'twitter'), { once: true });
+
+      const liBtn = root.querySelector<HTMLAnchorElement>('[data-share-linkedin]')!;
+      liBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      liBtn.addEventListener('click', () => quizEvents.shared(slug, tier.name, 'linkedin'), { once: true });
+
+      const copyBtn = root.querySelector<HTMLButtonElement>('[data-action="copy-share"]')!;
+      const copyLabel = root.querySelector<HTMLElement>('[data-share-label]')!;
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(`${copyText}: ${url}`);
+          copyLabel.textContent = 'Copied!';
+          quizEvents.shared(slug, tier.name, 'copy');
+          setTimeout(() => { copyLabel.textContent = 'Copy share link'; }, 2000);
+        } catch {
+          copyLabel.textContent = 'Press Cmd/Ctrl + C';
+        }
+      });
+
+      showScreen('result');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    backBtn.addEventListener('click', () => {
+      if (cursor === 0) return;
+      cursor -= 1;
+      renderQuestion();
+    });
+
+    root.querySelector<HTMLButtonElement>('[data-action="start"]')!.addEventListener('click', () => {
+      cursor = 0;
+      answers = [];
+      quizEvents.started(slug);
+      showScreen('question');
+      renderQuestion();
+    });
+
+    root.querySelector<HTMLButtonElement>('[data-action="restart"]')!.addEventListener('click', () => {
+      cursor = 0;
+      answers = [];
+      history.replaceState(null, '', window.location.pathname);
+      showScreen('intro');
+    });
+
+    // Auto-jump to result if ?r=... is in URL on initial load
+    const url = new URL(window.location.href);
+    const r = url.searchParams.get('r');
+    if (r) {
+      answers = decodeAnswers(r, base);
+      const score = scoreAnswers(data.questions, answers);
+      const tier = pickTier(data.tiers, score);
+      renderResult(tier);
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-quiz]').forEach(init);
+</script>

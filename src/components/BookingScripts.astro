@@ -1,0 +1,90 @@
+---
+/**
+ * Loads the Cal.com popup widget and wires booking analytics.
+ *
+ * Drop this once on any page that has a "Book a call" CTA. The widget
+ * auto-binds to any element with these data attributes:
+ *
+ *   data-cal-link="pillexislabs/pillexis-labs-intro-call"
+ *   data-cal-namespace="pillexis-labs-intro-call"
+ *   data-cal-config='{"layout":"month_view"}'
+ *
+ * For click + conversion tracking, add `data-book-call="<source>"` to
+ * the same element. The source string lands in GA + Pixel as the event
+ * label, e.g. "nav", "hero", "quiz_result_shipper".
+ */
+---
+
+{/* 1. Cal.com init — must be inline (no bundler). Lazy-loads embed.js
+       into <head> on first Cal() call. */}
+<script is:inline>
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === "string") {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ["initNamespace", namespace]);
+        } else {
+          p(cal, ar);
+        }
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  Cal("init", "pillexis-labs-intro-call", { origin: "https://cal.com" });
+  Cal.ns["pillexis-labs-intro-call"]("ui", {
+    hideEventTypeDetails: false,
+    layout: "month_view",
+  });
+</script>
+
+{/* 2. Booking analytics — Astro-bundled module. Imports the shared helper. */}
+<script>
+  import { bookingEvents } from '../lib/analytics.js';
+
+  // Click tracking on every CTA with `data-book-call`.
+  // Uses event delegation so we catch dynamically-added CTAs too
+  // (e.g. the quiz result screen).
+  document.addEventListener('click', (e) => {
+    const target = (e.target as HTMLElement | null)?.closest('[data-book-call]');
+    if (!target) return;
+
+    // Stop the browser from also navigating to the href. We keep the
+    // `<a href="https://cal.com/...">` for SEO + right-click + no-JS
+    // fallback, but once JS is loaded the popup handles the booking
+    // flow. Cal.com's own listener fires alongside ours and opens the
+    // modal — preventDefault here just stops the duplicate new tab.
+    if (target.hasAttribute('data-cal-link')) {
+      e.preventDefault();
+    }
+
+    const source = target.getAttribute('data-book-call') || 'unknown';
+    bookingEvents.clicked(source);
+  });
+
+  // Successful booking → conversion event for GA + Pixel Schedule.
+  if (typeof window.Cal === 'function') {
+    window.Cal('on', {
+      action: 'bookingSuccessful',
+      callback: (e: any) => {
+        bookingEvents.scheduled(e?.detail?.data);
+      },
+    });
+  }
+</script>

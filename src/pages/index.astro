@@ -1,0 +1,2154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookingScripts from '../components/BookingScripts.astro';
+
+const title = "Pillexis Labs — Finding what AI can't build";
+const description = "A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.";
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Pillexis Labs',
+  url: 'https://pillexislabs.com',
+  description,
+  sameAs: ['https://productlogz.com'],
+};
+---
+
+<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd}>
+  <style is:global>
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-elev: #111114;
+      --surface: #141417;
+      --surface-2: #18181c;
+      --hairline: rgba(255, 255, 255, 0.08);
+      --hairline-strong: rgba(255, 255, 255, 0.14);
+
+      --red: #FF6363;
+      --red-hot: #FF4D4D;
+      --red-dim: rgba(255, 99, 99, 0.18);
+      --red-faint: rgba(255, 99, 99, 0.08);
+
+      --text: #F5F5F7;
+      --text-muted: #A1A1A6;
+      --text-dim: #6E6E73;
+
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --r-sm: 6px;
+      --r-md: 10px;
+      --r-lg: 14px;
+      --r-xl: 20px;
+
+      --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4);
+      --glow-red: 0 0 80px 0 rgba(255, 99, 99, 0.35);
+      --glow-red-soft: 0 0 40px 0 rgba(255, 99, 99, 0.18);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: -0.011em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--red-dim);
+      color: #fff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a30;
+      border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3a3a42;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.7rem 1.5rem;
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--sans);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--red);
+      box-shadow: 0 0 12px rgba(255, 99, 99, 0.4);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      background: var(--red);
+      color: #fff !important;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        var(--glow-red-soft);
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--red-hot);
+      color: #fff !important;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.3rem;
+      border-radius: 10px;
+      background: var(--red);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.92rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 1px 2px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(255, 99, 99, 0.35);
+      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--red-hot);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 50px rgba(255, 99, 99, 0.5);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.3rem;
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--hairline);
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-2);
+      border-color: var(--hairline-strong);
+    }
+
+    /* ── SECTION HELPERS ── */
+    section {
+      padding: 7rem 2rem;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .badge,
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      background: var(--red-dim);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: clamp(2rem, 4.4vw, 3.2rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: -0.028em;
+      line-height: 1.05;
+    }
+
+    .section-title em,
+    .hero h1 em,
+    .cta-section h2 em {
+      font-style: normal;
+      background: linear-gradient(180deg, #FFA48A 0%, #FF6363 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hairline {
+      height: 1px;
+      background: var(--hairline);
+      border: 0;
+    }
+
+    /* dotted grid overlay helper */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    }
+
+    /* aurora bloom (applied via .aurora on sections) */
+    .aurora::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 99, 99, 0.35), transparent 60%),
+        radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255, 140, 80, 0.22), transparent 70%),
+        radial-gradient(ellipse 50% 30% at 20% 60%, rgba(255, 99, 99, 0.12), transparent 70%);
+    }
+
+    .aurora::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 200px;
+      pointer-events: none;
+      background: linear-gradient(to top, var(--bg), transparent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: 9rem 2rem 6rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 0 3rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* showcase (mock dashboard) */
+    .showcase {
+      padding: 4rem 2rem 8rem;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-header {
+      max-width: 940px;
+      margin: 0 0 4rem;
+    }
+
+    .showcase-header p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin-top: 0.75rem;
+    }
+
+    .showcase-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .showcase-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      text-decoration: none;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+
+    .showcase-card:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .showcase-card h3 {
+      font: 600 1.05rem/1.2 var(--sans);
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .showcase-card .tagline {
+      font: 500 .72rem/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font: 500 .68rem/1 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .35rem .6rem;
+      border-radius: 6px;
+      border: 1px solid var(--hairline);
+      color: var(--text-muted);
+      width: fit-content;
+    }
+
+    .status-badge.live {
+      color: var(--red);
+      background: var(--red-dim);
+      border-color: transparent;
+    }
+
+    .status-badge.live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+    }
+
+    .showcase-cta {
+      margin-top: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: .92rem;
+      transition: color .2s, gap .2s;
+    }
+
+    .showcase-cta:hover {
+      color: var(--red);
+      gap: .65rem;
+    }
+
+    /* ── STATS ── */
+    .stats-bar {
+      padding: 4rem 2rem;
+      background: var(--bg);
+      border-top: 1px solid var(--hairline);
+      position: relative;
+    }
+
+    .stats-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stats-quote {
+      font-family: var(--sans);
+      font-weight: 500;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--text);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.5;
+      letter-spacing: -0.015em;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 4.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-family: var(--mono);
+      font-size: 2.6rem;
+      font-weight: 500;
+      background: linear-gradient(180deg, #fff 0%, #FF6363 130%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .stat-item p {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--bg-elev);
+    }
+
+    .about-grid {
+      margin: 0;
+    }
+
+    .about-text {
+      max-width: 720px;
+      margin: 0 0 5rem;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+
+    .about-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.4rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .about-card:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .about-card .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+      color: var(--red);
+    }
+
+    .about-card .card-icon .icon-svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .about-card h4 {
+      font-size: 0.96rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .about-card p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works {
+      background: var(--bg);
+    }
+
+    .how-header {
+      margin-bottom: 4rem;
+      max-width: 720px;
+    }
+
+    .how-header p {
+      color: var(--text-muted);
+      margin: 0.75rem 0 0;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 1000px;
+      margin: 0;
+    }
+
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .step:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .step h3 {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.015em;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── BENTO ── */
+    .bento-section {
+      background: var(--bg-elev);
+    }
+
+    .bento-header {
+      margin-bottom: 4rem;
+      max-width: 720px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0;
+    }
+
+    .bento-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .bento-card:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .bento-card>*:not(.grid-bg) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bento-card .bento-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.9rem;
+      color: var(--red);
+    }
+
+    .bento-card .bento-icon .icon-svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .bento-card h3 {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.015em;
+    }
+
+    .bento-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .bento-card .big-stat {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 3.2rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      background: linear-gradient(180deg, #fff 0%, #FF6363 130%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.6rem;
+    }
+
+    .bento-card.bento-feature::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -25%;
+      width: 80%;
+      height: 130%;
+      background: radial-gradient(circle at top right, rgba(255, 99, 99, 0.4), transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PRODUCTS ── */
+    .products-section {
+      background: var(--bg);
+    }
+
+    .products-header {
+      margin-bottom: 4rem;
+      max-width: 720px;
+    }
+
+    .products-header p {
+      color: var(--text-muted);
+      margin: 0.75rem 0 0;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .product-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255, 99, 99, 0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    .product-card-img>.icon-svg {
+      position: relative;
+      z-index: 1;
+      color: var(--red);
+      filter: drop-shadow(0 0 18px rgba(255, 99, 99, 0.35));
+    }
+
+    .product-card-body {
+      padding: 1.4rem;
+    }
+
+    .product-card-body h3 {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.015em;
+    }
+
+    .product-card-body .tagline {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.85rem;
+    }
+
+    .product-card-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .product-tags span {
+      font-size: 0.68rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--hairline);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      letter-spacing: 0.02em;
+    }
+
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: gap 0.2s, color 0.2s;
+    }
+
+    .product-link:hover {
+      gap: 0.7rem;
+      color: var(--red);
+    }
+
+    /* ── COMPARISON ── */
+    .comparison {
+      background: var(--bg);
+      padding: 7rem 2rem;
+    }
+
+    .comparison-header {
+      margin-bottom: 4rem;
+      max-width: 720px;
+    }
+
+    .comparison-table {
+      max-width: 1024px;
+      margin: 0;
+    }
+
+    .comp-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .comp-cell {
+      padding: 1.25rem 1rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .comp-head {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      padding: 1rem 1rem 0.85rem;
+    }
+
+    .comp-head.highlight {
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .comp-head.highlight::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 2px;
+      display: inline-block;
+      box-shadow: 0 0 12px rgba(255, 99, 99, 0.5);
+    }
+
+    .comp-cell.feature {
+      color: var(--text);
+    }
+
+    .comp-cell.check {
+      text-align: center;
+    }
+
+    .comp-cell.check .icon-svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy {
+      background: var(--bg-elev);
+    }
+
+    .philosophy-inner {
+      margin: 0;
+    }
+
+    .philosophy-text {
+      max-width: 720px;
+      margin: 0 0 5rem;
+    }
+
+    .philosophy-text p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin-bottom: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .philosophy-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9rem;
+    }
+
+    .phil-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.4rem;
+      text-align: left;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .phil-card:hover {
+      border-color: var(--hairline-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .phil-card .phil-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+      color: var(--red);
+    }
+
+    .phil-card .phil-icon .icon-svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .phil-card h4 {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .phil-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .phil-card.tall {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(255, 99, 99, 0.28);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .phil-card.tall::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 99, 99, 0.3), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 140, 80, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .phil-card.tall>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .phil-card.tall .phil-icon {
+      background: rgba(255, 99, 99, 0.15);
+      border-color: rgba(255, 99, 99, 0.3);
+    }
+
+    /* ── TEAM ── */
+    .team-section {
+      background: var(--bg);
+    }
+
+    .team-split {
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+      margin: 0;
+    }
+
+    .team-text {
+      max-width: 720px;
+      margin: 0;
+      order: 1;
+    }
+
+    .team-visual {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.9rem;
+      max-width: 720px;
+      width: 100%;
+      order: 2;
+    }
+
+    .team-img {
+      aspect-ratio: 1;
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .team-img:hover {
+      border-color: var(--hairline-strong);
+    }
+
+    .team-img:nth-child(2) {
+      border-radius: var(--r-lg) var(--r-lg) var(--r-lg) 60px;
+      color: var(--red);
+      border-color: rgba(255, 99, 99, 0.28);
+      box-shadow: var(--glow-red-soft);
+    }
+
+    .team-img:nth-child(2)::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255, 99, 99, 0.22), transparent 65%);
+      pointer-events: none;
+    }
+
+    .team-img:nth-child(3) {
+      border-radius: var(--r-lg) var(--r-lg) 60px var(--r-lg);
+    }
+
+    .team-img>.icon-svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-text p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin-bottom: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .team-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .team-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .team-chip .icon-svg {
+      color: var(--red);
+      width: 1.05em;
+      height: 1.05em;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      background: var(--bg-elev);
+    }
+
+    .faq-header {
+      margin-bottom: 4rem;
+      max-width: 720px;
+    }
+
+    .faq-header p {
+      color: var(--text-muted);
+      margin: 0.75rem 0 0;
+    }
+
+    .faq-list {
+      max-width: 760px;
+      margin: 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 1.3rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--sans);
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--text);
+      text-align: left;
+      letter-spacing: -0.01em;
+    }
+
+    .faq-chevron {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      transition: transform 0.3s, color 0.3s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-answer-inner {
+      padding-bottom: 1.3rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .faq-item.active .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--red);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 400px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 9rem 2rem;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
+        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cta-inner > * { max-width: 720px; }
+
+    .cta-section h2 {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 1.2rem 0 2rem;
+      line-height: 1.6;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: 10px;
+      background: var(--red);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.98rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        var(--glow-red);
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--red-hot);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ── CONTACT ── */
+    .contact-bar {
+      background: var(--bg);
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-inner > * { max-width: 600px; }
+
+    .contact-bar h3 {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    .contact-bar p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-email:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-left p {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .footer-col h4 {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 0.45rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--text);
+    }
+
+    .footer-status {
+      font: 500 .65rem/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-dim);
+      margin-left: .4rem;
+    }
+
+    /* ── SVG ICON UTILITY ── */
+    .icon-svg {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 7rem 1.25rem 4rem;
+        text-align: center;
+      }
+
+      .hero-grid {
+        max-width: 100%;
+      }
+
+      .hero h1,
+      .hero p {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        gap: 0.6rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-actions a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .about-text,
+      .how-header,
+      .bento-header,
+      .products-header,
+      .comparison-header,
+      .philosophy-text,
+      .team-text,
+      .faq-header,
+      .showcase-header {
+        text-align: center;
+        max-width: 100%;
+      }
+
+      .team-chips {
+        justify-content: center;
+      }
+
+      .showcase-cards {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 4.5rem 1.25rem;
+      }
+
+      .stats-bar {
+        padding: 3rem 1.25rem;
+      }
+
+      .about-text,
+      .philosophy-text {
+        margin-bottom: 2.5rem;
+      }
+
+      .team-split {
+        gap: 2.5rem;
+      }
+
+      .about-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps-grid,
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-grid::before {
+        display: none;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
+      .philosophy-visual {
+        grid-template-columns: 1fr;
+      }
+
+      .team-visual {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 360px;
+      }
+
+      .stats-row {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .stats-quote {
+        font-size: 1.08rem;
+      }
+
+      .comp-row {
+        grid-template-columns: 1.3fr 0.85fr 0.85fr;
+      }
+
+      .comp-cell {
+        padding: 0.85rem 0.6rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+  </style>
+
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-dot"></span>
+        Pillexis Labs
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="/tools">Free tools</a></li>
+        <li><a href="/work-with-us">Work with us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a
+        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+        target="_blank"
+        rel="noopener"
+        class="nav-cta"
+        data-cal-link="pillexislabs/pillexis-labs-intro-call"
+        data-cal-namespace="pillexis-labs-intro-call"
+        data-cal-config='{"layout":"month_view"}'
+        data-book-call="home_nav"
+      >Book a call</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero aurora">
+    <div class="grid-bg"></div>
+    <div class="hero-grid">
+      <h1>AI builds almost everything.<br>We find what it <em>can't.</em></h1>
+      <p>A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary">
+          Explore Products
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a href="#about" class="btn-secondary">See our thesis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section class="showcase">
+    <div class="container">
+      <div class="showcase-header">
+        <span class="badge">The lab, right now</span>
+        <h2 class="section-title">What we're shipping. What we're <em>studying.</em></h2>
+        <p>Three products in three states, shipped, in beta, in research. Each one is an answer or an open question about what AI can build alone.</p>
+      </div>
+      <div class="showcase-cards">
+        <a href="https://productlogz.com" target="_blank" class="showcase-card">
+          <span class="status-badge live">Live · 300+ teams</span>
+          <h3>Productlogz</h3>
+          <span class="tagline">Feedback, voting, roadmaps</span>
+        </a>
+        <a href="#products" class="showcase-card">
+          <span class="status-badge">Pre-launch · iOS</span>
+          <h3>Quotesmatic</h3>
+          <span class="tagline">Quotes to visuals, instantly</span>
+        </a>
+        <a href="#products" class="showcase-card">
+          <span class="status-badge">Researching</span>
+          <h3>Next: Marketing</h3>
+          <span class="tagline">Distribution, in build</span>
+        </a>
+      </div>
+      <a href="#products" class="showcase-cta">Read the full case studies →</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <p class="stats-quote">"The question isn't what AI can do. It's what's still worth doing,and how to make that
+        part easier."</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <h3>2+</h3>
+          <p>Live experiments</p>
+        </div>
+        <div class="stat-item">
+          <h3>1</h3>
+          <p>Gap under study (marketing)</p>
+        </div>
+        <div class="stat-item">
+          <h3>AI-Built</h3>
+          <p>Every product, end-to-end</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="badge">Who We Are</span>
+          <h2 class="section-title">A <em>lab,</em> not<br>a factory.</h2>
+          <p>Pillexis Labs Pvt Ltd is a research-driven product studio. We build apps and SaaS with AI to study one
+            question: when AI can build almost anything, what's still worth building?</p>
+          <p>Every product we ship is also a field study. We track where AI accelerates us, where it falls short, and
+            where humans still carry the work,then build software to close those gaps.</p>
+        </div>
+        <div class="about-cards">
+          <div class="about-card">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg></div>
+            <h4>Ship to Learn</h4>
+            <p>Every product is a real experiment in what AI can and can't do</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="2" />
+                <rect x="9" y="9" width="6" height="6" />
+                <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+              </svg></div>
+            <h4>Built with AI</h4>
+            <p>End-to-end AI in every product we make</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg></div>
+            <h4>Study Real Gaps</h4>
+            <p>Marketing, distribution, judgment,the work AI hasn't replaced</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg></div>
+            <h4>Solve What's Left</h4>
+            <p>Then we build software for the work humans still own</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="how-header">
+        <span class="badge">Our Method</span>
+        <h2 class="section-title">From <em>experiment</em><br>to product</h2>
+        <p>We don't try to predict what AI can't do. We ship real software, watch where it breaks, and build for those
+          gaps.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">Step 01</div>
+          <h3>Build</h3>
+          <p>Ship real apps and SaaS using AI end-to-end. Speed is the point,more shipped means more signal.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">Step 02</div>
+          <h3>Observe</h3>
+          <p>Track where AI helped and where a human had to step in. The seams between the two are the data.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">Step 03</div>
+          <h3>Solve</h3>
+          <p>When a gap shows up across products,like marketing,we build software to close it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO GRID -->
+  <section class="bento-section">
+    <div class="container">
+      <div class="bento-header">
+        <span class="badge">What We're Learning</span>
+        <h2 class="section-title">What AI <em>still</em> can't do.</h2>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="m3 11 18-5v12L3 14v-3z" />
+              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+            </svg></div>
+          <h3>Marketing is still human</h3>
+          <p>AI writes copy in seconds. It doesn't pick channels, set price, or earn trust. The hardest gap we've found.
+          </p>
+        </div>
+        <div class="bento-card bento-feature">
+          <div class="big-stat">80/20</div>
+          <h3>AI builds. Humans launch.</h3>
+          <p>Our rough split across every product we've shipped,the build isn't the bottleneck anymore.</p>
+        </div>
+        <div class="bento-card">
+          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+              <path
+                d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+              <path d="M9 18h6" />
+              <path d="M10 22h4" />
+            </svg></div>
+          <h3>Judgment still wins</h3>
+          <p>What to build, what to cut, when to ship. AI suggests endlessly. Humans still have to decide.</p>
+        </div>
+        <div class="bento-card">
+          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M3 12h4l3-9 4 18 3-9h4" />
+            </svg></div>
+          <h3>The last mile is human</h3>
+          <p>Positioning, pricing, distribution. Everything between shippable and shipped is still our work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="products-header">
+        <span class="badge">Case studies, not catalog</span>
+        <h2 class="section-title">Three products. <em>Three open questions.</em></h2>
+        <p>Each product is live research. We shipped them to learn what AI hands off well and what it still leaves on the floor.</p>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card">
+          <div class="product-card-img">
+            <svg class="icon-svg" style="width: 3.5rem; height: 3.5rem;" viewBox="0 0 24 24">
+              <path d="M12 20V10M18 20V4M6 20v-4" />
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <h3>Productlogz</h3>
+            <div class="tagline">Stop guessing what to build next</div>
+            <p>Customer feedback boards, voting, and public roadmaps for SaaS teams who'd rather ship what users actually want than argue about it in a doc. Used by 300+ companies.</p>
+            <div class="product-tags">
+              <span>Feedback boards</span>
+              <span>Public roadmaps</span>
+              <span>User voting</span>
+              <span>Changelogs</span>
+            </div>
+            <a href="https://productlogz.com" class="product-link" target="_blank">
+              See it at productlogz.com &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-img">
+            <svg class="icon-svg" style="width: 3.5rem; height: 3.5rem;" viewBox="0 0 24 24">
+              <path
+                d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+              <path d="M5 3v4M19 17v4M3 5h4M17 19h4" />
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <h3>Quotesmatic</h3>
+            <div class="tagline">Quotes, designed in a tap</div>
+            <p>An iOS experiment in AI-native content creation: type an idea, get a finished visual ready for social. Currently in TestFlight while we figure out what "good enough to share" actually means.</p>
+            <div class="product-tags">
+              <span>iOS</span>
+              <span>AI generation</span>
+              <span>Typography</span>
+              <span>TestFlight</span>
+            </div>
+            <a href="#contact" class="product-link">
+              Join the TestFlight &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-img">
+            <svg class="icon-svg" style="width: 3.5rem; height: 3.5rem;" viewBox="0 0 24 24">
+              <path
+                d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" />
+              <path d="M8.5 2h7M7 16.5h10" />
+            </svg>
+          </div>
+          <div class="product-card-body">
+            <h3>Next: Marketing</h3>
+            <div class="tagline">The distribution problem, in code</div>
+            <p>AI gave us leverage on the build. Almost none on the launch. We're prototyping software that applies the same kind of leverage to go-to-market, positioning, channels, and the daily grind of getting found.</p>
+            <div class="product-tags">
+              <span>Distribution</span>
+              <span>Positioning</span>
+              <span>Launch ops</span>
+              <span>Channels</span>
+            </div>
+            <a href="#contact" class="product-link">
+              Follow the build &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="comparison">
+    <div class="container">
+      <div class="comparison-header">
+        <span class="badge">Studio vs Lab</span>
+        <h2 class="section-title">Pillexis Labs vs Traditional<br>Software Studios</h2>
+      </div>
+      <div class="comparison-table">
+        <div class="comp-row">
+          <div class="comp-cell comp-head">Feature</div>
+          <div class="comp-cell comp-head highlight">Pillexis Labs</div>
+          <div class="comp-cell comp-head">Traditional Studios</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Builds with AI end-to-end</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-dim);" viewBox="0 0 24 24">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg></div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Studies what AI still can't do</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-dim);" viewBox="0 0 24 24">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg></div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Ships to learn, not just to sell</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-dim);" viewBox="0 0 24 24">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg></div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Builds tools for the gaps it finds</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-dim);" viewBox="0 0 24 24">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg></div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Publishes what it learns</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-dim);" viewBox="0 0 24 24">
+              <path d="M5 12h14" />
+            </svg></div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-cell feature">Small, focused team</div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--red);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+          <div class="comp-cell check"><svg class="icon-svg" style="color: var(--text-muted);" viewBox="0 0 24 24">
+              <path d="M20 6 9 17l-5-5" />
+            </svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy" id="philosophy">
+    <div class="container">
+      <div class="philosophy-inner">
+        <div class="philosophy-text">
+          <span class="badge">Our Thesis</span>
+          <h2 class="section-title">We don't <em>predict.</em><br>We <em>find out.</em></h2>
+          <p>Every founder is asking the same question right now: when AI can build almost anything, what's still worth
+            building? Most try to guess. We ship things and watch what happens.</p>
+          <p>The parts of the work where humans still hold the line,that's the next generation of software. That's
+            what we're here to find.</p>
+        </div>
+        <div class="philosophy-visual">
+          <div class="phil-card">
+            <div class="phil-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg></div>
+            <h4>Ship to Learn</h4>
+            <p>Real products, not papers</p>
+          </div>
+          <div class="phil-card tall">
+            <div class="phil-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg></div>
+            <h4>Study the Seams</h4>
+            <p>Where AI ends and humans pick up,that's where the next product lives</p>
+          </div>
+          <div class="phil-card">
+            <div class="phil-icon"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg></div>
+            <h4>Build for the Gap</h4>
+            <p>The next product comes from the last finding</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="team-split">
+        <div class="team-visual">
+          <div class="team-img"><svg class="icon-svg" style="width: 2.5rem; height: 2.5rem;" viewBox="0 0 24 24">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg></div>
+          <div class="team-img"><svg class="icon-svg" style="width: 2.5rem; height: 2.5rem;" viewBox="0 0 24 24">
+              <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+              <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+              <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+              <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+              <path
+                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </svg></div>
+          <div class="team-img"><svg class="icon-svg" style="width: 2.5rem; height: 2.5rem;" viewBox="0 0 24 24">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+              <path d="M12 18h.01" />
+            </svg></div>
+          <div class="team-img"><svg class="icon-svg" style="width: 2.5rem; height: 2.5rem;" viewBox="0 0 24 24">
+              <path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9" />
+              <path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5" />
+              <circle cx="12" cy="9" r="2" />
+              <path d="M16.2 4.7a6.14 6.14 0 0 1 .8 7.5" />
+              <path d="M19.1 1.9a10.14 10.14 0 0 1 0 14.2" />
+              <path d="M12 11v9" />
+            </svg></div>
+        </div>
+        <div class="team-text">
+          <span class="badge">Our Team</span>
+          <h2 class="section-title">Builders and <em>researchers.</em></h2>
+          <p>Pillexis Labs is built by a small group of engineers and product people who think the most interesting
+            question in software right now is also the simplest: what's left for humans to build?</p>
+          <p>We ship products to answer it,and share what we find along the way.</p>
+          <div class="team-chips">
+            <div class="team-chip"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg> Ship to Learn</div>
+            <div class="team-chip"><svg class="icon-svg" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg> Study the Seams</div>
+            <div class="team-chip"><svg class="icon-svg" viewBox="0 0 24 24">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg> Build for the Gap</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq-header">
+        <span class="badge">FAQ</span>
+        <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+        <p>Got a question? We've got answers for the most common ones.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item active">
+          <button class="faq-question">
+            What is Pillexis Labs?
+            <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Pillexis Labs is a research-driven product studio. We ship apps and SaaS built with AI end-to-end to study
+              what AI still can't do,then build the tools that close those gaps. Every product is real software and a
+              field experiment.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What are you studying right now?
+            <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Marketing. Across every product we've shipped, AI accelerates the build,but doesn't help much with
+              distribution, positioning, or trust. That's the gap we're closing next, and we're building software around
+              it.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What products has Pillexis Labs shipped?
+            <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              One in market, one in beta, one being built. Productlogz is live with 300+ SaaS teams. Quotesmatic is an iOS experiment currently in TestFlight. Our next product tackles distribution, the gap we keep hitting across everything we ship.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How much human work is still required if AI builds everything?
+            <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              That's exactly what we're measuring. Across our products the rough split is 80/20,AI does most of the
+              build, humans still own positioning, taste, decisions, and distribution. We're building software to shrink
+              the 20% wherever we can.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How can I partner with Pillexis Labs?
+            <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              For partnerships, product inquiries, or collaborations, reach out to contact@pillexislabs.com. We
+              especially like hearing from people working on similar questions,what AI can and can't do, and what to
+              build for what's left.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2>Find what's <em>worth</em><br>building.</h2>
+      <p>Follow our products,and the questions they're answering about what AI can and can't do.</p>
+      <a href="#products" class="cta-btn">
+        Explore Our Products
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-bar" id="contact">
+    <div class="contact-inner">
+      <h3>Working on a similar question?</h3>
+      <p>Partnerships, collaborations, or just swapping notes on what AI can and can't do,we'd love to hear from you.
+      </p>
+      <a href="mailto:contact@pillexislabs.com" class="contact-email">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        contact@pillexislabs.com
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">
+          <span class="logo-dot"></span>
+          Pillexis Labs
+        </div>
+        <p>&copy; 2026 Pillexis Labs Pvt Ltd</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="https://productlogz.com" target="_blank">Productlogz <span class="footer-status">Live</span></a>
+          <a href="#products">Quotesmatic <span class="footer-status">Beta</span></a>
+          <a href="#products">Next: Marketing <span class="footer-status">In build</span></a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#about">About</a>
+          <a href="#philosophy">Philosophy</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!wasActive) item.classList.add('active');
+      });
+    });
+  </script>
+
+  <BookingScripts />
+
+</BaseLayout>

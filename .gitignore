@@ -1,0 +1,15 @@
+# Astro
+.astro/
+dist/
+node_modules/
+
+# Env vars
+.env
+.env.local
+.env.production
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.log

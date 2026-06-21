@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" width="1600" height="400">
+  <!-- Wordmark for DARK backgrounds. Use on the brand bg color #0a0a0a. -->
+
+  <!--
+    Layout (viewBox 1600×400):
+      Mark: 320×320 logomark, x=40..360, vertically centered
+      Wordmark: starts at x=420, vertically centered baseline at ~y=255
+  -->
+
+  <!-- Logomark, scaled-down version of public/brand/logomark.svg -->
+  <g transform="translate(40, 40) scale(0.3125)">
+    <rect width="1024" height="1024" rx="180" fill="#FF6363"/>
+    <path fill="#FFFFFF" fill-rule="evenodd" d="
+      M290 180
+      H470
+      a270 270 0 0 1 0 540
+      V844
+      H290
+      Z
+      M470 310
+      H540
+      a140 140 0 0 1 0 280
+      H470
+      Z
+    "/>
+  </g>
+
+  <!-- Wordmark text — white on dark -->
+  <text x="420" y="250"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="180"
+        font-weight="800"
+        fill="#F5F5F7"
+        letter-spacing="-6">Pillexis Labs</text>
+</svg>
