@@ -1,0 +1,300 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const authors = await getCollection('authors');
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return authors.map(author => ({
+    params: { slug: author.slug },
+    props: {
+      author,
+      posts: posts
+        .filter(p => p.data.author.id === author.slug)
+        .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
+    },
+  }));
+}
+
+type Props = {
+  author: CollectionEntry<'authors'>;
+  posts: CollectionEntry<'blog'>[];
+};
+
+const { author, posts } = Astro.props;
+const { Content } = await author.render();
+
+const PILLAR_LABEL: Record<string, string> = {
+  'build-logs': 'Build logs',
+  'studio-notes': 'Studio notes',
+  'distribution-diaries': 'Distribution diaries',
+};
+
+const path = `/blog/authors/${author.slug}`;
+const url = `https://pillexislabs.com${path}`;
+
+const socials = author.data.socials ?? {};
+const sameAs = [socials.twitter, socials.linkedin, socials.github, socials.website].filter(Boolean) as string[];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: author.data.name,
+    description: author.data.bio,
+    jobTitle: author.data.role,
+    url,
+    ...(sameAs.length > 0 && { sameAs }),
+    ...(author.data.avatar && { image: `https://pillexislabs.com${author.data.avatar}` }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Posts by ${author.data.name}`,
+    url,
+    hasPart: posts.map(p => ({
+      '@type': 'BlogPosting',
+      headline: p.data.title,
+      url: `https://pillexislabs.com/blog/${p.slug}`,
+      datePublished: p.data.publishDate.toISOString(),
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={`${author.data.name} · Pillexis Labs`}
+  description={author.data.bio}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <main class="author-page">
+    <div class="author-bg" aria-hidden="true"></div>
+    <div class="author-inner">
+      <a href="/blog" class="back-link">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        All posts
+      </a>
+
+      <header class="author-head">
+        {author.data.avatar && (
+          <img src={author.data.avatar} alt={author.data.name} class="author-avatar" width="96" height="96" />
+        )}
+        <div class="author-meta">
+          <span class="author-eyebrow">
+            <span class="pill-dot"></span>
+            Author
+          </span>
+          <h1 class="author-name">{author.data.name}</h1>
+          <p class="author-role">{author.data.role}</p>
+        </div>
+      </header>
+
+      <div class="author-bio prose">
+        <Content />
+      </div>
+
+      {sameAs.length > 0 || socials.email ? (
+        <div class="author-socials">
+          {socials.website && (
+            <a href={socials.website} target="_blank" rel="noopener" class="social-chip">Website ↗</a>
+          )}
+          {socials.twitter && (
+            <a href={socials.twitter} target="_blank" rel="noopener" class="social-chip">Twitter / X ↗</a>
+          )}
+          {socials.linkedin && (
+            <a href={socials.linkedin} target="_blank" rel="noopener" class="social-chip">LinkedIn ↗</a>
+          )}
+          {socials.github && (
+            <a href={socials.github} target="_blank" rel="noopener" class="social-chip">GitHub ↗</a>
+          )}
+          {socials.email && (
+            <a href={`mailto:${socials.email}`} class="social-chip">{socials.email}</a>
+          )}
+        </div>
+      ) : null}
+
+      <section class="author-posts">
+        <h2 class="posts-heading">
+          Posts by {author.data.name}
+          <span class="posts-count">{posts.length}</span>
+        </h2>
+
+        {posts.length === 0 ? (
+          <p class="empty">No posts yet.</p>
+        ) : (
+          <ul class="post-list">
+            {posts.map(post => (
+              <li class="post-row">
+                <a href={`/blog/${post.slug}`} class="post-link">
+                  <div class="post-meta">
+                    <time>{post.data.publishDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</time>
+                    <span class="sep">·</span>
+                    <span class="post-pillar">{PILLAR_LABEL[post.data.pillar]}</span>
+                  </div>
+                  <h3 class="post-title">{post.data.title}</h3>
+                  <p class="post-desc">{post.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  </main>
+
+  <style>
+    .author-page {
+      position: relative;
+      padding: 7.5rem 1.5rem 6rem;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .author-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 50% at 30% 0%, rgba(255, 99, 99, 0.16), transparent 65%);
+    }
+    .author-inner { position: relative; max-width: 760px; margin: 0 auto; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 2.5rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .back-link:hover { color: var(--red); gap: 0.55rem; }
+
+    .author-head {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .author-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .author-meta { flex: 1; min-width: 0; }
+    .author-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--red);
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 99, 99, 0.08);
+      border: 1px solid rgba(255, 99, 99, 0.22);
+      border-radius: 100px;
+      margin-bottom: 0.85rem;
+    }
+    .pill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); box-shadow: 0 0 10px var(--red);
+    }
+    .author-name {
+      font-family: var(--sans); font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+    .author-role {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .author-bio {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #d4d4d8;
+      margin-bottom: 2rem;
+    }
+    .author-bio :global(p) { margin-bottom: 1.1rem; }
+    .author-bio :global(p:last-child) { margin-bottom: 0; }
+
+    .author-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 4rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .social-chip {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 0.45rem 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .social-chip:hover { color: var(--red); border-color: var(--red); }
+
+    .posts-heading {
+      font-family: var(--sans); font-weight: 700;
+      font-size: 1.35rem; letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.65rem;
+    }
+    .posts-count {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.12em; color: var(--text-dim);
+      padding: 0.25rem 0.55rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+    }
+
+    .post-list { list-style: none; }
+    .post-row { border-top: 1px solid var(--hairline); }
+    .post-row:last-child { border-bottom: 1px solid var(--hairline); }
+    .post-link {
+      display: block; padding: 1.5rem 0; color: var(--text);
+      transition: padding-left 0.18s;
+    }
+    .post-link:hover { padding-left: 0.5rem; }
+    .post-meta {
+      display: flex; gap: 0.5rem; align-items: center;
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 0.55rem;
+    }
+    .post-meta .sep { color: var(--hairline-strong); }
+    .post-pillar { color: var(--red); }
+    .post-title {
+      font-family: var(--sans); font-weight: 700;
+      font-size: 1.3rem; letter-spacing: -0.02em;
+      line-height: 1.2; color: var(--text); margin-bottom: 0.35rem;
+    }
+    .post-desc { color: var(--text-muted); font-size: 0.94rem; line-height: 1.55; }
+
+    .empty {
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-style: italic;
+      border-top: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    @media (max-width: 600px) {
+      .author-page { padding: 6rem 1.25rem 4rem; }
+      .author-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .author-avatar { width: 72px; height: 72px; }
+    }
+  </style>
+</BaseLayout>

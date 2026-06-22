@@ -1,0 +1,488 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post, allPosts: posts },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<'blog'>;
+  allPosts: CollectionEntry<'blog'>[];
+};
+
+const { post, allPosts } = Astro.props;
+const { Content } = await post.render();
+
+// Resolve the author reference into the full author entry.
+const author = await getEntry(post.data.author);
+const authorSocials = author.data.socials ?? {};
+const authorSameAs = [authorSocials.twitter, authorSocials.linkedin, authorSocials.github, authorSocials.website].filter(Boolean) as string[];
+const authorPath = `/blog/authors/${author.slug}`;
+
+const PILLARS: Record<string, string> = {
+  'build-logs': 'Build logs',
+  'studio-notes': 'Studio notes',
+  'distribution-diaries': 'Distribution diaries',
+};
+
+// 2 related posts (same pillar, excluding current)
+const related = allPosts
+  .filter(p => p.slug !== post.slug && p.data.pillar === post.data.pillar)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 2);
+
+const path = `/blog/${post.slug}`;
+const url = `https://pillexislabs.com${path}`;
+
+// Auto reading time fallback (≈ 220 words/min)
+const wordCount = post.body.split(/\s+/).filter(Boolean).length;
+const readingTime = post.data.readingTime ?? Math.max(1, Math.round(wordCount / 220));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishDate.toISOString(),
+  ...(post.data.updatedDate && { dateModified: post.data.updatedDate.toISOString() }),
+  author: {
+    '@type': 'Person',
+    name: author.data.name,
+    description: author.data.bio,
+    jobTitle: author.data.role,
+    url: `https://pillexislabs.com${authorPath}`,
+    ...(authorSameAs.length > 0 && { sameAs: authorSameAs }),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Pillexis Labs',
+    url: 'https://pillexislabs.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://pillexislabs.com/brand/logomark-512.png',
+    },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  url,
+  ...(post.data.hero && { image: `https://pillexislabs.com${post.data.hero}` }),
+  articleSection: PILLARS[post.data.pillar],
+  keywords: post.data.tags.join(', '),
+  inLanguage: 'en',
+  wordCount,
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} · Pillexis Labs`}
+  description={post.data.description}
+  path={path}
+  image={post.data.hero ?? undefined}
+  jsonLd={jsonLd}
+  type="article"
+>
+  <article class="post">
+    <div class="post-bg" aria-hidden="true"></div>
+
+    <header class="post-hero">
+      <a href="/blog" class="back-link">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        All posts
+      </a>
+
+      <div class="post-meta">
+        <a href={`/blog/tags/${post.data.pillar}`} class="post-pillar">
+          {PILLARS[post.data.pillar]}
+        </a>
+        <span class="sep">·</span>
+        <time datetime={post.data.publishDate.toISOString()}>
+          {post.data.publishDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+        </time>
+        <span class="sep">·</span>
+        <span>{readingTime} min read</span>
+      </div>
+
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-lede">{post.data.description}</p>
+
+      <a href={authorPath} class="byline">
+        {author.data.avatar && (
+          <img src={author.data.avatar} alt={author.data.name} class="byline-avatar" width="36" height="36" />
+        )}
+        <div class="byline-text">
+          <div class="byline-name">By {author.data.name}</div>
+          <div class="byline-role">{author.data.role}</div>
+        </div>
+      </a>
+
+      {post.data.tags.length > 0 && (
+        <div class="post-tags">
+          {post.data.tags.map(tag => (
+            <a href={`/blog/tags/${tag}`} class="post-tag">#{tag}</a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="post-body prose">
+      <Content />
+    </div>
+
+    {post.data.updatedDate && (
+      <div class="post-updated">
+        Last updated {post.data.updatedDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}.
+      </div>
+    )}
+
+    {related.length > 0 && (
+      <aside class="post-related">
+        <div class="related-label">More from {PILLARS[post.data.pillar]}</div>
+        <ul>
+          {related.map(r => (
+            <li>
+              <a href={`/blog/${r.slug}`}>
+                <span class="rel-title">{r.data.title}</span>
+                <span class="rel-arrow">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    <footer class="post-foot">
+      <a href="/blog" class="back-link">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        All posts
+      </a>
+      <a href="/rss.xml" class="rss-link">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M6 19a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+        </svg>
+        RSS
+      </a>
+    </footer>
+  </article>
+
+  <style>
+    .post {
+      position: relative;
+      padding: 7rem 1.5rem 6rem;
+      overflow: hidden;
+    }
+    .post-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 99, 99, 0.12), transparent 65%);
+    }
+    .post-hero,
+    .post-body,
+    .post-related,
+    .post-foot,
+    .post-updated {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .back-link:hover { color: var(--red); gap: 0.55rem; }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .post-meta .sep { color: var(--hairline-strong); }
+    .post-pillar {
+      color: var(--red);
+      transition: color 0.2s;
+    }
+    .post-pillar:hover { color: var(--peach); }
+
+    .post-title {
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    .post-lede {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.8rem;
+    }
+    /* Byline — author chip sits between the lede and the tags */
+    .byline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.95rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      color: var(--text);
+      transition: border-color 0.18s, transform 0.18s;
+      margin-bottom: 2.5rem;
+    }
+    .byline:hover {
+      border-color: var(--red);
+      transform: translateY(-1px);
+    }
+    .byline-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+    }
+    .byline-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .byline-name {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .byline-role {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .post-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      padding: 0.3rem 0.65rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .post-tag:hover { color: var(--red); border-color: var(--red); }
+
+    /* Prose styling for the rendered markdown */
+    .prose {
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: #d4d4d8;
+    }
+    .prose :global(p),
+    .prose :global(ul),
+    .prose :global(ol),
+    .prose :global(blockquote),
+    .prose :global(pre) {
+      margin-bottom: 1.4rem;
+    }
+    .prose :global(h2) {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1.55rem;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: var(--text);
+      margin: 3rem 0 1rem;
+    }
+    .prose :global(h3) {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 2.4rem 0 0.8rem;
+    }
+    .prose :global(a) {
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 164, 138, 0.4);
+      text-underline-offset: 3px;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+    .prose :global(a:hover) {
+      color: var(--red);
+      text-decoration-color: var(--red);
+    }
+    .prose :global(strong) {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .prose :global(em) {
+      color: var(--peach);
+      font-style: italic;
+    }
+    .prose :global(ul),
+    .prose :global(ol) {
+      padding-left: 1.4rem;
+    }
+    .prose :global(li) {
+      margin-bottom: 0.5rem;
+    }
+    .prose :global(blockquote) {
+      border-left: 3px solid var(--red);
+      padding: 0.5rem 0 0.5rem 1.4rem;
+      color: var(--text);
+      font-style: italic;
+      background: rgba(255, 99, 99, 0.04);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    }
+    .prose :global(code) {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      padding: 0.15em 0.4em;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      color: var(--peach);
+    }
+    .prose :global(pre) {
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      padding: 1.25rem 1.4rem;
+      background: #0d1419;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      overflow-x: auto;
+    }
+    .prose :global(pre code) {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      color: #e4ecf4;
+    }
+    .prose :global(hr) {
+      border: 0;
+      border-top: 1px solid var(--hairline);
+      margin: 2.5rem 0;
+    }
+    .prose :global(img) {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--r-md);
+      border: 1px solid var(--hairline);
+      margin: 1.5rem 0;
+    }
+
+    .post-updated {
+      margin-top: 3rem;
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .post-related {
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .related-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+    }
+    .post-related ul { list-style: none; }
+    .post-related li { border-bottom: 1px solid var(--hairline); }
+    .post-related li:first-child { border-top: 1px solid var(--hairline); }
+    .post-related a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 0;
+      transition: padding-left 0.2s, color 0.2s;
+    }
+    .post-related a:hover {
+      padding-left: 0.5rem;
+      color: var(--red);
+    }
+    .rel-title {
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+    .post-related a:hover .rel-title { color: var(--red); }
+    .rel-arrow { color: var(--red); }
+
+    .post-foot {
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .post-foot .back-link { margin-bottom: 0; }
+    .rss-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.45rem 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .rss-link:hover { color: var(--red); border-color: var(--red); }
+
+    @media (max-width: 700px) {
+      .post { padding: 6rem 1.25rem 4rem; }
+      .prose { font-size: 1.02rem; }
+    }
+  </style>
+</BaseLayout>

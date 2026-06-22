@@ -31,8 +31,8 @@
       "text": "Which AI build tools have you actually shipped something with?",
       "options": [
         { "label": "None yet, only seen demos", "w": 0 },
-        { "label": "One — ChatGPT or similar, basic prompting", "w": 1 },
-        { "label": "Two or three — Cursor, Claude Code, v0, Lovable, Bolt", "w": 2 },
+        { "label": "One: ChatGPT or similar, basic prompting", "w": 1 },
+        { "label": "Two or three: Cursor, Claude Code, v0, Lovable, Bolt", "w": 2 },
         { "label": "I have a stack I trust, and I know what each is for", "w": 3 }
       ]
     },

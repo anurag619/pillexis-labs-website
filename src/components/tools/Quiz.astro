@@ -51,7 +51,7 @@ const { data } = Astro.props;
         <span class="quiz-step-total">{data.questions.length}</span>
         <div class="quiz-progress-bar"><span data-progress-bar></span></div>
       </div>
-      <h2 class="quiz-q" data-question-text>—</h2>
+      <h2 class="quiz-q" data-question-text></h2>
       <div class="quiz-options" data-options></div>
       <div class="quiz-back-row">
         <button class="quiz-btn-ghost" data-action="back" hidden>
@@ -69,13 +69,13 @@ const { data } = Astro.props;
         <span class="dot"></span>
         <span>Your tier</span>
       </div>
-      <h2 class="quiz-result-tier" data-result-tier>—</h2>
-      <p class="quiz-result-headline" data-result-headline>—</p>
-      <p class="quiz-result-body" data-result-body>—</p>
+      <h2 class="quiz-result-tier" data-result-tier></h2>
+      <p class="quiz-result-headline" data-result-headline></p>
+      <p class="quiz-result-body" data-result-body></p>
 
       <div class="quiz-next">
-        <div class="quiz-next-label" data-next-label>—</div>
-        <p class="quiz-next-body" data-next-body>—</p>
+        <div class="quiz-next-label" data-next-label></div>
+        <p class="quiz-next-body" data-next-body></p>
       </div>
 
       {/* Booking CTA — only rendered when the tier defines a `book` field. */}
@@ -98,7 +98,7 @@ const { data } = Astro.props;
           </div>
           <div class="quiz-book-text">
             <div class="quiz-book-label" data-book-label>Book a 20-min call</div>
-            <div class="quiz-book-sub" data-book-sub>—</div>
+            <div class="quiz-book-sub" data-book-sub></div>
           </div>
           <svg class="quiz-book-arrow" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -122,7 +122,7 @@ const { data } = Astro.props;
       </div>
 
       <a class="quiz-studio-link" data-studio-link>
-        <span data-studio-link-label>—</span>
+        <span data-studio-link-label></span>
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
