@@ -409,6 +409,42 @@ const jsonLd = {
       color: var(--text-muted);
     }
 
+    /* Footnote at the bottom of each showcase card: small dot + label.
+       Replaces the old status pill, which broke layout on narrow widths. */
+    .showcase-foot {
+      margin-top: auto;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--hairline);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .showcase-foot .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--text-dim);
+    }
+    .showcase-foot.live { color: var(--red); }
+    .showcase-foot.live .dot {
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+    }
+    .showcase-foot.muted { color: var(--text-muted); }
+    .showcase-foot.muted .dot { background: var(--text-muted); }
+    .showcase-foot.experimental { color: #f59e0b; }
+    .showcase-foot.experimental .dot {
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+    }
+
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -1813,24 +1849,36 @@ const jsonLd = {
       </div>
       <div class="showcase-cards">
         <a href="https://productlogz.com" target="_blank" class="showcase-card">
-          <span class="status-badge live">Live · 300+ teams</span>
           <h3>Productlogz</h3>
           <span class="tagline">Feedback, voting, roadmaps</span>
+          <span class="showcase-foot live">
+            <span class="dot"></span>
+            <span>Live</span>
+          </span>
         </a>
         <a href="https://quotesmatic.com" target="_blank" rel="noopener" class="showcase-card">
-          <span class="status-badge live">Live · iOS</span>
           <h3>Quotesmatic</h3>
           <span class="tagline">Become who you almost are</span>
+          <span class="showcase-foot live">
+            <span class="dot"></span>
+            <span>Live on iOS</span>
+          </span>
         </a>
         <a href="https://migrainelogs.com" target="_blank" rel="noopener" class="showcase-card">
-          <span class="status-badge muted">Coming soon · iOS + Android</span>
           <h3>Migraine Logs</h3>
           <span class="tagline">Voice-first migraine tracking</span>
+          <span class="showcase-foot muted">
+            <span class="dot"></span>
+            <span>Coming soon, iOS + Android</span>
+          </span>
         </a>
         <a href="#products" class="showcase-card">
-          <span class="status-badge experimental">Experimental · macOS</span>
           <h3>Forge</h3>
           <span class="tagline">Command center for AI agents</span>
+          <span class="showcase-foot experimental">
+            <span class="dot"></span>
+            <span>Experimental, macOS</span>
+          </span>
         </a>
       </div>
       <a href="#products" class="showcase-cta">Read the full case studies →</a>
