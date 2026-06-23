@@ -908,6 +908,130 @@ const jsonLd = {
       object-position: top center;
     }
 
+    /* Brief-frame treatment for Forge (Forge Brief, macOS morning PR
+       summary). Dark window styled as the live app — PR rows with title,
+       meta, and an outcome tag (quality score / pushback / unreviewed). */
+    .product-card-img.has-brief { padding: 1.25rem; }
+    .product-card-img.has-brief > .brief {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background: #0d1419;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 184, 220, 0.18);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--sans);
+    }
+    .brief-bar {
+      background: #141c24;
+      padding: 0.45rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-bottom: 1px solid rgba(148, 184, 220, 0.09);
+      flex-shrink: 0;
+    }
+    .brief-bar > span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .brief-bar > span:nth-child(1) { background: #ff5f57; }
+    .brief-bar > span:nth-child(2) { background: #ffbd2e; }
+    .brief-bar > span:nth-child(3) { background: #28c941; }
+    .brief-title {
+      margin-left: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: #94a4b3;
+      letter-spacing: 0.04em;
+    }
+    .brief-body {
+      flex: 1;
+      padding: 0.85rem 0.95rem;
+      overflow: hidden;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+    .brief-summary {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--red);
+      text-transform: uppercase;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(148, 184, 220, 0.09);
+      margin-bottom: 0.2rem;
+    }
+    .brief-pr {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.2rem 0.5rem;
+      align-items: center;
+      padding: 0.35rem 0;
+    }
+    .brief-pr-src {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.18rem 0.36rem;
+      border-radius: 3px;
+      align-self: center;
+      width: 38px;
+      text-align: center;
+    }
+    .brief-pr-src.gh { color: #b6c5d5; background: rgba(182, 197, 213, 0.10); }
+    .brief-pr-src.sl { color: #f3a5b8; background: rgba(243, 165, 184, 0.10); }
+    .brief-pr-src.ln { color: #9aa8d6; background: rgba(154, 168, 214, 0.10); }
+    .brief-pr-src.nt { color: #e8b864; background: rgba(232, 184, 100, 0.10); }
+    .brief-pr-title {
+      grid-column: 2;
+      color: #e4ecf4;
+      font-weight: 500;
+      font-size: 0.7rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .brief-pr-meta {
+      grid-column: 2;
+      grid-row: 2;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: #6e7e8e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .brief-pr-tag {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .brief-pr-tag.good { color: #5eead4; background: rgba(94, 234, 212, 0.1); }
+    .brief-pr-tag.warn { color: #f59e0b; background: rgba(245, 158, 11, 0.12); }
+    .brief-pr-tag.muted { color: #94a4b3; background: rgba(148, 184, 220, 0.08); }
+
     /* Terminal-frame treatment for Forge (CTO desktop dashboard). Dark
        native macOS window showing a multi-agent terminal. CSS-only — no
        image asset. */
@@ -1872,9 +1996,9 @@ const jsonLd = {
             <span>Coming soon, iOS + Android</span>
           </span>
         </a>
-        <a href="#products" class="showcase-card">
+        <a href="/forge" class="showcase-card">
           <h3>Forge</h3>
-          <span class="tagline">Command center for AI agents</span>
+          <span class="tagline">GitHub + Slack + Linear + Notion, in one brief</span>
           <span class="showcase-foot experimental">
             <span class="dot"></span>
             <span>Experimental, macOS</span>
@@ -2108,52 +2232,52 @@ const jsonLd = {
         </div>
 
         <div class="product-card">
-          <div class="product-card-img has-terminal">
-            <div class="term">
-              <div class="term-bar">
+          <div class="product-card-img has-brief">
+            <div class="brief">
+              <div class="brief-bar">
                 <span></span><span></span><span></span>
-                <div class="term-title">forge · main</div>
+                <div class="brief-title">Forge Brief · last 24h</div>
               </div>
-              <div class="term-body">
-                <div class="term-line">
-                  <span class="term-prompt">›</span>
-                  <span class="term-agent claude">claude-1</span>
-                  <span class="term-text">refactor: extract PTY pool into module</span>
-                  <span class="term-status running">running</span>
+              <div class="brief-body">
+                <div class="brief-summary">12 PRs · 3 channels · 2 teams · 4 docs</div>
+                <div class="brief-pr">
+                  <span class="brief-pr-src gh">GH</span>
+                  <span class="brief-pr-title">Refactor billing v2</span>
+                  <span class="brief-pr-meta">"Don't drop v1 without deprecation"</span>
+                  <span class="brief-pr-tag warn">Pushback</span>
                 </div>
-                <div class="term-line">
-                  <span class="term-prompt">›</span>
-                  <span class="term-agent cursor">cursor-2</span>
-                  <span class="term-text">add Linear sync to event bus</span>
-                  <span class="term-status running">running</span>
+                <div class="brief-pr">
+                  <span class="brief-pr-src sl">Slack</span>
+                  <span class="brief-pr-title">#eng-platform</span>
+                  <span class="brief-pr-meta">3 decisions · 1 blocker</span>
+                  <span class="brief-pr-tag good">Active</span>
                 </div>
-                <div class="term-line">
-                  <span class="term-prompt">›</span>
-                  <span class="term-agent codex">codex-3</span>
-                  <span class="term-text">fix: worktree GC for orphaned checkouts</span>
-                  <span class="term-status done">done</span>
+                <div class="brief-pr">
+                  <span class="brief-pr-src ln">Linear</span>
+                  <span class="brief-pr-title">Backend team</span>
+                  <span class="brief-pr-meta">4 issues moved · 2 done</span>
+                  <span class="brief-pr-tag good">Q 7</span>
                 </div>
-                <div class="term-line">
-                  <span class="term-prompt">›</span>
-                  <span class="term-agent claude">claude-4</span>
-                  <span class="term-text">_</span>
-                  <span class="term-cursor"></span>
+                <div class="brief-pr">
+                  <span class="brief-pr-src nt">Notion</span>
+                  <span class="brief-pr-title">Strategy 2026</span>
+                  <span class="brief-pr-meta">3 sections rewritten by sarah</span>
+                  <span class="brief-pr-tag muted">Edited</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="product-card-body">
             <h3>Forge <span class="title-suffix experimental">Very experimental</span></h3>
-            <div class="tagline">A command center for fleets of AI agents</div>
-            <p>A native macOS desktop app for running multiple AI coding agents at once, each in its own isolated git worktree. WebGL terminals, native event bus, Linear/GitHub/Slack baked in. Built on Tauri so the binary stays under 10 MB. v0.1, Phase 1 just shipped.</p>
+            <div class="tagline">One morning brief. Four tools.</div>
+            <p>A macOS app that reads the last 24 hours of GitHub PRs, Slack channels, Linear teams, and Notion edits, and gives you one summarized view each morning. Pushback flagged, decisions surfaced, unreviewed merges called out, bot reviews kept separate from human ones.</p>
             <div class="product-tags">
               <span>macOS</span>
-              <span>Tauri + Svelte</span>
-              <span>Multi-agent</span>
-              <span>v0.1</span>
+              <span>GitHub + Slack + Linear + Notion</span>
+              <span>v0.3 shipped, v0.4 in flight</span>
             </div>
-            <a href="#contact" class="product-link">
-              Get early access &rarr;
+            <a href="/forge" class="product-link">
+              Read the Forge brief &rarr;
             </a>
           </div>
         </div>
@@ -2370,7 +2494,7 @@ const jsonLd = {
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Four products at different stages. Productlogz is live with 300+ SaaS teams. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a voice-first migraine tracker for iOS and Android, currently pre-launch. Forge is a very-early macOS desktop app for running fleets of AI coding agents, v0.1.
+              Four products at different stages. Productlogz is a live SaaS feedback platform. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a voice-first migraine tracker for iOS and Android, currently pre-launch. Forge is a small macOS app that gives engineering teams one morning brief across GitHub, Slack, Linear, and Notion. v0.3 is shipped (GitHub PRs, Slack channels, Linear teams), v0.4 (Notion page summaries) is in flight, currently in dogfood.
             </div>
           </div>
         </div>
@@ -2454,7 +2578,7 @@ const jsonLd = {
           <a href="https://productlogz.com" target="_blank">Productlogz <span class="footer-status">Live</span></a>
           <a href="https://quotesmatic.com" target="_blank" rel="noopener">Quotesmatic <span class="footer-status">Live</span></a>
           <a href="https://migrainelogs.com" target="_blank" rel="noopener">Migraine Logs <span class="footer-status">Coming soon</span></a>
-          <a href="#products">Forge <span class="footer-status">Experimental</span></a>
+          <a href="/forge">Forge <span class="footer-status">Experimental</span></a>
         </div>
         <div class="footer-col">
           <h4>Resources</h4>
