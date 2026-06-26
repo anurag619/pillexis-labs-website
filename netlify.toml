@@ -15,16 +15,6 @@
   to = "/404"
   status = 404
 
-[[redirects]]
-  from = "/work-with-us"
-  to = "/"
-  status = 301
-
-[[redirects]]
-  from = "/work-with-us/"
-  to = "/"
-  status = 301
-
 [[headers]]
   for = "/*"
   [headers.values]
