@@ -5,6 +5,7 @@
 [build.environment]
   NODE_VERSION = "20"
   PUBLIC_FB_PIXEL_ID = "1548597113625938"
+  PUBLIC_GA_ID = "G-VJFFZCJNEC"
 
 # SPA-style fallback isn't needed (static site). Astro outputs
 # proper HTML per route.
