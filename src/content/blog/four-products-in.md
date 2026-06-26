@@ -67,7 +67,7 @@ Distribution. Positioning. The daily grind of getting found. The cold-start prob
 
 There's a product in that, and we're looking at it. We don't have a name yet, won't for weeks, because the name is part of the 20%.
 
-If you're shipping AI-built products and hitting the same wall, we'd genuinely like to hear what's working for you, what isn't, and where you're stuck. That's research material. [Drop us a line](/work-with-us).
+If you're shipping AI-built products and hitting the same wall, we'd genuinely like to hear what's working for you, what isn't, and where you're stuck. That's research material. [Drop us a line](/).
 
 ---
 

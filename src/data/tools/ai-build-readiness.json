@@ -169,7 +169,7 @@
       },
       "studioLink": {
         "label": "How we think about shipping AI products",
-        "href": "/#philosophy"
+        "href": "/ai-labs#philosophy"
       }
     },
     {
@@ -183,7 +183,7 @@
       },
       "studioLink": {
         "label": "Read the studio's method",
-        "href": "/#how-it-works"
+        "href": "/ai-labs#how-it-works"
       }
     },
     {
@@ -197,7 +197,7 @@
       },
       "studioLink": {
         "label": "What we're studying about distribution",
-        "href": "/#products"
+        "href": "/ai-labs#products"
       },
       "book": {
         "label": "Book a 20-min call",
@@ -215,7 +215,7 @@
       },
       "studioLink": {
         "label": "Follow our work on the distribution problem",
-        "href": "/work-with-us"
+        "href": "/ai-labs"
       },
       "book": {
         "label": "Book a 20-min call",

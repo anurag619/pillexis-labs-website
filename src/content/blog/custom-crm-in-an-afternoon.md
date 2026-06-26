@@ -108,4 +108,4 @@ For a 12-feature internal CRUD tool, those trade-offs are small. For a 60-featur
 
 The next post in the series gets into exactly that. The build vs buy decision, with the post-AI math.
 
-If you're thinking about replacing one of the bloated SaaS tools your team is currently paying for with something narrower and built for you, [talk to us](/work-with-us). We do this work for D2C teams as one of our two-sprint engagements.
+If you're thinking about replacing one of the bloated SaaS tools your team is currently paying for with something narrower and built for you, [talk to us](/). We do this work for D2C teams as one of our two-sprint engagements.

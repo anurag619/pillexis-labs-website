@@ -85,7 +85,7 @@ Then ask the harder question: are any of these tools eating more than $500/month
 
 If yes, you have a build candidate.
 
-We do this work for Indian D2C teams who've outgrown their stack. If the audit you just ran turned up something painful, [talk to us](/work-with-us). We'll help you scope which tools are real build candidates and which to leave alone.
+We do this work for Indian D2C teams who've outgrown their stack. If the audit you just ran turned up something painful, [talk to us](/). We'll help you scope which tools are real build candidates and which to leave alone.
 
 In the next post in this series, I'll walk through what the actual build looks like, using the example of a custom CRM. The pattern is the same for almost every workflow tool: PRD first, hard-code what your team actually does, milestone the build, let AI do the typing.
 
