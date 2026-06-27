@@ -48,20 +48,35 @@ export const bookingEvents = {
       try { window.fbq('track', 'InitiateCheckout', { content_name: 'intro_call', source }); } catch {}
     }
   },
-  /** Fires when Cal.com confirms a booking via its bookingSuccessful callback. */
-  scheduled(detail) {
+  /**
+   * Fires when Cal.com confirms a booking via its bookingSuccessful callback.
+   * `eventId` is the Cal booking uid — passed as Pixel `eventID` for dedup
+   * with the server-side Conversions API event from netlify/functions/cal-booking.ts.
+   */
+  scheduled(detail, eventId) {
     const meta = {
       event_type: detail?.eventType?.title || 'intro_call',
       duration: detail?.eventType?.length,
     };
-    track('call_booked', meta);
-    // Pixel: Schedule (standard event)
+    track('call_booked', { ...meta, event_id: eventId });
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      try { window.fbq('track', 'Schedule', meta); } catch {}
+      try {
+        if (eventId) {
+          window.fbq('track', 'Schedule', meta, { eventID: eventId });
+        } else {
+          window.fbq('track', 'Schedule', meta);
+        }
+      } catch {}
     }
-    // GA4 standard lead event
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      try { window.gtag('event', 'generate_lead', { value: 1, currency: 'USD', ...meta }); } catch {}
+      try {
+        window.gtag('event', 'generate_lead', {
+          value: 1,
+          currency: 'INR',
+          event_id: eventId,
+          ...meta,
+        });
+      } catch {}
     }
   },
 };

@@ -58,6 +58,46 @@
 <script>
   import { bookingEvents } from '../lib/analytics.js';
 
+  const CAL_NAMESPACE = 'pillexis-labs-intro-call';
+
+  function getCookie(name: string): string {
+    const match = document.cookie.match(
+      new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'),
+    );
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  // Pass Meta click + browser cookies through Cal.com booking metadata so
+  // the server-side webhook (netlify/functions/cal-booking.ts) can forward
+  // them to the Conversions API for ad attribution. Cookies are set by the
+  // Pixel script in BaseLayout.astro on first ad click.
+  function patchCalConfigs(): void {
+    const fbc = getCookie('_fbc');
+    const fbp = getCookie('_fbp');
+    const landingUrl = location.href;
+    document.querySelectorAll<HTMLElement>('[data-cal-link]').forEach((el) => {
+      let config: Record<string, any> = {};
+      try {
+        config = JSON.parse(el.getAttribute('data-cal-config') || '{}');
+      } catch {
+        config = {};
+      }
+      config.metadata = {
+        ...(config.metadata || {}),
+        ...(fbc ? { fbc } : {}),
+        ...(fbp ? { fbp } : {}),
+        landingUrl,
+      };
+      el.setAttribute('data-cal-config', JSON.stringify(config));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', patchCalConfigs);
+  } else {
+    patchCalConfigs();
+  }
+
   // Click tracking on every CTA with `data-book-call`.
   // Uses event delegation so we catch dynamically-added CTAs too
   // (e.g. the quiz result screen).
@@ -79,11 +119,20 @@
   });
 
   // Successful booking → conversion event for GA + Pixel Schedule.
-  if (typeof window.Cal === 'function') {
-    window.Cal('on', {
+  // Subscribe on the NAMESPACED Cal instance — the popup opens via
+  // Cal.ns[namespace], not the global Cal, so `bookingSuccessful` events
+  // only fire on the namespaced emitter. (Subscribing on global Cal here
+  // was the bug that kept the Schedule / generate_lead events at zero.)
+  // The init shim queues calls until embed.js loads, so calling this
+  // before Cal is fully ready is safe.
+  const ns = (window as any).Cal?.ns?.[CAL_NAMESPACE];
+  if (typeof ns === 'function') {
+    ns('on', {
       action: 'bookingSuccessful',
       callback: (e: any) => {
-        bookingEvents.scheduled(e?.detail?.data);
+        const detail = e?.detail?.data;
+        const uid: string | undefined = detail?.booking?.uid || detail?.uid;
+        bookingEvents.scheduled(detail, uid);
       },
     });
   }

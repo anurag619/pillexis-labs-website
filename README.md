@@ -1,6 +1,6 @@
 # Pillexis Labs — website
 
-Astro static site. Marketing pages + free AI tools.
+Astro static site for **Pillexis Labs Pvt Ltd**, a founder-led product and engineering studio. The homepage (`/`) sells the studio's two fixed-price sprints (AI Stack Audit + Ops Automation) to Indian D2C brands and funnels to a Cal.com call; `/ai-labs` carries the secondary "research-driven product studio" narrative. Plus a blog and free AI tools. See the root [`CLAUDE.md`](../CLAUDE.md) for the full positioning.
 
 ## Quick start
 
@@ -15,6 +15,8 @@ npm run preview   # serve the built dist/
 
 - **Astro 4** (static output, zero JS by default)
 - **`@astrojs/sitemap`** — auto-generates `sitemap-index.xml`
+- **`@astrojs/rss`** — generates the blog feed at `/rss.xml`
+- **Content collections** — blog posts and author profiles, schema-validated
 - **No CSS framework** — design tokens in `src/styles/tokens.css`, per-page CSS inline in `.astro` pages
 - **Vanilla JS islands** for the quiz tools (no React/Vue/Svelte)
 
@@ -26,14 +28,28 @@ src/
 │   └── BaseLayout.astro       # HTML shell + GA4 + FB Pixel + SEO slot
 ├── components/
 │   ├── SEO.astro              # title/description/canonical/OG/Twitter/JSON-LD
+│   ├── BookingScripts.astro   # Cal.com embed + click + Schedule event wiring
 │   └── tools/
 │       └── Quiz.astro         # JSON-driven assessment engine (island)
 ├── pages/
-│   ├── index.astro            # / — main marketing page
-│   ├── work-with-us.astro     # /work-with-us — services
-│   └── tools/
-│       ├── index.astro                 # /tools — tools hub
-│       └── ai-build-readiness.astro    # first live tool
+│   ├── index.astro            # / — homepage (services for D2C)
+│   ├── work-with-us.astro     # /work-with-us — services + booking
+│   ├── ai-labs.astro          # /ai-labs — research-studio thesis page
+│   ├── forge.astro            # /forge — Forge product landing page
+│   ├── 404.astro
+│   ├── rss.xml.js             # /rss.xml — blog feed
+│   ├── tools/
+│   │   ├── index.astro                 # /tools — tools hub
+│   │   └── ai-build-readiness.astro    # first live tool
+│   └── blog/
+│       ├── index.astro        # /blog — index
+│       ├── [slug].astro       # dynamic post pages
+│       ├── tags/              # tag archive pages
+│       └── authors/           # author archive pages
+├── content/
+│   ├── blog/                  # markdown blog posts
+│   ├── authors/               # markdown author profiles
+│   └── config.ts              # zod schema for both collections
 ├── data/tools/
 │   └── ai-build-readiness.json  # questions + tiers + share copy
 ├── lib/
@@ -41,6 +57,10 @@ src/
 │   └── analytics.js           # GA4 + Pixel event helpers
 └── styles/
     └── tokens.css             # :root CSS variables (colors, fonts, radii)
+
+netlify/
+└── functions/
+    └── cal-booking.ts         # Cal.com webhook → Meta Conversions API (server-side Schedule event)
 
 public/
 ├── robots.txt
@@ -99,9 +119,9 @@ The repo already includes `netlify.toml` with the build config. To connect Netli
    - Build command: `npm run build`
    - Publish directory: `dist`
    - Node version: 20
-2. **Env vars** (set in Netlify UI → Site settings → Environment variables):
-   - `PUBLIC_GA_ID` — your GA4 measurement ID (`G-XXXXXXXXXX`)
-   - `PUBLIC_FB_PIXEL_ID` — your Pixel ID (`000000000000000`)
+2. **Env vars**:
+   - **Build-time, in `netlify.toml`** (`PUBLIC_*` → client-exposed, safe to commit): `PUBLIC_GA_ID`, `PUBLIC_FB_PIXEL_ID`. UI-set vars didn't propagate to the Astro build at deploy time, so the toml is the source of truth. See `../META_ADS_LAUNCH.md` §5 for the debugging story.
+   - **Runtime secrets, in the Netlify UI** (never commit): `META_CAPI_ACCESS_TOKEN`, `CAL_WEBHOOK_SECRET`, optionally `META_TEST_EVENT_CODE`. Used by the Cal.com webhook function (`netlify/functions/cal-booking.ts`) to fire the server-side Meta `Schedule` conversion. See the root `CLAUDE.md` "Booking conversion pipeline" section for details.
 3. **Domain** — `pillexislabs.com` (already pointing at Netlify).
 4. **Submit sitemap** to Google Search Console at `https://pillexislabs.com/sitemap-index.xml` after first deploy.
 
