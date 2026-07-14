@@ -14,6 +14,13 @@ export interface Props {
   lang?: string;
   /** Pass-through inline body class (rare — for per-page utility flags). */
   bodyClass?: string;
+  /**
+   * Stash the query string into window.__bk and strip it from the URL BEFORE
+   * GA/Pixel fire PageView. Used on /booked, where Cal forwards booking params
+   * (incl. the attendee's raw email) — we want the data, but not in analytics
+   * page_location. The page reads window.__bk after load.
+   */
+  scrubQuery?: boolean;
 }
 
 const {
@@ -26,6 +33,7 @@ const {
   type,
   lang = 'en',
   bodyClass = '',
+  scrubQuery = false,
 } = Astro.props;
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
@@ -63,6 +71,22 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
       jsonLd={jsonLd}
       type={type}
     />
+
+    {/* Stash + strip query params BEFORE any analytics fire, so forwarded
+        booking data (incl. raw email) never lands in GA/Pixel page_location.
+        The page reads window.__bk after load. Must precede GA + Pixel. */}
+    {scrubQuery && (
+      <script is:inline>
+        (function () {
+          try {
+            if (location.search) {
+              window.__bk = Object.fromEntries(new URLSearchParams(location.search));
+              history.replaceState(null, '', location.pathname + location.hash);
+            }
+          } catch (e) {}
+        })();
+      </script>
+    )}
 
     {/* Google Analytics 4 */}
     {GA_ID && (

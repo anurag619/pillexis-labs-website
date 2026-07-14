@@ -27,6 +27,7 @@ const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PR
   description="Your intro call with Pillexis Labs is confirmed."
   path="/booked"
   noindex={true}
+  scrubQuery={true}
 >
   <main class="confirm">
     <header class="topbar">
@@ -39,7 +40,8 @@ const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PR
       <p class="eyebrow">
         <span class="dot" aria-hidden="true"></span>Booking confirmed
       </p>
-      <h1>You're booked.</h1>
+      <h1 id="bk-headline">You're booked.</h1>
+      <p class="calltime" id="bk-calltime"></p>
       <p class="sub">Invite and Google Meet link are in your inbox.</p>
     </section>
 
@@ -73,6 +75,7 @@ const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PR
         That's where your reminder goes, and how you reach us if plans change.
       </p>
       <a
+        id="bk-wa"
         class="wa-btn"
         href={waHref}
         target="_blank"
@@ -151,6 +154,17 @@ const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PR
       font-size: 1.05rem;
       margin: 16px auto 0;
       max-width: 34ch;
+    }
+    /* Personalized call-time line, filled by JS from forwarded Cal params.
+       Hidden until populated so it never shows an empty gap. */
+    .calltime {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--peach);
+      margin: 14px auto 0;
+    }
+    .calltime:empty {
+      display: none;
     }
 
     /* Founder card */
@@ -280,9 +294,76 @@ const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PR
     }
   </style>
 
-  <!-- Track the WhatsApp confirm tap so we can see how many bookers complete
-       the handshake (proxy for show-rate lift). -->
+  <!-- Reads the Cal booking params (stashed to window.__bk by BaseLayout before
+       the URL was scrubbed) to (a) personalize the page, (b) enrich the WhatsApp
+       prefill with the booker's name + call time, and (c) fire a dedup-safe
+       Schedule conversion. Also tracks the WhatsApp confirm tap. -->
   <script>
+    import { bookingEvents } from '../lib/analytics.js';
+
+    const p: Record<string, string> = (window as any).__bk || {};
+
+    const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+    const firstName = cap((p.attendeeName || '').trim().split(/\s+/)[0] || '');
+
+    // Format the attendee's booked slot from attendeeStartTime, which already
+    // carries their local wall-clock + offset (e.g. 2026-07-14T14:00:00+05:30).
+    // Parse the wall-clock parts directly so the browser timezone can't shift it.
+    function formatCallTime(raw?: string): string {
+      if (!raw) return '';
+      const m = raw.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+      if (!m) return '';
+      const y = +m[1], mo = +m[2], d = +m[3], hh = +m[4], mm = +m[5];
+      const dt = new Date(Date.UTC(y, mo - 1, d, hh, mm));
+      const wd = dt.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' });
+      const mon = dt.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+      const h12 = ((hh + 11) % 12) + 1;
+      const ap = hh < 12 ? 'AM' : 'PM';
+      return `${wd}, ${mon} ${d} at ${h12}:${String(mm).padStart(2, '0')} ${ap}`;
+    }
+    const timeStr = formatCallTime(p.attendeeStartTime);
+
+    // (a) Personalize the headline + call-time line.
+    if (firstName) {
+      const h = document.getElementById('bk-headline');
+      if (h) h.textContent = `You're booked, ${firstName}.`;
+    }
+    if (timeStr) {
+      const c = document.getElementById('bk-calltime');
+      if (c) c.textContent = `You're on with Anurag on ${timeStr}.`;
+    }
+
+    // (b) Enrich the WhatsApp prefill so the thread lands already identifying
+    //     who + when. Reuse the number already in the server-rendered href.
+    const waBtn = document.getElementById('bk-wa') as HTMLAnchorElement | null;
+    if (waBtn) {
+      let msg = firstName
+        ? `Hi Anurag, this is ${firstName}, confirming my Pillexis call`
+        : 'Hi Anurag, confirming my Pillexis call';
+      if (timeStr) msg += ` on ${timeStr}`;
+      msg += '.';
+      const base = (waBtn.getAttribute('href') || '').split('?')[0];
+      if (base) waBtn.setAttribute('href', `${base}?text=${encodeURIComponent(msg)}`);
+    }
+
+    // (c) Dedup-safe Schedule. /booked is only reached after a real booking, and
+    //     Cal forwards the uid. Reuse bookingEvents.scheduled so the browser event
+    //     matches the server CAPI event (same eventID=uid + hashed email) and Meta
+    //     dedups. The scrubbed URL means a page reload has no uid → no refire.
+    if (p.uid) {
+      const start = Date.parse(p.startTime || '');
+      const end = Date.parse(p.endTime || '');
+      const length = start && end && end > start ? Math.round((end - start) / 60000) : 25;
+      bookingEvents.scheduled(
+        {
+          eventType: { title: 'Pillexis Labs intro call', length },
+          booking: { attendees: [{ email: p.email || '', name: p.attendeeName || '' }] },
+        },
+        p.uid,
+      );
+    }
+
+    // Track the WhatsApp confirm tap (proxy for show-rate lift).
     document.addEventListener('click', (e) => {
       const el = (e.target as HTMLElement | null)?.closest('[data-wa-confirm]');
       if (!el) return;
