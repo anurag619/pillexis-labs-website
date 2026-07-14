@@ -1,0 +1,296 @@
+---
+/**
+ * Post-booking confirmation page — the anti-no-show page.
+ *
+ * Cal.com redirects here after a successful booking (event → Advanced →
+ * "Redirect on booking" → https://pillexislabs.com/booked). Its whole job is
+ * to cut no-shows by adding what an email reminder can't:
+ *   1. A FACE + a promise — you booked a call with a named founder, not a form.
+ *   2. A WhatsApp click-to-chat handshake — the visitor messages US from their
+ *      real number, so (a) we can never capture a wrong number, (b) we get a
+ *      live thread to drop the reminder into, (c) tapping "send" is a
+ *      micro-commitment that lifts show-rate. See CAL_BOOKING_FORM.md.
+ *
+ * noindex — this is a private post-conversion page, never a search landing page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// International format, digits only (country code + number, no +, no spaces).
+const WHATSAPP_NUMBER = '918967265150';
+
+const WA_PREFILL = 'Hi Pillexis, I just booked my intro call. Confirming here.';
+const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_PREFILL)}`;
+---
+
+<BaseLayout
+  title="You're booked · Pillexis Labs"
+  description="Your intro call with Pillexis Labs is confirmed."
+  path="/booked"
+  noindex={true}
+>
+  <main class="confirm">
+    <header class="topbar">
+      <a href="/" class="wordmark" aria-label="Pillexis Labs home">
+        <img src="/brand/wordmark-light.svg" alt="Pillexis Labs" height="20" />
+      </a>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">
+        <span class="dot" aria-hidden="true"></span>Booking confirmed
+      </p>
+      <h1>You're booked.</h1>
+      <p class="sub">Invite and Google Meet link are in your inbox.</p>
+    </section>
+
+    <!-- Founder card: a face + a promise. You booked a person, not a form. -->
+    <section class="founder">
+      <img
+        class="avatar"
+        src="/team/founder-a.webp"
+        alt="Anurag, founder of Pillexis Labs"
+        width="1024"
+        height="1024"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="founder-copy">
+        <p class="founder-kicker">You'll be talking to</p>
+        <p class="founder-name">Anurag <span>· Founder, Pillexis Labs</span></p>
+        <p class="founder-promise">
+          Not a sales rep. 20 minutes, we look at your stack live. No slides,
+          no pitch.
+        </p>
+      </div>
+    </section>
+
+    <!-- The WhatsApp handshake: they message us, so we get a real number + a
+         live thread + a micro-commitment. This is the no-show killer. -->
+    <section class="wa">
+      <p class="wa-kicker">Before the call</p>
+      <h2>Say hi on WhatsApp.</h2>
+      <p class="wa-copy">
+        That's where your reminder goes, and how you reach us if plans change.
+      </p>
+      <a
+        class="wa-btn"
+        href={waHref}
+        target="_blank"
+        rel="noopener"
+        data-wa-confirm="booked"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.31-.01-.47-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.57.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"
+          ></path>
+        </svg>
+        Confirm on WhatsApp
+      </a>
+    </section>
+
+    <!-- Light prep = a small task that raises commitment and makes the call sharper. -->
+    <section class="prep">
+      <p class="prep-copy">
+        Bring your tools list, and last month's SaaS bill if it's handy.
+      </p>
+    </section>
+
+    <footer class="foot">
+      <a href="/">← Back to pillexislabs.com</a>
+    </footer>
+  </main>
+
+  <style>
+    .confirm {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 32px 20px 96px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 48px;
+    }
+    .wordmark img {
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 12px 2px rgba(255, 99, 99, 0.7);
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 8vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+    }
+    .hero .sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin: 16px auto 0;
+      max-width: 34ch;
+    }
+
+    /* Founder card */
+    .founder {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-top: 44px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-card);
+    }
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--hairline-strong);
+    }
+    .founder-kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .founder-name {
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin: 2px 0 8px;
+    }
+    .founder-name span {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .founder-promise {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    /* WhatsApp block — the hero action */
+    .wa {
+      margin-top: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      background:
+        radial-gradient(120% 120% at 50% 0%, rgba(37, 211, 102, 0.08), transparent 60%),
+        var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+    }
+    .wa-kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .wa h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 6px 0 12px;
+    }
+    .wa-copy {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 42ch;
+      margin: 0 auto 22px;
+      line-height: 1.55;
+    }
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: #06210f;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 26px;
+      border-radius: var(--r-md);
+      box-shadow: 0 0 40px 0 rgba(37, 211, 102, 0.28);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .wa-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 56px 0 rgba(37, 211, 102, 0.4);
+    }
+    /* Prep */
+    .prep {
+      margin-top: 20px;
+      padding: 16px 22px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      background: var(--bg-elev);
+      text-align: center;
+    }
+    .prep-copy {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .foot {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .foot a {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-family: var(--mono);
+    }
+    .foot a:hover {
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      .founder {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+
+  <!-- Track the WhatsApp confirm tap so we can see how many bookers complete
+       the handshake (proxy for show-rate lift). -->
+  <script>
+    document.addEventListener('click', (e) => {
+      const el = (e.target as HTMLElement | null)?.closest('[data-wa-confirm]');
+      if (!el) return;
+      const source = el.getAttribute('data-wa-confirm') || 'booked';
+      (window as any).gtag?.('event', 'whatsapp_confirm', { source });
+      (window as any).fbq?.('trackCustom', 'WhatsAppConfirm', { source });
+    });
+  </script>
+</BaseLayout>
+</content>
+</invoke>
