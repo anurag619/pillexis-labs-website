@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
+import SiteNav from '../components/SiteNav.astro';
 
 const title = "Work with us · Pillexis Labs";
-const description = "Two sprints. One operator. We sort the AI mess and the ops mess for Indian D2C teams who've outgrown their stack.";
+const description = "Three focused engagements. One operator. We sort the AI mess, the ops mess, and legacy code for Indian D2C teams who've outgrown their stack.";
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -16,7 +17,7 @@ const jsonLd = {
     name: 'Pillexis Labs',
     url: 'https://pillexislabs.com',
   },
-  serviceType: 'AI & Operations consulting sprints',
+  serviceType: 'AI, operations, and legacy application modernization engagements',
   areaServed: { '@type': 'Country', name: 'India' },
   potentialAction: {
     '@type': 'ReserveAction',
@@ -26,7 +27,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd} hasSiteNav>
   <style is:global>
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -170,10 +171,11 @@ const jsonLd = {
     }
     .section-title em {
       font-style: normal;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.12em;
     }
     .section-sub {
       font-size: 1.1rem;
@@ -185,7 +187,7 @@ const jsonLd = {
 
     /* ── HERO ── */
     .hero {
-      padding: 11rem 2rem 7rem;
+      padding: 9rem 2rem 6rem;
       position: relative;
       overflow: hidden;
     }
@@ -195,8 +197,8 @@ const jsonLd = {
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at top right, rgba(255, 99, 99, 0.35), transparent 60%),
-        radial-gradient(circle at 30% 80%, rgba(255, 140, 80, 0.12), transparent 55%);
+        radial-gradient(circle at 72% 18%, rgba(255, 99, 99, 0.14), transparent 42%),
+        radial-gradient(circle at 30% 80%, rgba(255, 140, 80, 0.08), transparent 55%);
     }
     .grid-bg {
       position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
@@ -204,7 +206,16 @@ const jsonLd = {
       background-size: 24px 24px;
       mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
     }
-    .hero-inner { position: relative; max-width: 1100px; margin: 0 auto; }
+    .hero-inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
+    }
+    .hero-copy { min-width: 0; }
 
     .hero h1 {
       font-weight: 900;
@@ -212,15 +223,16 @@ const jsonLd = {
       letter-spacing: -0.04em;
       line-height: 1.02;
       margin-bottom: 1.8rem;
-      max-width: 760px;
+      max-width: 700px;
+      overflow-wrap: anywhere;
     }
     .hero h1 em {
-      font-style: italic;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 40px rgba(255, 99, 99, 0.45));
+      font-style: normal;
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 0.12em;
     }
     .hero-sub {
       font-size: 1.2rem;
@@ -232,33 +244,82 @@ const jsonLd = {
     .hero-cta-row { display: flex; gap: 0.85rem; flex-wrap: wrap; }
 
     .hero-receipts {
-      margin-top: 4.5rem;
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      padding-top: 2rem;
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      padding-top: 1.5rem;
       border-top: 1px solid var(--hairline);
     }
     .hero-receipt {
-      flex: 1; min-width: 200px;
+      min-width: 0;
+      padding-right: 1rem;
+    }
+    .hero-receipt + .hero-receipt {
+      padding-left: 1rem;
+      border-left: 1px solid var(--hairline);
     }
     .hero-receipt .num {
       font-weight: 800;
-      font-size: 2.4rem;
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
       letter-spacing: -0.03em;
       line-height: 1;
-      background: linear-gradient(180deg, #fff 0%, var(--red) 130%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
     .hero-receipt .label {
       font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-dim);
       margin-top: 0.6rem;
+    }
+    .hero-visual {
+      position: relative;
+      min-width: 0;
+      width: 100%;
+      max-width: 520px;
+      justify-self: end;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: -18px 12px 18px -12px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      pointer-events: none;
+    }
+    .hero-visual figure {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-md);
+      width: 100%;
+    }
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 650px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+    .hero-visual figcaption {
+      position: absolute;
+      inset: auto 0 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(10, 10, 10, 0.86);
+      border-top: 1px solid var(--hairline);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     /* ── RECEIPTS / CASE STUDY ── */
@@ -290,7 +351,6 @@ const jsonLd = {
       height: 8px;
       border-radius: 2px;
       background: var(--red);
-      box-shadow: 0 0 10px rgba(255, 99, 99, 0.55);
       flex-shrink: 0;
     }
     .case-meta .case-link {
@@ -321,7 +381,17 @@ const jsonLd = {
       color: var(--text-muted);
       margin-bottom: 1.5rem;
     }
-    .case-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
+    .case-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+    .case-meta-brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .case-meta-brand .case-label {
+      padding-left: 0.75rem;
+      border-left: 1px solid var(--hairline-strong);
+    }
     .case-title {
       font-weight: 800;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
@@ -331,10 +401,11 @@ const jsonLd = {
     }
     .case-title em {
       font-style: normal;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.1em;
     }
     .case-body {
       color: var(--text-muted);
@@ -397,68 +468,104 @@ const jsonLd = {
       font-size: 2.6rem;
       letter-spacing: -0.04em;
       line-height: 1;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
       margin-bottom: 0.5rem;
     }
+    .case-stat {
+      padding-right: 2rem;
+      border-right: 1px solid var(--hairline);
+    }
+    .case-stat:last-child { padding-right: 0; border-right: 0; }
     .case-stat .label {
       font-size: 0.92rem;
       color: var(--text-muted);
       line-height: 1.4;
     }
-    .case-work {
-      margin-top: 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-    .work-chip {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 0.4rem 0.8rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--hairline);
-      border-radius: 100px;
-    }
-
     /* ── OUR OWN PRODUCTS ── */
     .own-products { background: var(--bg); }
     .own-products-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-    .own-product-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: var(--r-lg);
-      padding: 1.75rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .own-product-card {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--hairline);
+      border-radius: 0;
+      padding: 2rem 1.25rem;
+      display: grid;
+      grid-template-columns: minmax(150px, 0.55fr) 168px minmax(0, 1.25fr) minmax(175px, 0.65fr);
+      grid-template-areas:
+        "name preview outcome meta"
+        "features preview outcome meta";
+      align-items: start;
+      gap: 0.75rem 2.5rem;
       color: var(--text);
       text-decoration: none;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      isolation: isolate;
+      transition: background 0.25s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .own-product-card:not(.own-product-card-static):hover {
-      border-color: var(--red);
-      transform: translateY(-2px);
-      box-shadow: var(--glow-red-soft);
+    .own-product-card:hover,
+    .own-product-card:focus-visible {
+      background: var(--surface);
+      transform: translateX(4px);
     }
+    .own-product-card:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
     .own-product-card-static { cursor: default; }
 
+    .own-product-preview {
+      grid-area: preview;
+      align-self: stretch;
+      min-height: 112px;
+      overflow: hidden;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      background: var(--surface-2);
+      opacity: 0.34;
+      transform: translateX(14px) scale(0.97);
+      transition: opacity 0.35s, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s;
+    }
+    .own-product-preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.55) saturate(0.72);
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s;
+    }
+    .own-product-preview--migraine img { object-fit: contain; padding: 0.4rem; }
+    .own-product-preview--tether img { object-fit: cover; object-position: center; }
+    .own-product-preview--forge {
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      background: var(--bg-elev);
+    }
+    .own-product-preview--forge svg { width: 80%; height: 80%; }
+    .own-product-preview--forge path { fill: none; stroke: var(--hairline-strong); stroke-width: 1; }
+    .own-product-preview--forge circle { fill: var(--surface-2); stroke: currentColor; stroke-width: 1.5; }
+    .own-product-card:is(:hover, :focus-visible) .own-product-preview {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      border-color: var(--hairline-strong);
+    }
+    .own-product-card:is(:hover, :focus-visible) .own-product-preview img {
+      filter: grayscale(0) saturate(1);
+      transform: scale(1.035);
+    }
+    .own-product-card:is(:hover, :focus-visible) .own-product-preview--migraine img { transform: scale(1); }
+    .own-product-card:is(:hover, :focus-visible) .own-product-name { color: var(--peach); }
+
     .own-product-meta {
+      grid-area: meta;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-end;
       gap: 0.75rem;
-      flex-wrap: wrap;
     }
     .own-product-status {
       display: inline-flex;
@@ -470,7 +577,7 @@ const jsonLd = {
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 0.35rem 0.7rem;
-      border-radius: 100px;
+      border-radius: 7px;
       border: 1px solid var(--hairline);
       color: var(--text-muted);
       background: rgba(255, 255, 255, 0.03);
@@ -488,7 +595,6 @@ const jsonLd = {
     }
     .own-product-status.live .dot {
       background: var(--red);
-      box-shadow: 0 0 8px var(--red);
     }
     .own-product-status.muted {
       color: var(--text-muted);
@@ -500,7 +606,6 @@ const jsonLd = {
     }
     .own-product-status.experimental .dot {
       background: #f59e0b;
-      box-shadow: 0 0 8px #f59e0b;
     }
     .own-product-host {
       font-family: var(--mono);
@@ -513,141 +618,146 @@ const jsonLd = {
     }
 
     .own-product-name {
+      grid-area: name;
       font-family: var(--sans);
       font-weight: 700;
       font-size: 1.35rem;
       letter-spacing: -0.02em;
       color: var(--text);
+      transition: color 0.25s;
     }
     .own-product-outcome {
+      grid-area: outcome;
       color: var(--text-muted);
       font-size: 0.98rem;
       line-height: 1.55;
     }
     .own-product-features {
+      grid-area: features;
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-top: auto;
-      padding-top: 0.5rem;
+      margin-top: 0;
+      padding-top: 0;
     }
     .own-product-features span {
       font-family: var(--mono);
       font-size: 0.66rem;
       letter-spacing: 0.06em;
       color: var(--text-muted);
-      padding: 0.3rem 0.6rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--hairline);
-      border-radius: 100px;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--hairline);
     }
 
-    /* ── SPRINTS ── */
+    /* Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V5 */
+    /* ── SERVICE REGISTER ── */
     .sprints {
-      background: linear-gradient(180deg, var(--bg) 0%, #050505 100%);
+      background: var(--bg-elev);
     }
-    .sprints-grid {
+    .services-heading {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3rem;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+      gap: 3rem;
+      align-items: end;
+      margin-bottom: 3.5rem;
     }
-    .sprint-card {
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: var(--r-xl);
-      padding: 2.5rem;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .sprint-card:hover {
-      border-color: var(--hairline-strong);
-      transform: translateY(-2px);
-    }
-    .sprint-card.featured {
-      border: 1px solid rgba(255, 99, 99, 0.3);
-      box-shadow: 0 0 60px rgba(255, 99, 99, 0.15);
-    }
-    .sprint-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+    .services-heading .section-title,
+    .services-heading .section-sub { margin-bottom: 0; }
+    .services-kicker {
+      display: block;
+      margin-bottom: 1rem;
       font-family: var(--mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.18em;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.17em;
       text-transform: uppercase;
       color: var(--red);
-      font-weight: 600;
-      padding: 0.4rem 0.75rem;
-      background: rgba(255, 99, 99, 0.08);
-      border: 1px solid rgba(255, 99, 99, 0.2);
-      border-radius: 100px;
-      margin-bottom: 1.5rem;
-      width: fit-content;
     }
-    .sprint-name {
-      font-weight: 800;
-      font-size: 1.7rem;
-      letter-spacing: -0.025em;
-      margin-bottom: 0.4rem;
+    .services-register {
+      overflow: clip;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
     }
-    .sprint-name em {
-      font-style: normal;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .sprint-pitch {
-      color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.55;
-      margin-bottom: 1.5rem;
-    }
-    .sprint-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.7rem;
-      padding: 1rem 0;
-      border-top: 1px solid var(--hairline);
+    .service-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 2.5rem;
+      padding: 2.5rem;
       border-bottom: 1px solid var(--hairline);
-      margin-bottom: 1.5rem;
+      transition: background 0.2s;
     }
-    .sprint-price {
-      font-weight: 800;
-      font-size: 1.8rem;
-      letter-spacing: -0.025em;
-      color: var(--text);
-    }
-    .sprint-duration {
+    .service-row:last-child { border-bottom: 0; }
+    .service-row:hover { background: var(--surface-2); }
+    .service-index {
       font-family: var(--mono);
       font-size: 0.78rem;
       letter-spacing: 0.12em;
+      color: var(--red);
+      font-weight: 600;
+      padding-top: 0.3rem;
+    }
+    .service-label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-dim);
     }
-    .sprint-includes {
-      list-style: none;
-      margin-bottom: 1.5rem;
+    .service-name {
+      font-weight: 800;
+      font-size: clamp(1.45rem, 2.3vw, 2rem);
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+      margin-bottom: 0.9rem;
     }
-    .sprint-includes li {
-      font-size: 0.95rem;
+    .service-name em {
+      font-style: normal;
+      color: var(--peach);
+    }
+    .service-pitch {
       color: var(--text-muted);
-      padding: 0.45rem 0;
-      padding-left: 1.6rem;
-      position: relative;
-      line-height: 1.5;
+      font-size: 0.96rem;
+      line-height: 1.6;
     }
-    .sprint-includes li::before {
+    .service-includes {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem 1.5rem;
+      align-content: start;
+    }
+    .service-includes li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.45;
+    }
+    .service-includes li::before {
       content: '→';
       position: absolute;
       left: 0;
       color: var(--red);
       font-weight: 700;
     }
-    .sprint-card .btn-primary { margin-top: auto; width: fit-content; }
+    .services-cta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 1.25rem;
+      padding: 1.5rem 1.6rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+    }
+    .services-cta strong { display: block; font-size: 1rem; margin-bottom: 0.15rem; }
+    .services-cta p { color: var(--text-muted); font-size: 0.9rem; }
+    .services-cta .btn-primary { white-space: nowrap; }
 
     /* ── HOW IT WORKS ── */
     .how { background: var(--bg); }
@@ -743,13 +853,13 @@ const jsonLd = {
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
+        radial-gradient(ellipse 50% 50% at 30% 50%, rgba(255, 99, 99, 0.18), transparent 65%),
+        radial-gradient(ellipse 70% 40% at 30% 50%, rgba(255, 140, 80, 0.08), transparent 75%);
     }
     .cta-final-inner {
       position: relative; z-index: 1;
-      max-width: 800px; margin: 0 auto;
-      text-align: center;
+      max-width: 1100px; margin: 0 auto;
+      text-align: left;
     }
     .cta-final h2 {
       font-weight: 800;
@@ -760,41 +870,18 @@ const jsonLd = {
     }
     .cta-final h2 em {
       font-style: normal;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 0.1em;
     }
     .cta-final p {
       color: var(--text-muted);
       font-size: 1.1rem;
-      margin: 1.4rem auto 2.4rem;
+      margin: 1.4rem 0 2.4rem;
       max-width: 520px;
       line-height: 1.6;
-    }
-    .cta-bullets {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .cta-bullets div {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .cta-bullets div::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 10px var(--red);
     }
 
     /* ── FOOTER ── */
@@ -869,10 +956,11 @@ const jsonLd = {
     }
     .cta-section h2 em {
       font-style: normal;
-      background: linear-gradient(180deg, var(--peach) 0%, var(--red) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--peach);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 3px;
+      text-underline-offset: 0.1em;
     }
     .cta-section p {
       font-size: 1.1rem;
@@ -905,80 +993,146 @@ const jsonLd = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      section { padding: 5rem 1.5rem; }
-      .hero { padding: 8rem 1.5rem 5rem; }
-      .sprints-grid { grid-template-columns: 1fr; }
+      section { padding: 3.5rem 1.25rem; }
+      .hero { padding: 6.5rem 1.25rem 3.5rem; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-visual { width: 100%; max-width: none; justify-self: start; grid-row: 1; }
+      .hero-copy { grid-row: 2; }
+      .hero-visual img { height: clamp(210px, 62vw, 280px); }
+      .hero h1 { font-size: clamp(2.2rem, 10vw, 2.55rem); margin-bottom: 1.25rem; }
+      .hero-sub { font-size: 1.05rem; margin-bottom: 1.75rem; }
+      .section-title { font-size: clamp(1.85rem, 8.5vw, 2.15rem); }
+      .section-sub { font-size: 1rem; margin-bottom: 1.5rem; }
+      .services-heading { grid-template-columns: 1fr; gap: 0.8rem; margin-bottom: 1.5rem; }
+      .service-row { grid-template-columns: 36px minmax(0, 1fr); gap: 1rem; padding: 1.4rem 0.9rem; }
+      .service-includes { grid-column: 2; grid-template-columns: 1fr; }
+      .services-cta { grid-template-columns: 1fr; gap: 1.1rem; }
+      .services-cta .btn-primary { width: fit-content; }
       .how-grid { grid-template-columns: 1fr; }
       .case-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+      .case-stat { padding: 0 0 1.5rem; border-right: 0; border-bottom: 1px solid var(--hairline); }
+      .case-stat:last-child { padding-bottom: 0; border-bottom: 0; }
       .own-products-grid { grid-template-columns: 1fr; }
+      .own-product-card {
+        grid-template-columns: 1fr;
+        grid-template-areas: "meta" "preview" "name" "outcome" "features";
+        gap: 1rem;
+        padding: 1.4rem 0;
+        transform: none;
+      }
+      .own-product-preview,
+      .own-product-card:is(:hover, :focus-visible) .own-product-preview {
+        width: 100%;
+        height: 145px;
+        min-height: 0;
+        opacity: 1;
+        transform: none;
+      }
+      .own-product-preview img,
+      .own-product-card:is(:hover, :focus-visible) .own-product-preview img {
+        filter: grayscale(0) saturate(0.92);
+        transform: none;
+      }
+      .own-product-meta {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
       .footer-inner { flex-direction: column; }
       .footer-links { gap: 1.5rem; }
-      .receipts-card { padding: 2rem 1.5rem; }
+      .receipts-card { padding: 1.5rem 1.1rem; }
+      .case-meta-brand {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        align-items: start;
+      }
+      .case-meta-brand .case-label {
+        padding: 0.65rem 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--hairline);
+        font-size: 0.64rem;
+        letter-spacing: 0.11em;
+        line-height: 1.55;
+      }
+      .cta-section,
+      .cta-final { padding: 4.5rem 1.25rem; }
+      .cta-section h2,
+      .cta-final h2 { font-size: clamp(2rem, 9.5vw, 2.4rem); }
+      .faq-list { margin-top: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .own-product-card,
+      .own-product-preview,
+      .own-product-preview img { transition: none; }
+      .own-product-card:hover,
+      .own-product-card:focus-visible,
+      .own-product-card:is(:hover, :focus-visible) .own-product-preview,
+      .own-product-card:is(:hover, :focus-visible) .own-product-preview img { transform: none; }
+    }
+    @media (max-width: 520px) {
+      .hero-receipts { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 2rem; }
+      .hero-receipt { padding-right: 0.55rem; }
+      .hero-receipt + .hero-receipt { padding-left: 0.55rem; border-left: 1px solid var(--hairline); }
+      .hero-receipt .num { font-size: 1.15rem; }
+      .hero-receipt .label { font-size: 0.54rem; letter-spacing: 0.07em; }
+      .hero-visual::before { display: none; }
+      .hero-visual figcaption { position: static; }
     }
   </style>
 
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <span class="logo-dot"></span>
-        Pillexis Labs
-      </a>
-      <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="/ai-labs#about">About</a></li>
-        <li><a href="/ai-labs">AI labs</a></li>
-      </ul>
-      <a
-        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-        target="_blank"
-        rel="noopener"
-        class="nav-cta"
-        data-cal-link="pillexislabs/pillexis-labs-intro-call"
-        data-cal-namespace="pillexis-labs-intro-call"
-        data-cal-config='{"layout":"month_view"}'
-        data-book-call="nav"
-      >Book a 20-min call</a>
-    </div>
-  </nav>
+  <SiteNav links={[{ href: '#services', label: 'Services' }, { href: '/ai-labs#about', label: 'About' }, { href: '/ai-labs', label: 'AI labs' }]} />
 
   <!-- HERO -->
   <section class="hero">
     <div class="grid-bg"></div>
     <div class="hero-inner">
-      <h1>We build the stack<br/>your team <em>actually owns.</em></h1>
-      <p class="hero-sub">
-        We audit the AI stack, automate the ops workflows, and replace bloated SaaS with internal tools your team owns. Two fixed-price sprints. Code in your GitHub from day one.
-      </p>
-      <div class="hero-cta-row">
-        <a
-          href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-          target="_blank"
-          rel="noopener"
-          class="btn-primary"
-          data-cal-link="pillexislabs/pillexis-labs-intro-call"
-          data-cal-namespace="pillexis-labs-intro-call"
-          data-cal-config='{"layout":"month_view"}'
-          data-book-call="hero"
-        >Book a 20-min call →</a>
-        <a href="#how" class="btn-secondary">See how we work</a>
+      <div class="hero-copy">
+        <h1>We build the stack your team <em>actually owns.</em></h1>
+        <p class="hero-sub">
+          We audit the AI stack, automate ops workflows, migrate legacy code, and replace bloated SaaS with internal tools your team owns. Fixed scope. Code in your GitHub from day one.
+        </p>
+        <div class="hero-cta-row">
+          <a
+            href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+            target="_blank"
+            rel="noopener"
+            class="btn-primary"
+            data-cal-link="pillexislabs/pillexis-labs-intro-call"
+            data-cal-namespace="pillexis-labs-intro-call"
+            data-cal-config='{"layout":"month_view"}'
+            data-book-call="hero"
+          >Book a 20-min call →</a>
+          <a href="#how" class="btn-secondary">See how we work</a>
+        </div>
+
+        <div class="hero-receipts">
+          <div class="hero-receipt">
+            <div class="num">31 → 9 hrs</div>
+            <div class="label">Daily ops cut, same team</div>
+          </div>
+          <div class="hero-receipt">
+            <div class="num">500K+</div>
+            <div class="label">Users served · platform we built for</div>
+          </div>
+          <div class="hero-receipt">
+            <div class="num">30 days</div>
+            <div class="label">Fixed timeline, fixed price</div>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-receipts">
-        <div class="hero-receipt">
-          <div class="num">31 → 9 hrs</div>
-          <div class="label">Daily ops cut, same team</div>
-        </div>
-        <div class="hero-receipt">
-          <div class="num">500K+</div>
-          <div class="label">Users served · platform we built for</div>
-        </div>
-        <div class="hero-receipt">
-          <div class="num">30 days</div>
-          <div class="label">Fixed timeline, fixed price</div>
-        </div>
+      <div class="hero-visual">
+        <figure>
+          <img
+            src="/images/hero-ops-system.webp"
+            alt="Tangled red cables resolving into an organized modular system"
+            width="1000"
+            height="1500"
+            fetchpriority="high"
+          />
+          <figcaption><span>The mess</span><span>Your system</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -986,6 +1140,7 @@ const jsonLd = {
   <!-- RECEIPTS / CASE STUDY -->
   <section class="receipts">
     <div class="container">
+      <p class="eyebrow">Results, not testimonials.</p>
       <h2 class="section-title">What we ship<br/><em>actually moves.</em></h2>
       <p class="section-sub">
         Two consumer platforms. Full-stack work: mobile apps, backends, admin panels, internal CRMs. Built end-to-end by a small team, shipped to real users.
@@ -1026,15 +1181,6 @@ const jsonLd = {
             </div>
           </div>
 
-          <div class="case-work">
-            <span class="work-chip">CRM rebuild</span>
-            <span class="work-chip">AI clinical notes</span>
-            <span class="work-chip">Mobile dashboards</span>
-            <span class="work-chip">Automated comms</span>
-            <span class="work-chip">Internal OTP</span>
-            <span class="work-chip">Vernacular app</span>
-            <span class="work-chip">2× consumer apps</span>
-          </div>
         </div>
       </div>
 
@@ -1046,9 +1192,9 @@ const jsonLd = {
 
       <div class="receipts-card">
         <div class="receipts-card-inner">
-          <div class="case-meta">
-            <span class="dot"></span>
-            <a href="https://www.ojiapp.in/" target="_blank" rel="noopener" class="case-link">Oji</a> · Consumer AI agent platform for Bharat
+          <div class="case-meta case-meta-brand">
+            <a href="https://www.ojiapp.in/" target="_blank" rel="noopener" class="case-link">Oji</a>
+            <span class="case-label">Consumer AI agent platform for Bharat</span>
           </div>
           <h3 class="case-title">AI for Bharat,<br/>on their phone, <em>in their language.</em></h3>
           <p class="case-body">
@@ -1084,15 +1230,6 @@ const jsonLd = {
             </div>
           </div>
 
-          <div class="case-work">
-            <span class="work-chip">Android app</span>
-            <span class="work-chip">Admin / CRM</span>
-            <span class="work-chip">Multi-language launch</span>
-            <span class="work-chip">Multi-persona agents</span>
-            <span class="work-chip">Real-time chat</span>
-            <span class="work-chip">Bharat-first design</span>
-            <span class="work-chip">In-house content shipping</span>
-          </div>
         </div>
       </div>
     </div>
@@ -1101,59 +1238,85 @@ const jsonLd = {
   <!-- SERVICES -->
   <section class="sprints" id="services">
     <div class="container">
-      <h2 class="section-title">Pick the mess.<br/><em>We sort it.</em></h2>
-      <p class="section-sub">
-        Each sprint is fixed in scope and window. You own the code from day one. End of sprint, we hand over the keys. No retainer, no lock-in.
-      </p>
+      <div class="services-heading">
+        <div>
+          <span class="services-kicker">Three ways we can help</span>
+          <h2 class="section-title">Pick the mess.<br/><em>We sort it.</em></h2>
+        </div>
+        <p class="section-sub">
+          Every engagement has a defined scope and delivery plan. You own the code from day one. No retainer, no lock in.
+        </p>
+      </div>
 
-      <div class="sprints-grid">
-        <div class="sprint-card featured">
-          <span class="sprint-tag">AI Stack Audit · 14 days</span>
-          <h3 class="sprint-name">We sort the <em>AI mess.</em></h3>
-          <p class="sprint-pitch">
+      <div class="services-register">
+        <article class="service-row">
+          <span class="service-index">01</span>
+          <div class="service-summary">
+            <span class="service-label">AI Stack Audit, 14 days</span>
+            <h3 class="service-name">We sort the <em>AI mess.</em></h3>
+            <p class="service-pitch">
             Your prompts live in Notion, Google Doc, Slack, and someone's laptop. ChatGPT Plus, Claude Pro, and Jasper subscriptions stacked on top of each other. Nobody knows which prompt is canonical.
-          </p>
-          <ul class="sprint-includes">
+            </p>
+          </div>
+          <ul class="service-includes">
             <li>Stack audit and subscription cut-list</li>
-            <li>Versioned prompt library — one source of truth</li>
+            <li>Versioned prompt library, one source of truth</li>
             <li>Hallucination eval suite</li>
             <li>Internal tools to replace bloated AI SaaS</li>
           </ul>
-          <a
-            href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-            target="_blank"
-            rel="noopener"
-            class="btn-primary"
-            data-cal-link="pillexislabs/pillexis-labs-intro-call"
-            data-cal-namespace="pillexis-labs-intro-call"
-            data-cal-config='{"layout":"month_view"}'
-            data-book-call="service_ai_audit"
-          >Book a 20-min call →</a>
-        </div>
+        </article>
 
-        <div class="sprint-card">
-          <span class="sprint-tag">Ops Automation · 30 days</span>
-          <h3 class="sprint-name">We sort the <em>ops mess.</em></h3>
-          <p class="sprint-pitch">
+        <article class="service-row">
+          <span class="service-index">02</span>
+          <div class="service-summary">
+            <span class="service-label">Ops Automation, 30 days</span>
+            <h3 class="service-name">We sort the <em>ops mess.</em></h3>
+            <p class="service-pitch">
             Tuesday, 11pm. Manual CRM export. Typeform Pro for one form. AiSensy, Interakt, and Wati for the same WhatsApp messages. Zapier renewals climbing every year.
-          </p>
-          <ul class="sprint-includes">
+            </p>
+          </div>
+          <ul class="service-includes">
             <li>Replace bloated SaaS with internal tools your team owns</li>
             <li>Rebuild Zapier chains in n8n, Make, or plain Node</li>
+            <li>WhatsApp automation and WhatsApp CRM workflows</li>
             <li>Custom CRM, admin panels, and ops dashboards</li>
             <li>Ownership handover with docs and runbooks</li>
           </ul>
-          <a
-            href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-            target="_blank"
-            rel="noopener"
-            class="btn-primary"
-            data-cal-link="pillexislabs/pillexis-labs-intro-call"
-            data-cal-namespace="pillexis-labs-intro-call"
-            data-cal-config='{"layout":"month_view"}'
-            data-book-call="service_ops"
-          >Book a 20-min call →</a>
+        </article>
+
+        <article class="service-row">
+          <span class="service-index">03</span>
+          <div class="service-summary">
+            <span class="service-label">Legacy Code Migration, scoped rollout</span>
+            <h3 class="service-name">Legacy code migration.</h3>
+            <p class="service-pitch">
+              Unsupported frameworks, fragile integrations, and undocumented business rules make every release risky. We replace the highest risk parts in stages while the current system keeps running.
+            </p>
+          </div>
+          <ul class="service-includes">
+            <li>Dependency and architecture risk map</li>
+            <li>Characterization tests that preserve current behavior</li>
+            <li>Incremental module replacement and data migration</li>
+            <li>Controlled cutover, rollback plan, and handover docs</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="services-cta">
+        <div>
+          <strong>Not sure which engagement fits?</strong>
+          <p>Show us the system. We will tell you where to start and what can wait.</p>
         </div>
+        <a
+          href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+          data-cal-link="pillexislabs/pillexis-labs-intro-call"
+          data-cal-namespace="pillexis-labs-intro-call"
+          data-cal-config='{"layout":"month_view"}'
+          data-book-call="services_shared"
+        >Book a 20-min call →</a>
       </div>
     </div>
   </section>
@@ -1163,11 +1326,12 @@ const jsonLd = {
     <div class="container">
       <h2 class="section-title">We don't just consult on shipping.<br/><em>We ship.</em></h2>
       <p class="section-sub">
-        Four products across four domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
+        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
       </p>
 
       <div class="own-products-grid">
         <a href="https://productlogz.com" target="_blank" rel="noopener" class="own-product-card">
+          <span class="own-product-preview" aria-hidden="true"><img src="/products/productlogz.webp" alt="" loading="lazy" /></span>
           <div class="own-product-meta">
             <span class="own-product-status live"><span class="dot"></span>Live</span>
             <span class="own-product-host">productlogz.com</span>
@@ -1185,6 +1349,7 @@ const jsonLd = {
         </a>
 
         <a href="https://quotesmatic.com" target="_blank" rel="noopener" class="own-product-card">
+          <span class="own-product-preview" aria-hidden="true"><img src="/products/quotesmatic.webp" alt="" loading="lazy" /></span>
           <div class="own-product-meta">
             <span class="own-product-status live"><span class="dot"></span>Live · iOS</span>
             <span class="own-product-host">quotesmatic.com</span>
@@ -1202,6 +1367,7 @@ const jsonLd = {
         </a>
 
         <a href="https://migrainelogs.com" target="_blank" rel="noopener" class="own-product-card">
+          <span class="own-product-preview own-product-preview--migraine" aria-hidden="true"><img src="/products/migrainelogs.webp" alt="" loading="lazy" /></span>
           <div class="own-product-meta">
             <span class="own-product-status muted"><span class="dot"></span>Coming soon</span>
             <span class="own-product-host">migrainelogs.com</span>
@@ -1219,6 +1385,12 @@ const jsonLd = {
         </a>
 
         <a href="/forge" class="own-product-card">
+          <span class="own-product-preview own-product-preview--forge" aria-hidden="true">
+            <svg viewBox="0 0 240 100">
+              <path d="M20 50H58M78 50h34m20 0h30m20 0h38M68 50 102 20m20 30 34-30m16 30-22 30" />
+              <circle cx="68" cy="50" r="9" /><circle cx="112" cy="20" r="8" /><circle cx="122" cy="50" r="10" /><circle cx="166" cy="20" r="8" /><circle cx="172" cy="50" r="9" /><circle cx="140" cy="80" r="8" />
+            </svg>
+          </span>
           <div class="own-product-meta">
             <span class="own-product-status experimental"><span class="dot"></span>Very experimental</span>
             <span class="own-product-host">pillexislabs.com/forge</span>
@@ -1234,6 +1406,25 @@ const jsonLd = {
             <span>Notion edits (in flight)</span>
           </div>
         </a>
+
+        <article class="own-product-card own-product-card-static own-product-card-featured">
+          <span class="own-product-preview own-product-preview--tether" aria-hidden="true"><img src="/products/tether-card.webp" alt="" loading="lazy" /></span>
+          <div class="own-product-meta">
+            <span class="own-product-status experimental"><span class="dot"></span>Experimental · macOS</span>
+            <span class="own-product-host">Native menu-bar utility</span>
+          </div>
+          <h3 class="own-product-name">Tether</h3>
+          <p class="own-product-outcome">
+            Keeps your Mac awake and remotely reachable while you're away from the desk. Start an indefinite or timed session, keep the display on when needed, and stop automatically before the battery gets too low.
+          </p>
+          <div class="own-product-features">
+            <span>Timed sessions</span>
+            <span>Display control</span>
+            <span>Low-battery cutoff</span>
+            <span>App triggers</span>
+            <span>Closed-display mode</span>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -1261,7 +1452,7 @@ const jsonLd = {
         <div class="how-step">
           <span class="num">Step 01</span>
           <h3>20-minute call</h3>
-          <p>You describe the mess. We ask 4 questions. By the end of the call, you'll know whether a sprint fits and roughly what it'll cost.</p>
+          <p>You describe the mess. We ask 4 questions. By the end of the call, you'll know whether an engagement fits and roughly what it'll cost.</p>
         </div>
         <div class="how-step">
           <span class="num">Step 02</span>
@@ -1270,8 +1461,8 @@ const jsonLd = {
         </div>
         <div class="how-step">
           <span class="num">Step 03</span>
-          <h3>Sprint &amp; ship</h3>
-          <p>We build in your GitHub from day 1. Weekly demos. Async Slack. End of sprint: you own everything. We can leave or stick around for handover.</p>
+          <h3>Build and ship</h3>
+          <p>We build in your GitHub from day 1. Weekly demos. Async Slack. At handover, you own everything. We can leave or stick around for the next delivery.</p>
         </div>
       </div>
     </div>
@@ -1286,7 +1477,7 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">What if the work doesn't move the metric?</button>
           <div class="faq-answer">
-            We scope the metric upfront: daily ops hours, subscription spend, prompt eval pass rate, whatever's bleeding. If we miss the target by day 30, we refund the final milestone (typically 30% of the sprint). We've never had to.
+            We scope the metric upfront: daily ops hours, subscription spend, prompt eval pass rate, whatever's bleeding. If we miss the agreed target, we refund the final milestone. We've never had to.
           </div>
         </div>
         <div class="faq-item">
@@ -1298,13 +1489,13 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">Who actually does the work?</button>
           <div class="faq-answer">
-            Anurag (founder) is on every project. Depending on scope, 1–2 engineers and a designer join. No offshore handoff, no junior overload, no agency-style staff swaps mid-sprint.
+            Anurag (founder) is on every project. Depending on scope, 1–2 engineers and a designer join. No offshore handoff, no junior overload, no agency-style staff swaps during delivery.
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Why two sprints instead of a retainer?</button>
+          <button class="faq-question">Why fixed scope engagements instead of a retainer?</button>
           <div class="faq-answer">
-            Retainers reward keeping you on retainer. Fixed-scope sprints reward shipping. After delivery, you can hire us for another sprint or vanish. We'll never DM you about renewal.
+            Retainers reward keeping you on retainer. Fixed scope engagements reward shipping. After delivery, you can hire us again or vanish. We'll never DM you about renewal.
           </div>
         </div>
         <div class="faq-item">
@@ -1328,7 +1519,7 @@ const jsonLd = {
     <div class="cta-final-inner">
       <h2>Tell us where the <em>mess is.</em></h2>
       <p>
-        Pick a slot. Twenty minutes. By the end of the call, you'll know whether a sprint fits, what it'll cost, and what changes inside thirty days.
+        Pick a slot. Twenty minutes. By the end of the call, you'll know whether an engagement fits, what it'll cost, and what the first delivery window looks like.
       </p>
       <a
         href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
@@ -1343,11 +1534,6 @@ const jsonLd = {
       >
         Open the calendar →
       </a>
-      <div class="cta-bullets">
-        <div>No sales call</div>
-        <div>No retainer pitch</div>
-        <div>You keep the scope doc either way</div>
-      </div>
       <p style="margin-top:3rem;font-size:0.9rem;color:var(--text-dim);">
         Prefer email? <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a>
       </p>

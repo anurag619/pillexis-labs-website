@@ -1,6 +1,12 @@
 # Pillexis Labs — website
 
-Astro static site for **Pillexis Labs Pvt Ltd**, a founder-led product and engineering studio. The homepage (`/`) sells the studio's two fixed-price sprints (AI Stack Audit + Ops Automation) to Indian D2C brands and funnels to a Cal.com call; `/ai-labs` carries the secondary "research-driven product studio" narrative. Plus a blog and free AI tools. See the root [`CLAUDE.md`](../CLAUDE.md) for the full positioning.
+Astro static site for **Pillexis Labs Pvt Ltd**, a founder-led product and engineering studio. The homepage (`/`) sells the studio's two fixed-price sprints (AI Stack Audit + Ops Automation) to Indian D2C brands and funnels to a Cal.com call; `/ai-labs` carries the secondary "research-driven product studio" narrative across Productlogz, Quotesmatic, Migraine Logs, Forge, and Tether. Plus a blog and free AI tools. See the root [`CLAUDE.md`](../CLAUDE.md) for the full positioning.
+
+## Git repository boundary
+
+This `website/` directory is an independent Git repository. Run its Git and GitHub commands from this directory, or use `git -C website ...` from the Pillexis workspace root. The workspace root is not a Git repository. The sibling `forge/` directory is a separate repository with different branches, remotes, and deployment rules. Never combine website and Forge changes in one commit or pull request.
+
+**Hard GitHub account rule:** This repository belongs to `anurag619`, and every GitHub operation must use that account. The `anuragrk10` account belongs to a different organization and must never be used for this repository. Before any `gh` mutation, verify or switch with `gh auth switch -h github.com -u anurag619`.
 
 ## Quick start
 
@@ -120,7 +126,7 @@ The repo already includes `netlify.toml` with the build config. To connect Netli
    - Publish directory: `dist`
    - Node version: 20
 2. **Env vars**:
-   - **Build-time, in `netlify.toml`** (`PUBLIC_*` → client-exposed, safe to commit): `PUBLIC_GA_ID`, `PUBLIC_FB_PIXEL_ID`. UI-set vars didn't propagate to the Astro build at deploy time, so the toml is the source of truth. See `../META_ADS_LAUNCH.md` §5 for the debugging story.
+   - **Build-time, in `netlify.toml`** (`PUBLIC_*` → client-exposed, safe to commit): `PUBLIC_GA_ID`, `PUBLIC_FB_PIXEL_ID`. UI-set vars didn't propagate to the Astro build at deploy time, so the toml is the source of truth. See `../docs/marketing/META_ADS_LAUNCH.md` §5 for the debugging story.
    - **Runtime secrets, in the Netlify UI** (never commit): `META_CAPI_ACCESS_TOKEN`, `CAL_WEBHOOK_SECRET`, optionally `META_TEST_EVENT_CODE`. Used by the Cal.com webhook function (`netlify/functions/cal-booking.ts`) to fire the server-side Meta `Schedule` conversion. See the root `CLAUDE.md` "Booking conversion pipeline" section for details.
 3. **Domain** — `pillexislabs.com` (already pointing at Netlify).
 4. **Submit sitemap** to Google Search Console at `https://pillexislabs.com/sitemap-index.xml` after first deploy.
