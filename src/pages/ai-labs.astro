@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
+import SiteNav from '../components/SiteNav.astro';
 
 const title = "Pillexis Labs · Finding what AI can't build";
 const description = "A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.";
@@ -15,7 +16,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} path="/ai-labs" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} path="/ai-labs" jsonLd={jsonLd} hasSiteNav>
   <style is:global>
 
     *,
@@ -287,6 +288,7 @@ const jsonLd = {
       background-size: 24px 24px;
       -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
       mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+      animation: lab-grid-drift 22s linear infinite;
     }
 
     /* aurora bloom (applied via .aurora on sections) */
@@ -299,6 +301,8 @@ const jsonLd = {
         radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 99, 99, 0.35), transparent 60%),
         radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255, 140, 80, 0.22), transparent 70%),
         radial-gradient(ellipse 50% 30% at 20% 60%, rgba(255, 99, 99, 0.12), transparent 70%);
+      transform-origin: 50% 25%;
+      animation: lab-aurora-breathe 10s ease-in-out infinite alternate;
     }
 
     .aurora::after {
@@ -314,10 +318,7 @@ const jsonLd = {
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
       padding: 9rem 2rem 6rem;
-      display: flex;
-      align-items: center;
       overflow: hidden;
     }
 
@@ -326,16 +327,23 @@ const jsonLd = {
       margin: 0 auto;
       position: relative;
       z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: clamp(3rem, 7vw, 6rem);
+      align-items: center;
     }
+
+    .hero-copy { min-width: 0; }
 
     .hero h1 {
       font-family: var(--sans);
       font-weight: 800;
-      font-size: clamp(3rem, 9vw, 6.5rem);
+      font-size: clamp(3rem, 5.4vw, 5.2rem);
       color: var(--text);
       line-height: 1;
       letter-spacing: -0.05em;
       margin-bottom: 2.5rem;
+      overflow-wrap: anywhere;
     }
 
     .hero p {
@@ -350,6 +358,71 @@ const jsonLd = {
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-width: 0;
+      width: 100%;
+      max-width: 520px;
+      justify-self: end;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: -18px 12px 18px -12px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      pointer-events: none;
+      animation: lab-frame-calibrate 5s ease-in-out infinite;
+    }
+
+    .hero-visual figure {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-md);
+    }
+
+    .hero-visual figure::after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      inset: -18% 0 auto;
+      height: 18%;
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent, var(--red-faint) 72%, var(--red) 100%);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      animation: lab-scan 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 650px;
+      object-fit: cover;
+    }
+
+    .hero-visual figcaption {
+      position: absolute;
+      inset: auto 0 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(10, 10, 10, 0.86);
+      border-top: 1px solid var(--hairline);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     /* showcase (mock dashboard) */
@@ -373,11 +446,12 @@ const jsonLd = {
 
     .showcase-cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 1.1rem;
     }
 
     .showcase-card {
+      grid-column: span 2;
       background: var(--surface);
       border: 1px solid var(--hairline);
       border-radius: var(--r-lg);
@@ -386,13 +460,95 @@ const jsonLd = {
       flex-direction: column;
       gap: 0.85rem;
       text-decoration: none;
-      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      transition: border-color .28s, transform .28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .28s;
     }
 
-    .showcase-card:hover {
+    .showcase-card:nth-child(n + 4) {
+      grid-column: span 3;
+    }
+
+    .showcase-card:hover,
+    .showcase-card:focus-visible {
       border-color: var(--hairline-strong);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
       box-shadow: var(--glow-red-soft);
+    }
+
+    .showcase-card:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
+
+    .showcase-preview {
+      position: relative;
+      height: 132px;
+      overflow: hidden;
+      margin: -0.35rem -0.35rem 0.15rem;
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+      background: var(--surface-2);
+    }
+    .showcase-preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.72) contrast(1.02);
+      transform: scale(1.01);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s;
+    }
+    .showcase-preview--migraine img {
+      object-fit: contain;
+      padding: 0.4rem;
+    }
+    .showcase-preview--tether img {
+      object-fit: cover;
+      object-position: center;
+    }
+    .showcase-preview--forge {
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      background: var(--bg-elev);
+    }
+    .showcase-preview--forge svg { width: 78%; height: 78%; }
+    .showcase-preview--forge path { fill: none; stroke: var(--hairline-strong); stroke-width: 1; }
+    .showcase-preview--forge circle { fill: var(--surface-2); stroke: currentColor; stroke-width: 1.5; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .showcase-card { min-height: 184px; }
+      .showcase-preview {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        height: auto;
+        margin: 0;
+        border: 0;
+        border-radius: inherit;
+        opacity: 0;
+        transform: scale(1.025);
+        transition: opacity 0.3s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .showcase-preview::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, var(--red-faint), var(--surface) 82%);
+      }
+      .showcase-card > :not(.showcase-preview) { position: relative; z-index: 1; }
+      .showcase-card:is(:hover, :focus-visible) .showcase-preview {
+        opacity: 0.48;
+        transform: scale(1);
+      }
+      .showcase-card:is(:hover, :focus-visible) .showcase-preview img {
+        filter: saturate(1) contrast(1.04);
+        transform: scale(1.06);
+      }
+      .showcase-card:is(:hover, :focus-visible) .showcase-preview--migraine img { transform: scale(1); }
+      .showcase-card:is(:hover, :focus-visible) h3 { color: var(--peach); }
     }
 
     .showcase-card h3 {
@@ -400,6 +556,7 @@ const jsonLd = {
       letter-spacing: -0.015em;
       color: var(--text);
       margin: 0;
+      transition: color 0.28s;
     }
 
     .showcase-card .tagline {
@@ -436,6 +593,7 @@ const jsonLd = {
     .showcase-foot.live .dot {
       background: var(--red);
       box-shadow: 0 0 8px var(--red);
+      animation: lab-signal-pulse 2.4s ease-out infinite;
     }
     .showcase-foot.muted { color: var(--text-muted); }
     .showcase-foot.muted .dot { background: var(--text-muted); }
@@ -443,6 +601,69 @@ const jsonLd = {
     .showcase-foot.experimental .dot {
       background: #f59e0b;
       box-shadow: 0 0 8px #f59e0b;
+      animation: lab-signal-pulse 3.2s ease-out infinite;
+    }
+
+    /* Motion is progressively enabled by the inline observer below. Content
+       remains visible when JavaScript is unavailable. */
+    .motion-ready .lab-reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .motion-ready .lab-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-copy { animation: lab-enter-copy 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-visual { animation: lab-enter-visual 0.95s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+    @keyframes lab-grid-drift {
+      to { background-position: 24px 24px; }
+    }
+    @keyframes lab-aurora-breathe {
+      from { opacity: 0.72; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1.04); }
+    }
+    @keyframes lab-frame-calibrate {
+      0%, 100% { transform: translate(0, 0); opacity: 0.65; }
+      50% { transform: translate(4px, -4px); opacity: 1; }
+    }
+    @keyframes lab-scan {
+      0%, 12% { transform: translateY(0); opacity: 0; }
+      18% { opacity: 0.55; }
+      72% { opacity: 0.45; }
+      82%, 100% { transform: translateY(660%); opacity: 0; }
+    }
+    @keyframes lab-signal-pulse {
+      0%, 35% { box-shadow: 0 0 0 0 currentColor; }
+      70%, 100% { box-shadow: 0 0 0 7px transparent; }
+    }
+    @keyframes lab-enter-copy {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lab-enter-visual {
+      from { opacity: 0; transform: translateY(22px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .grid-bg,
+      .aurora::before,
+      .hero-copy,
+      .hero-visual,
+      .hero-visual::before,
+      .hero-visual figure::after,
+      .showcase-foot .dot { animation: none !important; }
+      .showcase-card,
+      .showcase-preview,
+      .showcase-preview img { transition: none !important; }
+      .motion-ready .lab-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }
 
     .status-badge {
@@ -805,6 +1026,19 @@ const jsonLd = {
       box-shadow: var(--glow-red-soft);
     }
 
+    .product-card-featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .product-card-featured .product-card-img {
+      aspect-ratio: auto;
+      min-height: 100%;
+      border-bottom: 0;
+      border-right: 1px solid var(--hairline);
+    }
+
     .product-card-img {
       width: 100%;
       aspect-ratio: 4/3;
@@ -844,6 +1078,20 @@ const jsonLd = {
       object-fit: contain;
       padding: 1.5rem;
       filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.45));
+    }
+
+    .product-card-img.has-tether {
+      padding: 1.5rem;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 164, 138, 0.16), transparent 58%),
+        var(--surface-2);
+    }
+
+    .product-card-img.has-tether > img {
+      max-width: 78%;
+      max-height: 430px;
+      border-radius: 16px;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
     }
 
     /* Browser-frame treatment for SaaS / web products. Wraps a light
@@ -1185,7 +1433,7 @@ const jsonLd = {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--hairline);
       padding: 0.2rem 0.5rem;
-      border-radius: 100px;
+      border-radius: 6px;
       letter-spacing: 0.08em;
     }
     .title-suffix.experimental {
@@ -1796,18 +2044,20 @@ const jsonLd = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
       .hero {
-        padding: 7rem 1.25rem 4rem;
-        text-align: center;
+        padding: 6.5rem 1.25rem 3.5rem;
+        text-align: left;
       }
 
       .hero-grid {
         max-width: 100%;
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
+
+      .hero h1 { font-size: clamp(2.35rem, 11vw, 2.75rem); margin-bottom: 1.4rem; }
+      .hero p { font-size: 1.05rem; margin-bottom: 2rem; }
+      .section-title { font-size: clamp(1.85rem, 8.5vw, 2.15rem); }
 
       .hero h1,
       .hero p {
@@ -1817,15 +2067,26 @@ const jsonLd = {
       }
 
       .hero-actions {
-        flex-direction: column;
         gap: 0.6rem;
         width: 100%;
-        justify-content: center;
       }
 
       .hero-actions a {
-        width: 100%;
+        width: fit-content;
         justify-content: center;
+      }
+
+      .hero-visual {
+        width: 100%;
+        max-width: none;
+        justify-self: start;
+        grid-row: 1;
+      }
+
+      .hero-copy { grid-row: 2; }
+
+      .hero-visual img {
+        height: clamp(210px, 62vw, 280px);
       }
 
       .about-text,
@@ -1849,21 +2110,55 @@ const jsonLd = {
         grid-template-columns: 1fr;
       }
 
-      section {
-        padding: 4.5rem 1.25rem;
+      .showcase-card,
+      .showcase-card:nth-child(n + 4) {
+        grid-column: auto;
+        min-height: 0;
       }
 
+      .showcase-preview {
+        position: relative;
+        inset: auto;
+        z-index: 0;
+        height: 150px;
+        margin: -0.35rem -0.35rem 0.15rem;
+        border: 1px solid var(--hairline);
+        border-radius: var(--r-md);
+        opacity: 1;
+        transform: none;
+      }
+
+      .showcase-preview::after { display: none; }
+      .showcase-card .showcase-preview img {
+        filter: saturate(0.9) contrast(1.02);
+        transform: none;
+      }
+      .showcase-card:is(:hover, :focus-visible) .showcase-preview {
+        opacity: 1;
+        transform: none;
+      }
+      .showcase-card:is(:hover, :focus-visible) .showcase-preview img {
+        filter: saturate(0.9) contrast(1.02);
+        transform: none;
+      }
+
+      section {
+        padding: 3.5rem 1.25rem;
+      }
+
+      .showcase { padding-bottom: 3.5rem; }
+
       .stats-bar {
-        padding: 3rem 1.25rem;
+        padding: 2.25rem 1.25rem;
       }
 
       .about-text,
       .philosophy-text {
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.75rem;
       }
 
       .team-split {
-        gap: 2.5rem;
+        gap: 1.75rem;
       }
 
       .about-cards {
@@ -1873,6 +2168,17 @@ const jsonLd = {
       .steps-grid,
       .products-grid {
         grid-template-columns: 1fr;
+      }
+
+      .product-card-featured {
+        display: block;
+      }
+
+      .product-card-featured .product-card-img {
+        aspect-ratio: 4 / 3;
+        min-height: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--hairline);
       }
 
       .steps-grid::before {
@@ -1915,65 +2221,70 @@ const jsonLd = {
         flex-direction: column;
         gap: 2rem;
       }
+
+      .comparison,
+      .cta-section { padding: 4.5rem 1.25rem; }
+      .cta-section h2 { font-size: clamp(2rem, 9.5vw, 2.4rem); }
+    }
+
+    @media (max-width: 520px) {
+      .hero-visual::before { display: none; }
+      .hero-visual figcaption { position: static; }
+      .footer-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 1.5rem;
+      }
     }
   </style>
 
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <span class="logo-dot"></span>
-        Pillexis Labs
-      </a>
-      <ul class="nav-links">
-        <li><a href="/">About</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="/#services">Services</a></li>
-        <li><a href="/ai-labs">AI labs</a></li>
-        <li><a href="/">Contact</a></li>
-      </ul>
-      <a
-        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-        target="_blank"
-        rel="noopener"
-        class="nav-cta"
-        data-cal-link="pillexislabs/pillexis-labs-intro-call"
-        data-cal-namespace="pillexis-labs-intro-call"
-        data-cal-config='{"layout":"month_view"}'
-        data-book-call="home_nav"
-      >Book a call</a>
-    </div>
-  </nav>
+  <SiteNav ctaLabel="Book a call" ctaSource="home_nav" links={[{ href: '/', label: 'About' }, { href: '#products', label: 'Products' }, { href: '/#services', label: 'Services' }, { href: '/', label: 'Contact' }]} />
 
   <!-- HERO -->
   <section class="hero aurora">
     <div class="grid-bg"></div>
     <div class="hero-grid">
-      <h1>AI builds almost everything.<br>We find what it <em>can't.</em></h1>
-      <p>A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.</p>
-      <div class="hero-actions">
-        <a href="#products" class="btn-primary">
-          Explore Products
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
-        <a href="#about" class="btn-secondary">See our thesis</a>
+      <div class="hero-copy">
+        <h1>AI builds almost everything.<br>We find what it <em>can't.</em></h1>
+        <p>A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.</p>
+        <div class="hero-actions">
+          <a href="#products" class="btn-primary">
+            Explore Products
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href="#about" class="btn-secondary">See our thesis</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <figure>
+          <img
+            src="/images/ai-labs-boundary.webp"
+            alt="A precise field of graphite forms interrupted by one imperfect peach object"
+            width="1000"
+            height="1250"
+            fetchpriority="high"
+          />
+          <figcaption><span>AI builds</span><span>We find the gap</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
   <!-- SHOWCASE -->
-  <section class="showcase">
+  <section class="showcase" id="products">
     <div class="container">
       <div class="showcase-header">
         <span class="badge">The lab, right now</span>
         <h2 class="section-title">What we're shipping. What we're <em>studying.</em></h2>
-        <p>Four products across four domains, from shipped to early-experimental. Each one is an answer or an open question about what AI can build alone.</p>
+        <p>Five products across five domains, from shipped to early-experimental. Each one is an answer or an open question about what AI can build alone.</p>
       </div>
       <div class="showcase-cards">
         <a href="https://productlogz.com" target="_blank" class="showcase-card">
+          <span class="showcase-preview" aria-hidden="true"><img src="/products/productlogz.webp" alt="" loading="lazy" /></span>
           <h3>Productlogz</h3>
           <span class="tagline">Feedback, voting, roadmaps</span>
           <span class="showcase-foot live">
@@ -1982,6 +2293,7 @@ const jsonLd = {
           </span>
         </a>
         <a href="https://quotesmatic.com" target="_blank" rel="noopener" class="showcase-card">
+          <span class="showcase-preview" aria-hidden="true"><img src="/products/quotesmatic.webp" alt="" loading="lazy" /></span>
           <h3>Quotesmatic</h3>
           <span class="tagline">Become who you almost are</span>
           <span class="showcase-foot live">
@@ -1990,6 +2302,7 @@ const jsonLd = {
           </span>
         </a>
         <a href="https://migrainelogs.com" target="_blank" rel="noopener" class="showcase-card">
+          <span class="showcase-preview showcase-preview--migraine" aria-hidden="true"><img src="/products/migrainelogs.webp" alt="" loading="lazy" /></span>
           <h3>Migraine Logs</h3>
           <span class="tagline">Voice-first migraine tracking</span>
           <span class="showcase-foot muted">
@@ -1998,6 +2311,12 @@ const jsonLd = {
           </span>
         </a>
         <a href="/forge" class="showcase-card">
+          <span class="showcase-preview showcase-preview--forge" aria-hidden="true">
+            <svg viewBox="0 0 240 100">
+              <path d="M20 50H58M78 50h34m20 0h30m20 0h38M68 50 102 20m20 30 34-30m16 30-22 30" />
+              <circle cx="68" cy="50" r="9" /><circle cx="112" cy="20" r="8" /><circle cx="122" cy="50" r="10" /><circle cx="166" cy="20" r="8" /><circle cx="172" cy="50" r="9" /><circle cx="140" cy="80" r="8" />
+            </svg>
+          </span>
           <h3>Forge</h3>
           <span class="tagline">GitHub + Slack + Linear + Notion, in one brief</span>
           <span class="showcase-foot experimental">
@@ -2005,8 +2324,17 @@ const jsonLd = {
             <span>Experimental, macOS</span>
           </span>
         </a>
+        <div class="showcase-card">
+          <span class="showcase-preview showcase-preview--tether" aria-hidden="true"><img src="/products/tether-card.webp" alt="" loading="lazy" /></span>
+          <h3>Tether</h3>
+          <span class="tagline">Keep your Mac awake and reachable</span>
+          <span class="showcase-foot experimental">
+            <span class="dot"></span>
+            <span>Experimental, macOS</span>
+          </span>
+        </div>
       </div>
-      <a href="#products" class="showcase-cta">Read the full case studies →</a>
+      <a href="/#our-products" class="showcase-cta">View the product index →</a>
     </div>
   </section>
 
@@ -2017,7 +2345,7 @@ const jsonLd = {
         part easier."</p>
       <div class="stats-row">
         <div class="stat-item">
-          <h3>4</h3>
+          <h3>5</h3>
           <p>Live experiments</p>
         </div>
         <div class="stat-item">
@@ -2107,182 +2435,6 @@ const jsonLd = {
           <h3>Solve</h3>
           <p>When a gap shows up across products, like marketing, we build software to close it.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BENTO GRID -->
-  <section class="bento-section">
-    <div class="container">
-      <div class="bento-header">
-        <span class="badge">What We're Learning</span>
-        <h2 class="section-title">What AI <em>still</em> can't do.</h2>
-      </div>
-      <div class="bento-grid">
-        <div class="bento-card">
-          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
-              <path d="m3 11 18-5v12L3 14v-3z" />
-              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
-            </svg></div>
-          <h3>Marketing is still human</h3>
-          <p>AI writes copy in seconds. It doesn't pick channels, set price, or earn trust. The hardest gap we've found.
-          </p>
-        </div>
-        <div class="bento-card bento-feature">
-          <div class="big-stat">80/20</div>
-          <h3>AI builds. Humans launch.</h3>
-          <p>Our rough split across every product we've shipped, the build isn't the bottleneck anymore.</p>
-        </div>
-        <div class="bento-card">
-          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
-              <path
-                d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-              <path d="M9 18h6" />
-              <path d="M10 22h4" />
-            </svg></div>
-          <h3>Judgment still wins</h3>
-          <p>What to build, what to cut, when to ship. AI suggests endlessly. Humans still have to decide.</p>
-        </div>
-        <div class="bento-card">
-          <div class="bento-icon"><svg class="icon-svg" viewBox="0 0 24 24">
-              <path d="M3 12h4l3-9 4 18 3-9h4" />
-            </svg></div>
-          <h3>The last mile is human</h3>
-          <p>Positioning, pricing, distribution. Everything between shippable and shipped is still our work.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section class="products-section" id="products">
-    <div class="container">
-      <div class="products-header">
-        <span class="badge">Case studies, not catalog</span>
-        <h2 class="section-title">Four products. <em>Four open questions.</em></h2>
-        <p>Each product is live research. We shipped them to learn what AI hands off well and what it still leaves on the floor.</p>
-      </div>
-      <div class="products-grid">
-
-        <div class="product-card">
-          <div class="product-card-img has-browser">
-            <div class="browser">
-              <div class="browser-bar">
-                <span></span><span></span><span></span>
-                <div class="browser-url">productlogz.com</div>
-              </div>
-              <div class="browser-view">
-                <img src="/products/productlogz.webp" alt="Productlogz Roadmap dashboard with Planned, In Progress, and Complete columns" loading="lazy" decoding="async" width="960" height="755" />
-              </div>
-            </div>
-          </div>
-          <div class="product-card-body">
-            <h3>Productlogz</h3>
-            <div class="tagline">Stop guessing what to build next</div>
-            <p>Customer feedback boards, voting, and public roadmaps for SaaS teams who'd rather ship what users actually want than argue about it in a doc. Used by 300+ companies.</p>
-            <div class="product-tags">
-              <span>Feedback boards</span>
-              <span>Public roadmaps</span>
-              <span>User voting</span>
-              <span>Changelogs</span>
-            </div>
-            <a href="https://productlogz.com" class="product-link" target="_blank">
-              See it at productlogz.com &rarr;
-            </a>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-card-img">
-            <img src="/products/quotesmatic.webp" alt="Quotesmatic quote card on a sunset gradient" loading="lazy" decoding="async" width="405" height="720" />
-          </div>
-          <div class="product-card-body">
-            <h3>Quotesmatic</h3>
-            <div class="tagline">Become who you almost are</div>
-            <p>A daily mindset app for iOS. Define a future self, write one sentence in your own voice that they'd say, then live with it across seven days, read, speak, place, write, until it's how you actually think.</p>
-            <div class="product-tags">
-              <span>iOS</span>
-              <span>Daily practice</span>
-              <span>Identity</span>
-              <span>Free + Premium</span>
-            </div>
-            <a href="https://quotesmatic.com" class="product-link" target="_blank" rel="noopener">
-              Visit quotesmatic.com &rarr;
-            </a>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-card-img">
-            <img src="/products/migrainelogs.webp" alt="Migraine Logs app on two iPhones showing voice logging and pattern detection" loading="lazy" decoding="async" width="960" height="758" />
-          </div>
-          <div class="product-card-body">
-            <h3>Migraine Logs <span class="title-suffix">Coming soon</span></h3>
-            <div class="tagline">Finally know what triggers your migraines</div>
-            <p>A voice-first migraine tracker built for use DURING an attack, not just after. Log in 8 seconds with your voice, auto-attached weather, sleep, and heart-rate context, and one-tap doctor-ready PDF reports. Coming to iOS and Android.</p>
-            <div class="product-tags">
-              <span>iOS + Android</span>
-              <span>Voice-first</span>
-              <span>Health</span>
-              <span>Pre-launch</span>
-            </div>
-            <a href="https://migrainelogs.com" class="product-link" target="_blank" rel="noopener">
-              Visit migrainelogs.com &rarr;
-            </a>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <div class="product-card-img has-brief">
-            <div class="brief">
-              <div class="brief-bar">
-                <span></span><span></span><span></span>
-                <div class="brief-title">Forge Brief · last 24h</div>
-              </div>
-              <div class="brief-body">
-                <div class="brief-summary">12 PRs · 3 channels · 2 teams · 4 docs</div>
-                <div class="brief-pr">
-                  <span class="brief-pr-src gh">GH</span>
-                  <span class="brief-pr-title">Refactor billing v2</span>
-                  <span class="brief-pr-meta">"Don't drop v1 without deprecation"</span>
-                  <span class="brief-pr-tag warn">Pushback</span>
-                </div>
-                <div class="brief-pr">
-                  <span class="brief-pr-src sl">Slack</span>
-                  <span class="brief-pr-title">#eng-platform</span>
-                  <span class="brief-pr-meta">3 decisions · 1 blocker</span>
-                  <span class="brief-pr-tag good">Active</span>
-                </div>
-                <div class="brief-pr">
-                  <span class="brief-pr-src ln">Linear</span>
-                  <span class="brief-pr-title">Backend team</span>
-                  <span class="brief-pr-meta">4 issues moved · 2 done</span>
-                  <span class="brief-pr-tag good">Q 7</span>
-                </div>
-                <div class="brief-pr">
-                  <span class="brief-pr-src nt">Notion</span>
-                  <span class="brief-pr-title">Strategy 2026</span>
-                  <span class="brief-pr-meta">3 sections rewritten by sarah</span>
-                  <span class="brief-pr-tag muted">Edited</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product-card-body">
-            <h3>Forge <span class="title-suffix experimental">Very experimental</span></h3>
-            <div class="tagline">One morning brief. Four tools.</div>
-            <p>A macOS app that reads the last 24 hours of GitHub PRs, Slack channels, Linear teams, and Notion edits, and gives you one summarized view each morning. Pushback flagged, decisions surfaced, unreviewed merges called out, bot reviews kept separate from human ones.</p>
-            <div class="product-tags">
-              <span>macOS</span>
-              <span>GitHub + Slack + Linear + Notion</span>
-              <span>v0.3 shipped, v0.4 in flight</span>
-            </div>
-            <a href="/forge" class="product-link">
-              Read the Forge brief &rarr;
-            </a>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -2473,7 +2625,7 @@ const jsonLd = {
         </div>
         <div class="faq-item">
           <button class="faq-question">
-            What are you studying right now?
+            Where does AI still fall short?
             <svg class="faq-chevron icon-svg" viewBox="0 0 24 24">
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -2495,7 +2647,7 @@ const jsonLd = {
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Four products at different stages. Productlogz is a live SaaS feedback platform. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a voice-first migraine tracker for iOS and Android, currently pre-launch. Forge is a small macOS app that gives engineering teams one morning brief across GitHub, Slack, Linear, and Notion. v0.3 is shipped (GitHub PRs, Slack channels, Linear teams), v0.4 (Notion page summaries) is in flight, currently in dogfood.
+              Five products at different stages. Productlogz is a live SaaS feedback platform. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a voice-first migraine tracker for iOS and Android, currently pre-launch. Forge is a small macOS app that gives engineering teams one morning brief across GitHub, Slack, Linear, and Notion. Tether is an experimental macOS menu-bar utility that keeps a Mac awake and remotely reachable during remote work sessions.
             </div>
           </div>
         </div>
@@ -2566,6 +2718,7 @@ const jsonLd = {
           <a href="https://quotesmatic.com" target="_blank" rel="noopener">Quotesmatic <span class="footer-status">Live</span></a>
           <a href="https://migrainelogs.com" target="_blank" rel="noopener">Migraine Logs <span class="footer-status">Coming soon</span></a>
           <a href="/forge">Forge <span class="footer-status">Experimental</span></a>
+          <a href="#products">Tether <span class="footer-status">Experimental</span></a>
         </div>
         <div class="footer-col">
           <h4>Resources</h4>
@@ -2585,6 +2738,26 @@ const jsonLd = {
   </footer>
 
   <script>
+    const revealTargets = document.querySelectorAll(
+      'section:not(.hero) > .container, .stats-inner, .contact-inner'
+    );
+    revealTargets.forEach(target => target.classList.add('lab-reveal'));
+    document.documentElement.classList.add('motion-ready');
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      revealTargets.forEach(target => revealObserver.observe(target));
+    } else {
+      revealTargets.forEach(target => target.classList.add('is-visible'));
+    }
+
     document.querySelectorAll('.faq-question').forEach(btn => {
       btn.addEventListener('click', () => {
         const item = btn.parentElement;

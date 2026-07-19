@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
+import SiteNav from '../components/SiteNav.astro';
 
 const title = "Work with us · Pillexis Labs";
 const description = "Two sprints. One operator. We sort the AI mess and the ops mess for Indian D2C teams who've outgrown their stack.";
@@ -26,7 +27,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd} hasSiteNav>
   <style is:global>
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -322,6 +323,16 @@ const jsonLd = {
       margin-bottom: 1.5rem;
     }
     .case-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
+    .case-meta-brand {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .case-meta-brand .case-label {
+      padding-left: 0.75rem;
+      border-left: 1px solid var(--hairline-strong);
+    }
     .case-title {
       font-weight: 800;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
@@ -423,7 +434,7 @@ const jsonLd = {
       padding: 0.4rem 0.8rem;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--hairline);
-      border-radius: 100px;
+      border-radius: 6px;
     }
 
     /* ── OUR OWN PRODUCTS ── */
@@ -452,6 +463,7 @@ const jsonLd = {
       box-shadow: var(--glow-red-soft);
     }
     .own-product-card-static { cursor: default; }
+    .own-product-card-featured { grid-column: 1 / -1; }
 
     .own-product-meta {
       display: flex;
@@ -470,7 +482,7 @@ const jsonLd = {
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 0.35rem 0.7rem;
-      border-radius: 100px;
+      border-radius: 7px;
       border: 1px solid var(--hairline);
       color: var(--text-muted);
       background: rgba(255, 255, 255, 0.03);
@@ -539,7 +551,7 @@ const jsonLd = {
       padding: 0.3rem 0.6rem;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--hairline);
-      border-radius: 100px;
+      border-radius: 6px;
     }
 
     /* ── SPRINTS ── */
@@ -583,7 +595,7 @@ const jsonLd = {
       padding: 0.4rem 0.75rem;
       background: rgba(255, 99, 99, 0.08);
       border: 1px solid rgba(255, 99, 99, 0.2);
-      border-radius: 100px;
+      border-radius: 7px;
       margin-bottom: 1.5rem;
       width: fit-content;
     }
@@ -772,30 +784,6 @@ const jsonLd = {
       max-width: 520px;
       line-height: 1.6;
     }
-    .cta-bullets {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .cta-bullets div {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .cta-bullets div::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 10px var(--red);
-    }
 
     /* ── FOOTER ── */
     footer {
@@ -905,44 +893,41 @@ const jsonLd = {
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      section { padding: 5rem 1.5rem; }
-      .hero { padding: 8rem 1.5rem 5rem; }
+      section { padding: 3.5rem 1.25rem; }
+      .hero { padding: 6.5rem 1.25rem 3.5rem; }
+      .hero h1 { font-size: clamp(2.2rem, 10vw, 2.55rem); margin-bottom: 1.25rem; }
+      .hero-sub { font-size: 1.05rem; margin-bottom: 1.75rem; }
+      .section-title { font-size: clamp(1.85rem, 8.5vw, 2.15rem); }
       .sprints-grid { grid-template-columns: 1fr; }
       .how-grid { grid-template-columns: 1fr; }
       .case-stats { grid-template-columns: 1fr; gap: 1.5rem; }
       .own-products-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; }
       .footer-links { gap: 1.5rem; }
-      .receipts-card { padding: 2rem 1.5rem; }
+      .receipts-card { padding: 1.5rem 1.1rem; }
+      .case-meta-brand {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+        align-items: start;
+      }
+      .case-meta-brand .case-label {
+        padding: 0.65rem 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--hairline);
+        font-size: 0.64rem;
+        letter-spacing: 0.11em;
+        line-height: 1.55;
+      }
+      .cta-section,
+      .cta-final { padding: 4.5rem 1.25rem; }
+      .cta-section h2,
+      .cta-final h2 { font-size: clamp(2rem, 9.5vw, 2.4rem); }
+      .faq-list { margin-top: 1.5rem; }
     }
   </style>
 
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <span class="logo-dot"></span>
-        Pillexis Labs
-      </a>
-      <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="/ai-labs#about">About</a></li>
-        <li><a href="/ai-labs">AI labs</a></li>
-      </ul>
-      <a
-        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-        target="_blank"
-        rel="noopener"
-        class="nav-cta"
-        data-cal-link="pillexislabs/pillexis-labs-intro-call"
-        data-cal-namespace="pillexis-labs-intro-call"
-        data-cal-config='{"layout":"month_view"}'
-        data-book-call="nav"
-      >Book a 20-min call</a>
-    </div>
-  </nav>
+  <SiteNav links={[{ href: '#services', label: 'Services' }, { href: '/ai-labs#about', label: 'About' }, { href: '/ai-labs', label: 'AI labs' }]} />
 
   <!-- HERO -->
   <section class="hero">
@@ -1046,9 +1031,9 @@ const jsonLd = {
 
       <div class="receipts-card">
         <div class="receipts-card-inner">
-          <div class="case-meta">
-            <span class="dot"></span>
-            <a href="https://www.ojiapp.in/" target="_blank" rel="noopener" class="case-link">Oji</a> · Consumer AI agent platform for Bharat
+          <div class="case-meta case-meta-brand">
+            <a href="https://www.ojiapp.in/" target="_blank" rel="noopener" class="case-link">Oji</a>
+            <span class="case-label">Consumer AI agent platform for Bharat</span>
           </div>
           <h3 class="case-title">AI for Bharat,<br/>on their phone, <em>in their language.</em></h3>
           <p class="case-body">
@@ -1163,7 +1148,7 @@ const jsonLd = {
     <div class="container">
       <h2 class="section-title">We don't just consult on shipping.<br/><em>We ship.</em></h2>
       <p class="section-sub">
-        Four products across four domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
+        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
       </p>
 
       <div class="own-products-grid">
@@ -1234,6 +1219,24 @@ const jsonLd = {
             <span>Notion edits (in flight)</span>
           </div>
         </a>
+
+        <article class="own-product-card own-product-card-static own-product-card-featured">
+          <div class="own-product-meta">
+            <span class="own-product-status experimental"><span class="dot"></span>Experimental · macOS</span>
+            <span class="own-product-host">Native menu-bar utility</span>
+          </div>
+          <h3 class="own-product-name">Tether</h3>
+          <p class="own-product-outcome">
+            Keeps your Mac awake and remotely reachable while you're away from the desk. Start an indefinite or timed session, keep the display on when needed, and stop automatically before the battery gets too low.
+          </p>
+          <div class="own-product-features">
+            <span>Timed sessions</span>
+            <span>Display control</span>
+            <span>Low-battery cutoff</span>
+            <span>App triggers</span>
+            <span>Closed-display mode</span>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -1343,11 +1346,6 @@ const jsonLd = {
       >
         Open the calendar →
       </a>
-      <div class="cta-bullets">
-        <div>No sales call</div>
-        <div>No retainer pitch</div>
-        <div>You keep the scope doc either way</div>
-      </div>
       <p style="margin-top:3rem;font-size:0.9rem;color:var(--text-dim);">
         Prefer email? <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a>
       </p>
