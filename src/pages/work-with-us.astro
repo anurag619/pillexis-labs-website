@@ -354,6 +354,7 @@ const jsonLd = {
       max-width: 680px;
       margin-bottom: 1.5rem;
     }
+    .case-read-more { display: none; }
 
     /* Bulleted breakdown of work shipped per case. Hairline-separated rows
        with a red arrow bullet. The "grouped" variant adds a mono-uppercase
@@ -905,6 +906,26 @@ const jsonLd = {
       .footer-inner { flex-direction: column; }
       .footer-links { gap: 1.5rem; }
       .receipts-card { padding: 1.5rem 1.1rem; }
+      .case-read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin: 0.15rem 0 0;
+        padding: 0.7rem 0.9rem;
+        border: 1px solid var(--hairline-strong);
+        border-radius: 7px;
+        background: var(--surface-2);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .case-read-more::after { content: '+'; color: var(--red); }
+      .receipts-card[data-expanded='true'] .case-read-more::after { content: '−'; }
+      .case-details { display: none; padding-top: 1.25rem; }
+      .receipts-card[data-expanded='true'] .case-details { display: block; }
       .case-meta-brand {
         grid-template-columns: 1fr;
         gap: 0.65rem;
@@ -986,6 +1007,8 @@ const jsonLd = {
           <p class="case-body">
             Six months of full-stack work. We replaced a tangle of SaaS with internal tools the team owns.
           </p>
+          <button class="case-read-more" type="button" aria-expanded="false">Read more</button>
+          <div class="case-details">
           <ul class="case-bullets">
             <li>Rebuilt the CRM from scratch</li>
             <li>Automated prescriptions, invoices, and session notifications</li>
@@ -1020,6 +1043,7 @@ const jsonLd = {
             <span class="work-chip">Vernacular app</span>
             <span class="work-chip">2× consumer apps</span>
           </div>
+          </div>
         </div>
       </div>
 
@@ -1039,6 +1063,8 @@ const jsonLd = {
           <p class="case-body">
             Built so a non-English speaker in a Tier 2 city could open an AI assistant and actually use it. Three pieces of work, one outcome.
           </p>
+          <button class="case-read-more" type="button" aria-expanded="false">Read more</button>
+          <div class="case-details">
           <ul class="case-bullets case-bullets-grouped">
             <li>
               <strong>Built for Bharat from day one</strong>
@@ -1077,6 +1103,7 @@ const jsonLd = {
             <span class="work-chip">Real-time chat</span>
             <span class="work-chip">Bharat-first design</span>
             <span class="work-chip">In-house content shipping</span>
+          </div>
           </div>
         </div>
       </div>
@@ -1395,6 +1422,16 @@ const jsonLd = {
   </footer>
 
   <script>
+    document.querySelectorAll('.case-read-more').forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.receipts-card');
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        button.textContent = expanded ? 'Read more' : 'Read less';
+        card?.setAttribute('data-expanded', String(!expanded));
+      });
+    });
+
     document.querySelectorAll('.faq-question').forEach(btn => {
       btn.addEventListener('click', () => {
         const item = btn.parentElement;
