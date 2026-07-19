@@ -6,6 +6,8 @@ Astro static site for **Pillexis Labs Pvt Ltd**, a founder-led product and engin
 
 This `website/` directory is an independent Git repository. Run its Git and GitHub commands from this directory, or use `git -C website ...` from the Pillexis workspace root. The workspace root is not a Git repository. The sibling `forge/` directory is a separate repository with different branches, remotes, and deployment rules. Never combine website and Forge changes in one commit or pull request.
 
+**Hard GitHub account rule:** This repository belongs to `anurag619`, and every GitHub operation must use that account. The `anuragrk10` account belongs to a different organization and must never be used for this repository. Before any `gh` mutation, verify or switch with `gh auth switch -h github.com -u anurag619`.
+
 ## Quick start
 
 ```bash
