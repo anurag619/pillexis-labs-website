@@ -67,6 +67,13 @@ export const bookingEvents = {
       try { window.fbq('track', 'InitiateCheckout', { content_name: 'intro_call', source }); } catch {}
     }
   },
+  /** Fires only after the embedded Cal frame is visible. */
+  formOpened(source) {
+    track('booking_form_opened', { source });
+  },
+  sectionViewed(section) {
+    track('section_viewed', { section });
+  },
   /**
    * Fires when Cal.com confirms a booking via its bookingSuccessful callback.
    * `eventId` is the Cal booking uid — passed as Pixel `eventID` for dedup

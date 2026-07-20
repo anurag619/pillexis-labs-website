@@ -116,6 +116,37 @@
 
     const source = target.getAttribute('data-book-call') || 'unknown';
     bookingEvents.clicked(source);
+
+    // A CTA click is intent. Count a form open separately only after Cal's
+    // embedded frame is present and visible, so popup failures are measurable.
+    let attempts = 0;
+    const findOpenForm = window.setInterval(() => {
+      attempts += 1;
+      const frame = Array.from(document.querySelectorAll<HTMLIFrameElement>('iframe'))
+        .find((iframe) => iframe.src.includes('cal.com') && iframe.getClientRects().length > 0);
+      if (frame) {
+        window.clearInterval(findOpenForm);
+        bookingEvents.formOpened(source);
+      } else if (attempts >= 20) {
+        window.clearInterval(findOpenForm);
+      }
+    }, 250);
+  });
+
+  // Record the first time a visitor sees each meaningful page section.
+  const seenSections = new Set<string>();
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const name = (entry.target as HTMLElement).dataset.analyticsSection;
+      if (!name || seenSections.has(name)) return;
+      seenSections.add(name);
+      bookingEvents.sectionViewed(name);
+      sectionObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll<HTMLElement>('[data-analytics-section]').forEach((section) => {
+    sectionObserver.observe(section);
   });
 
   // Successful booking → conversion event for GA + Pixel Schedule.
