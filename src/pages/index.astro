@@ -50,8 +50,8 @@ const jsonLd = {
       --text-muted: #A1A1A6;
       --text-dim: #6E6E73;
 
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+      --sans: 'Roboto', Arial, sans-serif;
+      --mono: 'Roboto', Arial, sans-serif;
 
       --r-sm: 6px;
       --r-md: 10px;
@@ -445,7 +445,11 @@ const jsonLd = {
     .case-bullets.case-bullets-grouped li {
       padding: 1rem 0 1rem 1.6rem;
     }
-    .case-bullets.case-bullets-grouped li::before { top: 1rem; }
+    .case-bullets.case-bullets-grouped li::before {
+      top: 1rem;
+      line-height: 1;
+      transform: translateY(-0.18rem);
+    }
     .case-bullets.case-bullets-grouped li strong {
       display: block;
       font-family: var(--mono);

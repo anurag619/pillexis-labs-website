@@ -1534,7 +1534,15 @@ const jsonLd = {
       color: var(--text);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
+    }
+
+    .comp-head:nth-child(3) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .comp-head.highlight::before {
@@ -1552,10 +1560,12 @@ const jsonLd = {
     }
 
     .comp-cell.check {
-      text-align: center;
+      display: grid;
+      place-items: center;
     }
 
     .comp-cell.check .icon-svg {
+      display: block;
       width: 18px;
       height: 18px;
     }
@@ -2240,7 +2250,7 @@ const jsonLd = {
   </style>
 
 
-  <SiteNav ctaLabel="Book a call" ctaSource="home_nav" links={[{ href: '/', label: 'About' }, { href: '#products', label: 'Products' }, { href: '/#services', label: 'Services' }, { href: '/', label: 'Contact' }]} />
+  <SiteNav ctaLabel="Book a call" ctaSource="home_nav" links={[{ href: '/ai-labs#about', label: 'About' }, { href: '#products', label: 'Products' }, { href: '/#services', label: 'Services' }, { href: '/', label: 'Contact' }]} />
 
   <!-- HERO -->
   <section class="hero aurora">
@@ -2728,7 +2738,7 @@ const jsonLd = {
         </div>
         <div class="footer-col">
           <h4>Company</h4>
-          <a href="/">About</a>
+          <a href="/ai-labs#about">About</a>
           <a href="#philosophy">Philosophy</a>
           <a href="/">Work with us</a>
           <a href="/">Contact</a>

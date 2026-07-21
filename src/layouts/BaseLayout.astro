@@ -62,7 +62,8 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
       (function () {
         try {
           var saved = localStorage.getItem('pillexis-theme');
-          var mode = saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'system';
+          var mode = saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'dark';
+          if (!saved) localStorage.setItem('pillexis-theme', mode);
           var theme = mode === 'system'
             ? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
             : mode;
@@ -70,7 +71,7 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
           document.documentElement.dataset.theme = theme;
           document.documentElement.style.colorScheme = theme;
         } catch (e) {
-          document.documentElement.dataset.themeMode = 'system';
+          document.documentElement.dataset.themeMode = 'dark';
           document.documentElement.dataset.theme = 'dark';
         }
       })();
@@ -79,7 +80,7 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -156,7 +157,7 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
           if (persist) localStorage.setItem('pillexis-theme', mode);
           if (meta) meta.setAttribute('content', theme === 'light' ? '#f5f1ee' : '#0a0a0a');
           document.querySelectorAll('[data-theme-toggle]').forEach(function (button) {
-            var next = mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system';
+            var next = mode === 'dark' ? 'light' : 'dark';
             button.setAttribute('aria-label', 'Theme: ' + mode + '. Switch to ' + next);
             button.setAttribute('title', 'Theme: ' + mode + '. Switch to ' + next);
           });
@@ -165,7 +166,7 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
         document.querySelectorAll('[data-theme-toggle]').forEach(function (button) {
           button.addEventListener('click', function () {
             var mode = currentMode();
-            paint(mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system', true);
+            paint(mode === 'dark' ? 'light' : 'dark', true);
           });
         });
         media.addEventListener('change', function (event) {
