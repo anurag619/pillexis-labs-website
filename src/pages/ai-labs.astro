@@ -1694,9 +1694,9 @@ const jsonLd = {
 
     .team-visual {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: minmax(0, 270px);
       gap: 1.25rem;
-      max-width: 560px;
+      max-width: 270px;
       width: 100%;
       order: 2;
     }
@@ -1748,6 +1748,48 @@ const jsonLd = {
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
+    }
+
+    .founder-socials {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.65rem;
+    }
+
+    .founder-social-link {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-sm);
+      transition: color 0.18s, border-color 0.18s, background-color 0.18s, transform 0.18s;
+    }
+
+    .founder-social-link:hover {
+      color: var(--red);
+      border-color: var(--red);
+      background: var(--red-dim);
+      transform: translateY(-1px);
+    }
+
+    .founder-social-link:active {
+      transform: translateY(0);
+    }
+
+    .founder-social-link:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
+
+    .founder-social-link svg {
+      width: 1rem;
+      height: 1rem;
+      fill: currentColor;
     }
 
     .team-text p {
@@ -2206,7 +2248,7 @@ const jsonLd = {
 
       .team-visual {
         grid-template-columns: 1fr;
-        max-width: 360px;
+        max-width: 280px;
       }
 
       .stats-row {
@@ -2572,25 +2614,31 @@ const jsonLd = {
             </div>
             <figcaption>
               <div class="founder-name">Anurag</div>
-              <div class="founder-role">Founder, Pillexis Labs</div>
-            </figcaption>
-          </figure>
-          <figure class="founder-card">
-            <div class="founder-photo">
-              <img src="/team/founder-b.webp" alt="Priyanka, co-founder of Pillexis Labs" loading="lazy" decoding="async" width="960" height="960" />
-            </div>
-            <figcaption>
-              <div class="founder-name">Priyanka</div>
-              <div class="founder-role">Co-founder, Pillexis Labs</div>
+              <div class="founder-role">Founder · 12+ years building products</div>
+              <div class="founder-socials" aria-label="Anurag's social profiles">
+                <a class="founder-social-link" href="https://in.linkedin.com/in/ak8085" target="_blank" rel="noopener noreferrer" aria-label="Anurag on LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.86-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.33V8.98h3.42v1.57h.05c.47-.9 1.64-1.86 3.37-1.86 3.6 0 4.27 2.37 4.27 5.46v6.3ZM5.31 7.41a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.04H3.53V8.98h3.56v11.47Z" />
+                  </svg>
+                </a>
+                <a class="founder-social-link" href="https://x.com/ak8085" target="_blank" rel="noopener noreferrer" aria-label="Anurag on X">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.48 22H3.36l7.26-8.3L2.97 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.84h1.73L8.43 4.05H6.58L17.8 19.84Z" />
+                  </svg>
+                </a>
+              </div>
             </figcaption>
           </figure>
         </div>
         <div class="team-text">
-          <span class="badge">Our Team</span>
-          <h2 class="section-title">Builders and <em>researchers.</em></h2>
-          <p>Pillexis Labs is built by a small group of engineers and product people who think the most interesting
-            question in software right now is also the simplest: what's left for humans to build?</p>
-          <p>We ship products to answer it, and share what we find along the way.</p>
+          <span class="badge">Founder</span>
+          <h2 class="section-title">12+ years building. <em>Still hands-on.</em></h2>
+          <p>Anurag is a product and engineering leader with more than 12 years of experience building software,
+            leading teams, and turning complex operations into products that ship. His work spans product strategy,
+            engineering, automation, and AI.</p>
+          <p>At Pillexis Labs, he stays close to the work, from defining the system and writing the code to reviewing
+            the final release. He also builds the studio's own products to test where AI is strong and where experienced
+            human judgment still wins.</p>
           <div class="team-chips">
             <div class="team-chip"><svg class="icon-svg" viewBox="0 0 24 24">
                 <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
