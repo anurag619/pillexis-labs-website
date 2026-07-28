@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 
 const title = 'Tether · Keep your Mac reachable';
 const description = 'A macOS menu bar app that keeps your Mac awake and reachable while you control AI agents remotely.';
@@ -99,6 +98,7 @@ const downloadPath = '/downloads/Tether.zip';
       background: var(--red-hot);
       transform: translateY(-1px);
     }
+    .tether-download:active { transform: translateY(1px); }
 
     .tether-download:focus-visible,
     .tether-footer a:focus-visible {
@@ -415,7 +415,476 @@ const downloadPath = '/downloads/Tether.zip';
     }
   </style>
 
+  <style is:global>
+    /* Hallmark · genre: modern-minimal · macrostructure: Product story · theme: Pillexis light
+     * enrichment: supplied product media · nav: shared N1b · footer: Ft2
+     * pre-emit critique: P5 H5 E5 S5 R5 V5
+     */
+    .tether-page { background: var(--bg); color: var(--text); }
+    .tether-page img { display: block; max-width: 100%; }
+    .tether-page h1,
+    .tether-page h2,
+    .tether-page h3 { overflow-wrap: anywhere; min-width: 0; }
+    .tether-shell { width: min(var(--layout-max), calc(100% - 3rem)); margin-inline: auto; }
+
+    .tether-story-hero { padding-block: 8.5rem 4.5rem; }
+    .tether-story-hero__head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.55fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: end;
+      margin-block-end: 3rem;
+    }
+    .tether-product-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-block-end: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+    .tether-product-label img { width: 30px; height: 30px; border-radius: 8px; }
+    .tether-story-hero h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+    .tether-story-hero h1 span { color: var(--red); }
+
+    .tether-page .heading-primary,
+    .tether-page .heading-secondary {
+      display: block;
+    }
+
+    .tether-page .heading-primary {
+      color: var(--text);
+      font-size: 1em;
+      line-height: 0.98;
+    }
+
+    .tether-page .heading-secondary {
+      max-width: 18ch;
+      margin-top: 0.22em;
+      color: var(--text-muted);
+      font-size: 0.58em;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .tether-page .heading-secondary--accent {
+      color: var(--red);
+    }
+
+    .tether-capabilities .heading-secondary {
+      font-size: 0.54em;
+    }
+
+    .tether-final .heading-secondary {
+      max-width: none;
+      margin-inline: auto;
+      font-size: 0.6em;
+    }
+    .tether-story-hero__copy { padding-block-end: 0.4rem; }
+    .tether-story-hero__copy p {
+      max-width: 58ch;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1.08rem;
+      line-height: 1.65;
+    }
+    .tether-story-hero__actions {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-block-start: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .tether-story-hero__download {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .tether-story-hero__download .tether-meta {
+      margin: 0;
+    }
+    .tether-story-hero__download .tether-download {
+      margin-block-start: 0;
+    }
+    .tether-download,
+    .tether-text-link {
+      white-space: nowrap;
+    }
+    .tether-text-link {
+      margin-block-start: 0.9rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .tether-text-link:hover { color: var(--text); }
+    .tether-text-link:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .tether-text-link:active { color: var(--red-hot); }
+    .tether-story-hero__media {
+      overflow: clip;
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+    .tether-story-hero__media img { width: 100%; height: 100%; }
+    .tether-proofline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-block: 1px solid var(--hairline-strong);
+    }
+    .tether-proofline div {
+      min-width: 0;
+      padding: 1.3rem 1.5rem;
+      border-inline-end: 1px solid var(--hairline-strong);
+    }
+    .tether-proofline div:last-child { border-inline-end: 0; }
+    .tether-proofline strong { display: block; font-size: 0.9rem; }
+    .tether-proofline span { display: block; margin-block-start: 0.25rem; color: var(--text-dim); font-size: 0.78rem; }
+
+    .tether-story { padding-block: 7rem; border-block-start: 1px solid var(--hairline); }
+    .tether-story__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: clamp(3rem, 8vw, 7rem);
+      align-items: center;
+    }
+    .tether-story:nth-of-type(even) .tether-story__media { order: 2; }
+    .tether-story__media {
+      justify-self: center;
+      width: min(100%, 520px);
+      overflow: clip;
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+    .tether-story__media img { width: 100%; height: 100%; }
+    .tether-story__index {
+      display: block;
+      margin-block-end: 1.25rem;
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .tether-story h2 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+    .tether-story__lede {
+      max-width: 62ch;
+      margin: 1.5rem 0 0;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .tether-story__points {
+      list-style: none;
+      margin: 2rem 0 0;
+      padding: 0;
+      border-block-start: 1px solid var(--hairline-strong);
+    }
+    .tether-story__points li {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 0.75rem;
+      padding-block: 0.9rem;
+      border-block-end: 1px solid var(--hairline);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .tether-story__points span { color: var(--red); font-size: 0.75rem; font-weight: 700; }
+
+    .tether-capabilities { padding-block: 7rem; border-block-start: 1px solid var(--hairline); background: var(--bg-elev); }
+    .tether-capabilities__head {
+      max-width: 850px;
+      margin-block-end: 3.5rem;
+    }
+    .tether-capabilities__head h2 {
+      margin: 0;
+      font-size: clamp(2.6rem, 5.8vw, 5.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+    .tether-capabilities__head p {
+      max-width: 62ch;
+      margin: 1.4rem 0 0;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .tether-capabilities__layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .tether-capabilities__media {
+      overflow: clip;
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+    .tether-capabilities__media img { width: 100%; height: 100%; }
+    .tether-capabilities__groups { border-block-start: 1px solid var(--hairline-strong); }
+    .capability-group {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 1.5rem;
+      padding-block: 1.5rem;
+      border-block-end: 1px solid var(--hairline-strong);
+    }
+    .capability-group h3 { margin: 0; font-size: 0.9rem; }
+    .capability-group ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem 1.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .capability-group li { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; }
+
+    .tether-final { padding-block: 7rem; text-align: center; border-block-start: 1px solid var(--hairline); }
+    .tether-final h2 {
+      max-width: 780px;
+      margin-inline: auto;
+      font-size: clamp(2.6rem, 5.6vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+    .tether-final p { max-width: 58ch; margin: 1.25rem auto 0; color: var(--text-muted); line-height: 1.65; }
+    .tether-final .tether-download { margin-block-start: 2rem; }
+    .tether-footer { padding-block: 2rem; border-block-start: 1px solid var(--hairline); }
+    .tether-footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .tether-footer-links { display: flex; align-items: center; gap: 1.25rem; }
+
+    @media (max-width: 900px) {
+      .tether-story-hero__head,
+      .tether-story__grid,
+      .tether-capabilities__layout { grid-template-columns: minmax(0, 1fr); }
+      .tether-story:nth-of-type(even) .tether-story__media { order: 0; }
+      .tether-story__media { justify-self: start; width: min(100%, 560px); }
+      .tether-proofline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tether-proofline div:nth-child(2) { border-inline-end: 0; }
+      .tether-proofline div:nth-child(-n+2) { border-block-end: 1px solid var(--hairline-strong); }
+      .tether-capabilities__media { width: min(100%, 520px); }
+    }
+    @media (max-width: 640px) {
+      .tether-shell { width: min(var(--layout-max), calc(100% - 2.5rem)); }
+      .tether-story-hero { padding-block: 6.5rem 3.5rem; }
+      .tether-story-hero__head { margin-block-end: 2rem; }
+      .tether-story-hero h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
+      .tether-story-hero__actions { align-items: stretch; flex-direction: column; }
+      .tether-story-hero__download { width: 100%; }
+      .tether-download { width: 100%; }
+      .tether-text-link { align-self: flex-start; margin-block-start: 0; }
+      .tether-proofline { grid-template-columns: minmax(0, 1fr); }
+      .tether-proofline div,
+      .tether-proofline div:nth-child(2) { border-inline-end: 0; border-block-end: 1px solid var(--hairline-strong); }
+      .tether-proofline div:last-child { border-block-end: 0; }
+      .tether-story,
+      .tether-capabilities,
+      .tether-final { padding-block: 4.5rem; }
+      .capability-group { grid-template-columns: minmax(0, 1fr); gap: 0.85rem; }
+      .capability-group ul { grid-template-columns: minmax(0, 1fr); }
+      .tether-footer-inner,
+      .tether-footer-links { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tether-download { transition: none; }
+      .tether-download:hover,
+      .tether-download:active { transform: none; }
+    }
+  </style>
+
+  <style is:global>
+    /* Tether correction · definite hero + cropped product UI + varied feature rhythm */
+    .tether-story-hero {
+      min-height: 720px;
+      padding-block: 7.5rem 5.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
+      gap: clamp(3rem, 7vw, 6.5rem);
+      align-items: center;
+    }
+    .tether-story-hero__copy { padding: 0; }
+    .tether-story-hero__copy > p:first-of-type {
+      max-width: 58ch;
+      margin-block-start: 1.5rem;
+    }
+    .tether-story-hero h1 {
+      max-width: 700px;
+      font-size: clamp(3.35rem, 5.8vw, 5.7rem);
+    }
+    .tether-story-hero__media {
+      position: relative;
+      height: 560px;
+      margin: 0;
+    }
+    .tether-story-hero__media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+      transform: scale(1.22);
+      transform-origin: right center;
+    }
+    .tether-proofline { margin-block-end: 0; }
+
+    .tether-story { padding-block: 6.5rem; }
+    .tether-story__grid {
+      gap: clamp(2.5rem, 6vw, 6rem);
+    }
+    .tether-story__media {
+      width: 100%;
+      max-width: none;
+      aspect-ratio: 4 / 3;
+      margin: 0;
+    }
+    .tether-story__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 82%;
+      transform: scale(1.28);
+      transform-origin: center 78%;
+    }
+    .tether-story--session .tether-story__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tether-story--session .tether-story__media { order: 2; }
+    .tether-story--trigger {
+      background: var(--bg-elev);
+    }
+    .tether-story--trigger .tether-story__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tether-story--trigger .tether-story__media {
+      aspect-ratio: 5 / 4;
+    }
+    .tether-story--closed .tether-story__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tether-story--closed .tether-story__media {
+      order: 2;
+      aspect-ratio: 4 / 3;
+    }
+    .tether-story--closed .tether-story__media img {
+      object-position: center bottom;
+      transform: scale(1.2);
+      transform-origin: center bottom;
+    }
+    .tether-story h2 {
+      max-width: 680px;
+      font-size: clamp(2.25rem, 3.6vw, 3.8rem);
+    }
+    .tether-story .heading-primary {
+      white-space: nowrap;
+    }
+
+    .tether-capabilities {
+      background: var(--surface);
+    }
+    .tether-capabilities__layout {
+      grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
+    }
+    .tether-capabilities__media {
+      aspect-ratio: 4 / 5;
+    }
+    .tether-capabilities__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 57%;
+      transform: scale(1.18);
+      transform-origin: center 57%;
+    }
+    .capability-group {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      padding-block: 1.75rem;
+    }
+    .capability-group h3 {
+      color: var(--red);
+      font-size: 0.78rem;
+    }
+    .capability-group ul {
+      gap: 0.65rem 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .tether-story-hero {
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr);
+        padding-block: 7rem 4rem;
+      }
+      .tether-story-hero__media {
+        width: min(100%, 620px);
+        height: auto;
+        aspect-ratio: 5 / 4;
+      }
+      .tether-story--session .tether-story__grid,
+      .tether-story--trigger .tether-story__grid,
+      .tether-story--closed .tether-story__grid,
+      .tether-capabilities__layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .tether-story--session .tether-story__media,
+      .tether-story--closed .tether-story__media {
+        order: 0;
+      }
+      .tether-story .heading-primary {
+        white-space: normal;
+      }
+    }
+    @media (max-width: 640px) {
+      .tether-story-hero {
+        padding-block: 6.25rem 3.5rem;
+        gap: 2.5rem;
+      }
+      .tether-story-hero h1 {
+        font-size: clamp(2.75rem, 13vw, 3.8rem);
+      }
+      .tether-story-hero__media {
+        aspect-ratio: 4 / 3;
+      }
+      .tether-story-hero__media img {
+        transform: scale(1.75);
+        transform-origin: right center;
+      }
+      .tether-story {
+        padding-block: 4.25rem;
+      }
+      .tether-story__media,
+      .tether-story--trigger .tether-story__media,
+      .tether-story--closed .tether-story__media {
+        aspect-ratio: 1 / 1;
+      }
+      .tether-capabilities__media {
+        aspect-ratio: 4 / 5;
+      }
+    }
+  </style>
+
   <div class="tether-page">
+    <script is:inline>
+      document.documentElement.dataset.theme = 'light';
+      document.documentElement.style.colorScheme = 'light';
+      document.querySelector('[data-theme-color]')?.setAttribute('content', '#f5f1ee');
+    </script>
     <SiteNav links={[
       { href: '/ai-labs#about', label: 'About' },
       { href: '/#services', label: 'Services' },
@@ -423,136 +892,169 @@ const downloadPath = '/downloads/Tether.zip';
     ]} />
 
     <main>
-      <section class="tether-hero tether-shell">
-        <div>
-          <div class="tether-kicker">
-            <img src="/products/tether-icon.png" alt="" width="28" height="28" />
+      <section class="tether-story-hero tether-shell">
+        <div class="tether-story-hero__copy">
+          <div class="tether-product-label">
+            <img src="/products/tether-icon.png" alt="" width="30" height="30" />
             <span>Tether for macOS</span>
           </div>
-          <h1>Keep your Mac <span>reachable.</span></h1>
-          <p class="tether-lede">
-            Tether keeps your Mac awake while you control AI agents from another device. Start a session before you leave the desk, then keep the remote connection alive for as long as the work needs.
-          </p>
-          <p class="tether-meta">Version 1.0 · macOS 13 or later · Apple silicon and Intel</p>
-          <a class="tether-download" href={downloadPath} download>Download Tether for macOS</a>
+          <h1>
+            <span class="heading-primary">Keep your Mac awake.</span>
+            <span class="heading-secondary heading-secondary--accent">Stay reachable.</span>
+          </h1>
+          <p>A lightweight menu bar utility for remote work, long running tasks, and the moments when macOS sleep would interrupt both.</p>
+          <div class="tether-story-hero__actions">
+            <div class="tether-story-hero__download">
+              <a class="tether-download" href={downloadPath} download>Download for macOS</a>
+              <p class="tether-meta">Version 1.0 · macOS 13 or later · Apple silicon and Intel</p>
+            </div>
+            <a class="tether-text-link" href="#features">See every feature</a>
+          </div>
         </div>
 
-        <div class="tether-icon-hero">
-          <img src="/products/tether-icon.png" alt="Tether app icon" width="512" height="512" />
-        </div>
+        <figure class="tether-story-hero__media">
+          <img src="/products/tether/hero.webp" alt="Tether menu bar controls beside the Tether app icon" width="2752" height="1536" fetchpriority="high" />
+        </figure>
       </section>
 
-      <section class="tether-section">
-        <div class="tether-shell">
-          <div class="section-intro">
-            <span class="section-label">The problem</span>
-            <div>
-              <h2>Your agent can keep working. Your sleeping Mac cannot.</h2>
-              <p>
-                When macOS sleeps, the processor and network connection go with it. That ends the remote session even if the agent still has work to do. Tether gives you a deliberate keep-awake session with a clear end condition.
-              </p>
-            </div>
-          </div>
+      <div class="tether-shell tether-proofline" aria-label="Tether highlights">
+        <div><strong>Menu bar utility</strong><span>Ready without another window</span></div>
+        <div><strong>Timed or indefinite</strong><span>Choose when the session ends</span></div>
+        <div><strong>Battery protection</strong><span>Stop at a chosen threshold</span></div>
+        <div><strong>Closed display</strong><span>Explicit and reversible</span></div>
+      </div>
 
-          <ol class="workflow">
-            <li>
-              <span class="workflow-index">1.0</span>
-              <h3>Choose a session.</h3>
-              <p>Run indefinitely, pick 30 minutes to 4 hours, or keep the Mac awake until a specific time.</p>
-            </li>
-            <li>
-              <span class="workflow-index">2.0</span>
-              <h3>Leave the desk.</h3>
-              <p>Your Mac stays awake and the remote-control connection remains available while the session is active.</p>
-            </li>
-            <li>
-              <span class="workflow-index">3.0</span>
-              <h3>Stop safely.</h3>
-              <p>End the session yourself, let the timer finish, or stop automatically at your chosen battery level.</p>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="tether-section">
-        <div class="tether-shell">
-          <div class="section-intro">
-            <span class="section-label">A session</span>
-            <div>
-              <h2>One menu bar control. No background guesswork.</h2>
-              <p>At a glance, you can see whether Tether is active, how much time remains, and which safeguards are enabled.</p>
-            </div>
-          </div>
-
-          <div class="session-board">
-            <div class="session-panel">
-              <h3>Start a session</h3>
-              <p>Choose the window that matches the remote task. You can also start Tether automatically while a selected app is running.</p>
-              <div class="duration-grid" aria-label="Available session durations">
-                <span>Indefinite</span>
-                <span>30 min</span>
-                <span>1 hour</span>
-                <span>2 hours</span>
-                <span>4 hours</span>
-                <span>Until…</span>
-              </div>
-            </div>
-            <div class="session-panel session-status">
-              <div class="status-line">Tether is active</div>
-              <div class="status-time">01:42:18</div>
-              <div class="status-foot">Mac awake · Display sleep allowed · Low battery cutoff on</div>
-            </div>
+      <section class="tether-story tether-story--session">
+        <div class="tether-shell tether-story__grid">
+          <figure class="tether-story__media">
+            <img src="/products/tether/active-session.webp" alt="Tether showing an active indefinite keep awake session" width="1856" height="2304" />
+          </figure>
+          <div>
+            <span class="tether-story__index">01 · Sessions</span>
+            <h2>
+              <span class="heading-primary">Start a session.</span>
+              <span class="heading-secondary">See it. End it immediately.</span>
+            </h2>
+            <p class="tether-story__lede">Tether uses a native macOS power assertion and keeps the current session state visible in the menu bar.</p>
+            <ul class="tether-story__points">
+              <li><span>01</span>Run indefinitely, for 30 minutes, 1 hour, 2 hours, or 4 hours.</li>
+              <li><span>02</span>Choose an exact end time with Start until.</li>
+              <li><span>03</span>See the remaining time live and end any session immediately.</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section class="tether-section">
-        <div class="tether-shell">
-          <div class="section-intro">
-            <span class="section-label">Controls</span>
-            <div>
-              <h2>Enough control to stay reachable without forgetting the battery.</h2>
-            </div>
+      <section class="tether-story tether-story--trigger">
+        <div class="tether-shell tether-story__grid">
+          <figure class="tether-story__media">
+            <img src="/products/tether/app-triggers.webp" alt="Tether app trigger menu listing running macOS applications" width="1856" height="2304" />
+          </figure>
+          <div>
+            <span class="tether-story__index">02 · App triggers</span>
+            <h2>
+              <span class="heading-primary">Let the work decide.</span>
+              <span class="heading-secondary">The Mac stays awake.</span>
+            </h2>
+            <p class="tether-story__lede">Choose a running app and Tether follows it. The keep awake session begins while that app runs, then stops when it closes.</p>
+            <ul class="tether-story__points">
+              <li><span>01</span>Select from the apps currently running on your Mac.</li>
+              <li><span>02</span>Refresh the available app list on demand.</li>
+              <li><span>03</span>Launch Tether automatically when you sign in.</li>
+            </ul>
           </div>
-
-          <dl class="spec-list">
-            <div class="spec-row">
-              <dt>Timed sessions</dt>
-              <dd>Choose an indefinite session, a fixed duration, or an exact end time.</dd>
-            </div>
-            <div class="spec-row">
-              <dt>Display control</dt>
-              <dd>Keep only the Mac awake, or keep both the Mac and its display awake.</dd>
-            </div>
-            <div class="spec-row">
-              <dt>Low battery cutoff</dt>
-              <dd>End the session automatically when the battery reaches a threshold from 5 to 50 percent.</dd>
-            </div>
-            <div class="spec-row">
-              <dt>App trigger</dt>
-              <dd>Keep the Mac awake while a chosen app is running, then stop when that app closes.</dd>
-            </div>
-            <div class="spec-row">
-              <dt>Launch at login</dt>
-              <dd>Keep Tether ready in the menu bar after you sign in.</dd>
-            </div>
-            <div class="spec-row">
-              <dt>Closed Display Mode</dt>
-              <dd>Keep the Mac active with its display closed when power and ventilation conditions are appropriate.</dd>
-            </div>
-          </dl>
-
-          <p class="safety-note">
-            <strong>Closed Display Mode is always explicit.</strong> Tether asks for confirmation, may require approval for its helper, and restores normal lid-sleep behavior when the session ends.
-          </p>
         </div>
       </section>
 
-      <section class="download-section">
+      <section class="tether-story tether-story--closed">
+        <div class="tether-shell tether-story__grid">
+          <figure class="tether-story__media">
+            <img src="/products/tether/closed-display.webp" alt="Tether Closed Display Mode safety confirmation" width="1856" height="2304" />
+          </figure>
+          <div>
+            <span class="tether-story__index">03 · Closed Display Mode</span>
+            <h2>
+              <span class="heading-primary">Remote access.</span>
+              <span class="heading-secondary">With an explicit safety boundary.</span>
+            </h2>
+            <p class="tether-story__lede">Closed Display Mode is available only during an active session. Tether confirms the change, uses a signed privileged helper, and restores the previous lid sleep setting when the session ends.</p>
+            <ul class="tether-story__points">
+              <li><span>01</span>See a safety confirmation before anything changes.</li>
+              <li><span>02</span>Renew the safety lease while the session remains active.</li>
+              <li><span>03</span>Return macOS to its previous lid sleep behavior automatically.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="tether-capabilities" id="features">
         <div class="tether-shell">
-          <h2>Keep the agent connected when you step away.</h2>
-          <p>The download is a signed and Apple-notarized universal macOS app for Apple silicon and Intel Macs.</p>
-          <a class="tether-download" href={downloadPath} download>Download Tether for macOS</a>
+          <div class="tether-capabilities__head">
+            <span class="tether-story__index">Complete feature set</span>
+            <h2>
+              <span class="heading-primary">Everything Tether</span>
+              <span class="heading-secondary heading-secondary--accent">controls.</span>
+            </h2>
+            <p>One menu bar utility, organized around sessions, safeguards, automation, and closed display behavior.</p>
+          </div>
+          <div class="tether-capabilities__layout">
+            <figure class="tether-capabilities__media">
+              <img src="/products/tether/feature-overview.webp" alt="Overview of the Tether menu bar utility and its core controls" width="1856" height="2304" />
+            </figure>
+            <div class="tether-capabilities__groups">
+              <section class="capability-group">
+                <h3>Sessions</h3>
+                <ul>
+                  <li>Lightweight macOS menu bar utility</li>
+                  <li>Native macOS power assertion</li>
+                  <li>Five preset session durations</li>
+                  <li>Custom end time with Start until</li>
+                  <li>Live remaining time</li>
+                  <li>Immediate End session control</li>
+                </ul>
+              </section>
+              <section class="capability-group">
+                <h3>Safeguards</h3>
+                <ul>
+                  <li>Optional display keep awake</li>
+                  <li>Automatic low battery stop</li>
+                  <li>Battery limits from 5 to 50 percent</li>
+                  <li>Ready, active, finished, battery, and error states</li>
+                </ul>
+              </section>
+              <section class="capability-group">
+                <h3>Automation</h3>
+                <ul>
+                  <li>Launch automatically at sign in</li>
+                  <li>Start while a selected app runs</li>
+                  <li>Stop when the selected app closes</li>
+                  <li>Refresh the running app list on demand</li>
+                </ul>
+              </section>
+              <section class="capability-group">
+                <h3>Closed display</h3>
+                <ul>
+                  <li>Available during an active session</li>
+                  <li>Safety confirmation before enabling</li>
+                  <li>Signed privileged helper</li>
+                  <li>Previous lid sleep setting restored</li>
+                  <li>Safety lease renewed while active</li>
+                  <li>Unavailable until a session starts</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tether-final">
+        <div class="tether-shell">
+          <h2>
+            <span class="heading-primary">Keep the Mac available.</span>
+            <span class="heading-secondary">When the work cannot pause.</span>
+          </h2>
+          <p>Tether is a signed and Apple notarized universal macOS app for Apple silicon and Intel Macs.</p>
+          <a class="tether-download" href={downloadPath} download>Download for macOS</a>
           <p class="tether-meta">Free · Version 1.0 · Requires macOS 13 or later</p>
         </div>
       </section>
@@ -567,10 +1069,6 @@ const downloadPath = '/downloads/Tether.zip';
         <div class="tether-footer-links">
           <a href="/ai-labs">AI labs</a>
           <a href="mailto:contact@pillexislabs.com">Contact</a>
-          <div class="footer-theme">
-            <span>Appearance</span>
-            <ThemeToggle />
-          </div>
         </div>
       </div>
     </footer>
