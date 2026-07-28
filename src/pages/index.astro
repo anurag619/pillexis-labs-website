@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
 import SiteNav from '../components/SiteNav.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 
 const title = "Work with us · Pillexis Labs";
 const description = "Three focused engagements. One operator. We sort the AI mess, the ops mess, and legacy code for Indian D2C teams who've outgrown their stack.";
@@ -41,7 +40,7 @@ const jsonLd = {
       line-height: 1.6;
       letter-spacing: -0.011em;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     ::selection { background: var(--red-dim); color: #fff; }
 
@@ -57,7 +56,7 @@ const jsonLd = {
       border-bottom: 1px solid var(--hairline);
     }
     .nav-inner {
-      max-width: 1200px; margin: 0 auto;
+      max-width: var(--layout-max); margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
     }
     .logo {
@@ -122,7 +121,7 @@ const jsonLd = {
 
     /* ── SECTION ── */
     section { padding: 5rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
+    .container { max-width: var(--layout-max); margin: 0 auto; }
     .eyebrow {
       font-family: var(--mono);
       font-size: 0.72rem;
@@ -178,7 +177,7 @@ const jsonLd = {
     }
     .hero-inner {
       position: relative;
-      max-width: 1200px;
+      max-width: var(--layout-max);
       margin: 0 auto;
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
@@ -292,170 +291,174 @@ const jsonLd = {
       text-transform: uppercase;
     }
 
-    /* ── RECEIPTS / CASE STUDY ── */
+    /* Hallmark · component: ownership ledger · genre: modern-minimal · theme: Pillexis light
+       states: default · hover · focus · active · disabled · loading · error · success
+       contrast: pass · pre-emit critique: P5 H5 E5 S5 R5 V5 */
     .receipts { background: var(--bg); }
-    .receipts-card {
+    .ownership-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.7fr);
+      align-items: end;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .ownership-title {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 0.98;
+      overflow-wrap: anywhere;
+      min-width: 0;
+    }
+    .ownership-title span { color: var(--red); }
+    .ownership-intro {
+      max-width: 52ch;
+      margin: 0 0 0.35rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.65;
+    }
+    .ownership-ledger {
+      overflow: clip;
       background: var(--surface);
       border: 1px solid var(--hairline);
-      border-radius: var(--r-xl);
-      padding: 3rem;
-      position: relative;
-      overflow: hidden;
+      border-radius: var(--r-lg);
       box-shadow: var(--shadow-card);
     }
-    /* Subtle brand-mark divider between case studies */
-    .case-divider {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      max-width: 220px;
-      margin: 3rem auto;
-    }
-    .case-divider-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--hairline-strong), transparent);
-    }
-    .case-divider-mark {
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      background: var(--red);
-      flex-shrink: 0;
-    }
-    .case-meta .case-link {
-      color: var(--peach);
-      text-decoration: underline;
-      text-decoration-color: rgba(255, 164, 138, 0.4);
-      text-underline-offset: 2px;
-      transition: color 0.2s, text-decoration-color 0.2s;
-    }
-    .case-meta .case-link:hover {
-      color: var(--red);
-      text-decoration-color: var(--red);
-    }
-    .receipts-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at top right, rgba(255, 99, 99, 0.10), transparent 55%);
-    }
-    .receipts-card-inner { position: relative; z-index: 1; }
-    .case-meta {
-      display: flex; gap: 0.6rem; align-items: center;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-    .case-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
-    .case-meta-brand {
+    .ownership-ledger-head,
+    .ownership-row {
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 0.75rem;
+      grid-template-columns: 72px minmax(180px, 0.72fr) minmax(0, 1.3fr) 88px;
       align-items: center;
+      column-gap: 1.5rem;
     }
-    .case-meta-brand .case-label {
-      padding-left: 0.75rem;
-      border-left: 1px solid var(--hairline-strong);
+    .ownership-ledger-head {
+      min-height: 48px;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--hairline);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
     }
-    .case-title {
-      font-weight: 800;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      letter-spacing: -0.035em;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-    .case-title em {
-      font-style: normal;
-      color: var(--peach);
-      text-decoration: underline;
-      text-decoration-color: var(--red);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 0.1em;
-    }
-    .case-body {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      max-width: 680px;
-      margin-bottom: 1.5rem;
-    }
-    .case-read-more { display: none; }
-
-    /* Bulleted breakdown of work shipped per case. Hairline-separated rows
-       with a red arrow bullet. The "grouped" variant adds a mono-uppercase
-       label above each bullet's body for multi-surface case studies. */
-    .case-bullets {
-      list-style: none;
-      max-width: 720px;
-      margin: 0 0 2.5rem;
-      padding: 0;
-    }
-    .case-bullets li {
-      position: relative;
-      padding: 0.75rem 0 0.75rem 1.6rem;
-      color: var(--text);
-      font-size: 1rem;
-      line-height: 1.55;
+    .ownership-ledger-head span:last-child { text-align: right; }
+    .ownership-row {
+      min-height: 126px;
+      padding: 1.5rem 2rem;
       border-bottom: 1px solid var(--hairline);
     }
-    .case-bullets li:last-child { border-bottom: 0; }
-    .case-bullets li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      top: 0.75rem;
+    .ownership-row:last-child { border-bottom: 0; }
+    .ownership-index {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .ownership-row h3 {
+      margin: 0;
+      font-size: clamp(1.08rem, 2vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+      min-width: 0;
+    }
+    .ownership-row p {
+      max-width: 64ch;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .ownership-owner {
+      justify-self: end;
       color: var(--red);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .reference-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+    }
+    .reference-note p {
+      max-width: 68ch;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .reference-link {
+      flex-shrink: 0;
+      color: var(--red);
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: color 0.2s, transform 0.15s;
+    }
+    .reference-link:hover { color: var(--red-hot); }
+    .reference-link:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .reference-link:active { transform: translateY(1px); }
+    .reference-link[aria-disabled='true'] { cursor: not-allowed; opacity: 0.55; }
+    .ownership-handover {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+      gap: 3rem;
+      align-items: start;
+      margin-top: 1rem;
+      padding: 2rem;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-md);
+    }
+    .ownership-handover-copy {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .ownership-handover-copy strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-size: 1.02rem;
       font-weight: 700;
     }
-    .case-bullets.case-bullets-grouped li {
-      padding: 1rem 0 1rem 1.6rem;
-    }
-    .case-bullets.case-bullets-grouped li::before {
-      top: 1rem;
-      line-height: 1;
-      transform: translateY(-0.18rem);
-    }
-    .case-bullets.case-bullets-grouped li strong {
-      display: block;
-      font-family: var(--mono);
-      font-weight: 500;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--peach);
-      margin-bottom: 0.45rem;
-    }
-
-    .case-stats {
+    .ownership-steps {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--hairline);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
-    .case-stat .num {
-      font-weight: 800;
-      font-size: 2.6rem;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
+    .ownership-step {
+      min-width: 0;
+      padding: 0 1rem;
+      border-left: 1px solid var(--hairline);
+    }
+    .ownership-step:first-child { padding-left: 0; border-left: 0; }
+    .ownership-step:last-child { padding-right: 0; }
+    .ownership-step span {
+      display: block;
       margin-bottom: 0.5rem;
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 700;
     }
-    .case-stat {
-      padding-right: 2rem;
-      border-right: 1px solid var(--hairline);
-    }
-    .case-stat:last-child { padding-right: 0; border-right: 0; }
-    .case-stat .label {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+    .ownership-step strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.35;
     }
     /* ── OUR OWN PRODUCTS ── */
     .own-products { background: var(--bg); }
@@ -624,115 +627,192 @@ const jsonLd = {
       border-bottom: 1px solid var(--hairline);
     }
 
-    /* Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V5 */
-    /* ── SERVICE REGISTER ── */
+    /* Hallmark · component: service decision canvas · genre: modern-minimal · theme: Pillexis light
+       states: default · hover · focus · active · disabled · selected · loading · error · success
+       contrast: pass · pre-emit critique: P5 H5 E5 S5 R5 V5 */
     .sprints {
       background: var(--bg-elev);
     }
-    .services-heading {
+    .service-decision {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
-      gap: 3rem;
-      align-items: end;
-      margin-bottom: 3.5rem;
+      grid-template-columns: minmax(400px, 0.86fr) minmax(0, 1.14fr);
+      gap: 1px;
+      overflow: clip;
+      background: var(--hairline-strong);
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-card);
     }
-    .services-heading .section-title,
-    .services-heading .section-sub { margin-bottom: 0; }
+    .service-question,
+    .service-answer {
+      min-width: 0;
+      background: var(--surface);
+    }
+    .service-question {
+      padding: 2.5rem;
+    }
     .services-kicker {
       display: block;
       margin-bottom: 1rem;
       font-family: var(--mono);
       font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.17em;
-      text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: var(--red);
     }
-    .services-register {
-      overflow: clip;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: var(--r-lg);
+    .service-question .section-title {
+      margin-bottom: 1rem;
+      font-size: clamp(2.25rem, 4.2vw, 3.6rem);
+      overflow-wrap: anywhere;
+      min-width: 0;
     }
-    .service-row {
+    .service-question .section-sub {
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    .service-choices {
       display: grid;
-      grid-template-columns: 72px minmax(0, 0.9fr) minmax(0, 1.1fr);
-      gap: 2.5rem;
-      padding: 2.5rem;
-      border-bottom: 1px solid var(--hairline);
-      transition: background 0.2s;
+      gap: 0.5rem;
     }
-    .service-row:last-child { border-bottom: 0; }
-    .service-row:hover { background: var(--surface-2); }
-    .service-index {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      color: var(--red);
-      font-weight: 600;
-      padding-top: 0.3rem;
-    }
-    .service-label {
-      display: block;
-      margin-bottom: 0.8rem;
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-    .service-name {
-      font-weight: 800;
-      font-size: clamp(1.45rem, 2.3vw, 2rem);
-      letter-spacing: -0.035em;
-      line-height: 1.12;
-      margin-bottom: 0.9rem;
-    }
-    .service-name em {
-      font-style: normal;
-      color: var(--peach);
-    }
-    .service-pitch {
+    .service-choice {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: start;
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid transparent;
+      border-radius: var(--r-sm);
+      background: transparent;
       color: var(--text-muted);
-      font-size: 0.96rem;
-      line-height: 1.6;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.15s;
     }
-    .service-includes {
+    .service-choice:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .service-choice:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+    }
+    .service-choice:active { transform: translateY(1px); }
+    .service-choice:disabled,
+    .service-choice[aria-disabled='true'] {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+    .service-choice[aria-selected='true'],
+    .service-choice[data-state='success'] {
+      background: var(--red-faint);
+      border-color: var(--red-dim);
+      color: var(--text);
+    }
+    .service-choice[data-state='loading'] { cursor: wait; opacity: 0.7; }
+    .service-choice[data-state='error'] { border-color: var(--red); }
+    .service-choice-index {
+      color: var(--red);
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .service-choice-label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .service-question-foot {
+      margin: 1.5rem 0 0;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+    .service-answer {
+      display: flex;
+      min-height: 610px;
+      padding: 3rem;
+    }
+    .service-panel {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .service-panel[hidden] { display: none; }
+    .service-panel-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .service-panel-number { color: var(--red); }
+    .service-panel h3 {
+      max-width: 680px;
+      margin: 0 0 1.25rem;
+      font-weight: 800;
+      font-size: clamp(2.1rem, 4.4vw, 3.8rem);
+      letter-spacing: -0.05em;
+      line-height: 1.02;
+      overflow-wrap: anywhere;
+      min-width: 0;
+    }
+    .service-panel-pitch {
+      max-width: 66ch;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.65;
+    }
+    .service-deliverables {
       list-style: none;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem 1.5rem;
-      align-content: start;
+      gap: 0;
+      margin: 2.5rem 0;
+      padding: 0;
+      border-top: 1px solid var(--hairline);
     }
-    .service-includes li {
+    .service-deliverables li {
+      position: relative;
+      min-height: 58px;
+      padding: 1rem 1rem 1rem 1.5rem;
+      border-bottom: 1px solid var(--hairline);
       font-size: 0.9rem;
       color: var(--text-muted);
-      padding-left: 1.25rem;
-      position: relative;
       line-height: 1.45;
     }
-    .service-includes li::before {
-      content: '→';
+    .service-deliverables li:nth-child(odd) { padding-left: 1.5rem; }
+    .service-deliverables li:nth-child(even) {
+      border-left: 1px solid var(--hairline);
+      padding-left: 2rem;
+    }
+    .service-deliverables li::before {
+      content: '·';
       position: absolute;
-      left: 0;
+      left: 0.5rem;
       color: var(--red);
       font-weight: 700;
     }
-    .services-cta {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+    .service-panel-action {
+      display: flex;
       align-items: center;
-      gap: 2rem;
-      margin-top: 1.25rem;
-      padding: 1.5rem 1.6rem;
-      background: var(--surface);
-      border: 1px solid var(--hairline);
-      border-radius: var(--r-md);
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: auto;
+      padding-top: 1.5rem;
     }
-    .services-cta strong { display: block; font-size: 1rem; margin-bottom: 0.15rem; }
-    .services-cta p { color: var(--text-muted); font-size: 0.9rem; }
-    .services-cta .btn-primary { white-space: nowrap; }
+    .service-panel-action p {
+      max-width: 40ch;
+      margin: 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .service-panel-action .btn-primary { flex-shrink: 0; white-space: nowrap; }
 
     /* ── HOW IT WORKS ── */
     .how { background: var(--bg); }
@@ -833,7 +913,7 @@ const jsonLd = {
     }
     .cta-final-inner {
       position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto;
+      max-width: var(--layout-max); margin: 0 auto;
       text-align: left;
     }
     .cta-final h2 {
@@ -866,7 +946,7 @@ const jsonLd = {
       border-top: 1px solid var(--hairline);
     }
     .footer-inner {
-      max-width: 1100px;
+      max-width: var(--layout-max);
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -916,7 +996,7 @@ const jsonLd = {
     .cta-inner {
       position: relative;
       z-index: 1;
-      max-width: 1200px;
+      max-width: var(--layout-max);
       margin: 0 auto;
     }
     .cta-inner > * { max-width: 720px; }
@@ -966,6 +1046,11 @@ const jsonLd = {
       transform: translateY(-1px);
     }
 
+    @media (max-width: 960px) {
+      .service-decision { grid-template-columns: minmax(0, 1fr); }
+      .service-answer { min-height: 0; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       section { padding: 3rem 1.25rem; }
@@ -978,15 +1063,37 @@ const jsonLd = {
       .hero-sub { font-size: 1.05rem; margin-bottom: 1.75rem; }
       .section-title { font-size: clamp(1.85rem, 8.5vw, 2.15rem); }
       .section-sub { font-size: 1rem; margin-bottom: 1.5rem; }
-      .services-heading { grid-template-columns: 1fr; gap: 0.8rem; margin-bottom: 1.5rem; }
-      .service-row { grid-template-columns: 36px minmax(0, 1fr); gap: 1rem; padding: 1.4rem 0.9rem; }
-      .service-includes { grid-column: 2; grid-template-columns: 1fr; }
-      .services-cta { grid-template-columns: 1fr; gap: 1.1rem; }
-      .services-cta .btn-primary { width: fit-content; }
+      .service-question { padding: 1.5rem; }
+      .service-answer { min-height: 0; padding: 1.5rem; }
+      .service-panel-meta { margin-bottom: 1.5rem; }
+      .service-panel h3 { font-size: clamp(2rem, 10vw, 3rem); }
+      .service-deliverables { grid-template-columns: minmax(0, 1fr); margin: 2rem 0; }
+      .service-deliverables li,
+      .service-deliverables li:nth-child(odd),
+      .service-deliverables li:nth-child(even) {
+        min-height: 0;
+        padding: 0.85rem 0.75rem 0.85rem 1.5rem;
+        border-left: 0;
+      }
+      .service-panel-action { align-items: flex-start; flex-direction: column; }
+      .service-panel-action .btn-primary { width: fit-content; }
       .how-grid { grid-template-columns: 1fr; }
-      .case-stats { grid-template-columns: 1fr; gap: 1.5rem; }
-      .case-stat { padding: 0 0 1.5rem; border-right: 0; border-bottom: 1px solid var(--hairline); }
-      .case-stat:last-child { padding-bottom: 0; border-bottom: 0; }
+      .ownership-head { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+      .ownership-title { font-size: clamp(2.5rem, 13vw, 4.4rem); }
+      .ownership-ledger-head { display: none; }
+      .ownership-row {
+        grid-template-columns: 40px minmax(0, 1fr);
+        min-height: 0;
+        gap: 0.75rem 1rem;
+        padding: 1.5rem;
+      }
+      .ownership-index { grid-row: 1 / span 3; padding-top: 0.25rem; }
+      .ownership-row p { margin-top: 0.5rem; }
+      .ownership-owner { justify-self: start; margin-top: 0.75rem; }
+      .reference-note { align-items: flex-start; flex-direction: column; gap: 0.75rem; }
+      .ownership-handover { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; }
+      .ownership-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 0; }
+      .ownership-step:nth-child(3) { padding-left: 0; border-left: 0; }
       .own-products-grid { grid-template-columns: 1fr; }
       .own-product-card {
         grid-template-columns: 1fr;
@@ -1015,40 +1122,6 @@ const jsonLd = {
       }
       .footer-inner { flex-direction: column; }
       .footer-links { gap: 1.5rem; }
-      .receipts-card { padding: 1.5rem 1.1rem; }
-      .case-read-more {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        margin: 0.15rem 0 0;
-        padding: 0.7rem 0.9rem;
-        border: 1px solid var(--hairline-strong);
-        border-radius: 7px;
-        background: var(--surface-2);
-        color: var(--text);
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        cursor: pointer;
-      }
-      .case-read-more::after { content: '+'; color: var(--red); }
-      .receipts-card[data-expanded='true'] .case-read-more::after { content: '−'; }
-      .case-details { display: none; padding-top: 1.25rem; }
-      .receipts-card[data-expanded='true'] .case-details { display: block; }
-      .case-meta-brand {
-        grid-template-columns: 1fr;
-        gap: 0.65rem;
-        align-items: start;
-      }
-      .case-meta-brand .case-label {
-        padding: 0.65rem 0 0;
-        border-left: 0;
-        border-top: 1px solid var(--hairline);
-        font-size: 0.64rem;
-        letter-spacing: 0.11em;
-        line-height: 1.55;
-      }
       .cta-section,
       .cta-final { padding: 3.75rem 1.25rem; }
       .cta-section h2,
@@ -1056,6 +1129,8 @@ const jsonLd = {
       .faq-list { margin-top: 1.5rem; }
     }
     @media (prefers-reduced-motion: reduce) {
+      .service-choice { transition: none; }
+      .service-choice:active { transform: none; }
       .own-product-card,
       .own-product-preview,
       .own-product-preview img { transition: none; }
@@ -1132,104 +1207,74 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- RECEIPTS / CASE STUDY -->
+  <!-- OWNERSHIP LEDGER -->
   <section class="receipts" data-analytics-section="proof">
     <div class="container">
-      <p class="eyebrow">Results, not testimonials.</p>
-      <h2 class="section-title">What we ship<br/><em>actually moves.</em></h2>
-      <p class="section-sub">
-        Two consumer platforms. Full-stack work: mobile apps, backends, admin panels, internal CRMs. Built end-to-end by a small team, shipped to real users.
-      </p>
+      <header class="ownership-head">
+        <h2 class="ownership-title">The system ships.<br/><span>The dependency ends.</span></h2>
+        <p class="ownership-intro">
+          You leave with working software, the source code, and a clear way to run it. No mystery layer. No permanent retainer.
+        </p>
+      </header>
 
-      <div class="receipts-card">
-        <div class="receipts-card-inner">
-          <div class="case-meta">
-            <span class="dot"></span>
-            India's largest mental wellness platform · 500K+ users
-          </div>
-          <h3 class="case-title">Daily team ops dropped from <em>31 hours to 9.</em><br/>With fewer team members. While revenue grew.</h3>
-          <p class="case-body">
-            Six months of full-stack work. We replaced a tangle of SaaS with internal tools the team owns.
-          </p>
-          <button class="case-read-more" type="button" aria-expanded="false">Read more</button>
-          <div class="case-details">
-          <ul class="case-bullets">
-            <li>Rebuilt the CRM from scratch</li>
-            <li>Automated prescriptions, invoices, and session notifications</li>
-            <li>AI-drafted clinical notes</li>
-            <li>Mobile dashboards for the practitioner team</li>
-            <li>Retired Typeform, a third-party OTP service, and a half-dozen Zapier flows</li>
-            <li>Shipped two consumer mobile apps in parallel: Rocket Journal and Rocket Fuel</li>
-            <li>Plus a vernacular Tier 2-3 product for Bharat</li>
-          </ul>
-
-          <div class="case-stats">
-            <div class="case-stat">
-              <div class="num">22 hrs</div>
-              <div class="label">Daily team ops removed</div>
-            </div>
-            <div class="case-stat">
-              <div class="num">6</div>
-              <div class="label">SaaS subscriptions retired</div>
-            </div>
-            <div class="case-stat">
-              <div class="num">2</div>
-              <div class="label">Consumer apps shipped in parallel</div>
-            </div>
-          </div>
-          </div>
+      <div class="ownership-ledger" aria-label="What the client owns after delivery">
+        <div class="ownership-ledger-head" aria-hidden="true">
+          <span>Item</span>
+          <span>Delivery</span>
+          <span>What it means</span>
+          <span>Owner</span>
         </div>
+        <article class="ownership-row">
+          <span class="ownership-index">01</span>
+          <h3>Working system</h3>
+          <p>The automation, internal tool, or AI workflow is deployed and running in your environment.</p>
+          <span class="ownership-owner">You</span>
+        </article>
+        <article class="ownership-row">
+          <span class="ownership-index">02</span>
+          <h3>Code in your GitHub</h3>
+          <p>The repository belongs to your team from day one. Progress is visible, reviewable, and never held hostage.</p>
+          <span class="ownership-owner">You</span>
+        </article>
+        <article class="ownership-row">
+          <span class="ownership-index">03</span>
+          <h3>Operations runbook</h3>
+          <p>Daily use, integrations, failure cases, and maintenance are documented in plain English.</p>
+          <span class="ownership-owner">You</span>
+        </article>
+        <article class="ownership-row">
+          <span class="ownership-index">04</span>
+          <h3>Clean handover</h3>
+          <p>Access, environments, documentation, and training move to your team without creating another dependency.</p>
+          <span class="ownership-owner">You</span>
+        </article>
       </div>
 
-      <div class="case-divider" aria-hidden="true">
-        <span class="case-divider-line"></span>
-        <span class="case-divider-mark"></span>
-        <span class="case-divider-line"></span>
+      <div class="reference-note">
+        <p>Some client work stays private. On the call, we can share relevant references and outcomes where permitted.</p>
+        <a
+          class="reference-link"
+          href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+          target="_blank"
+          rel="noopener"
+          data-cal-link="pillexislabs/pillexis-labs-intro-call"
+          data-cal-namespace="pillexis-labs-intro-call"
+          data-cal-config='{"layout":"month_view"}'
+          data-book-call="proof_references"
+        >Ask for relevant references →</a>
       </div>
 
-      <div class="receipts-card">
-        <div class="receipts-card-inner">
-          <div class="case-meta case-meta-brand">
-            <a href="https://www.ojiapp.in/" target="_blank" rel="noopener" class="case-link">Oji</a>
-            <span class="case-label">Consumer AI agent platform for Bharat</span>
-          </div>
-          <h3 class="case-title">AI for Bharat,<br/>on their phone, <em>in their language.</em></h3>
-          <p class="case-body">
-            Built so a non-English speaker in a Tier 2 city could open an AI assistant and actually use it. Three pieces of work, one outcome.
-          </p>
-          <button class="case-read-more" type="button" aria-expanded="false">Read more</button>
-          <div class="case-details">
-          <ul class="case-bullets case-bullets-grouped">
-            <li>
-              <strong>Built for Bharat from day one</strong>
-              Eight languages live at launch (English plus seven Indic). Not a translated American product. The Hindi-first user gets the same experience as the English-first user, in the language they actually think in.
-            </li>
-            <li>
-              <strong>Multi-persona, one tap away</strong>
-              AI agents for the things people actually do every day: government services, earning, English learning, astrology, health. The user picks the persona for the moment they're in, instead of being stuck in one general chat.
-            </li>
-            <li>
-              <strong>A team that ships new agents without an engineer</strong>
-              The admin panel hands content control back to Oji's team. New categories, fresh home sections, new agents, all manageable in-house. Engineering stops being the bottleneck for new content.
-            </li>
-          </ul>
-
-          <div class="case-stats">
-            <div class="case-stat">
-              <div class="num">8</div>
-              <div class="label">Languages live at launch (English + 7 Indic)</div>
-            </div>
-            <div class="case-stat">
-              <div class="num">5+</div>
-              <div class="label">AI personas live (gov, earning, learning, more)</div>
-            </div>
-            <div class="case-stat">
-              <div class="num">0</div>
-              <div class="label">Engineering hours for routine content updates</div>
-            </div>
-          </div>
-          </div>
-        </div>
+      <div class="ownership-handover">
+        <p class="ownership-handover-copy">
+          <strong>One path through the work.</strong>
+          Every engagement moves from diagnosis to ownership.
+        </p>
+        <ol class="ownership-steps">
+          <li class="ownership-step"><span>01</span><strong>Map the mess</strong></li>
+          <li class="ownership-step"><span>02</span><strong>Cut what is unnecessary</strong></li>
+          <li class="ownership-step"><span>03</span><strong>Build the system</strong></li>
+          <li class="ownership-step"><span>04</span><strong>Hand over ownership</strong></li>
+        </ol>
       </div>
     </div>
   </section>
@@ -1237,85 +1282,124 @@ const jsonLd = {
   <!-- SERVICES -->
   <section class="sprints" id="services" data-analytics-section="services">
     <div class="container">
-      <div class="services-heading">
-        <div>
+      <div class="service-decision">
+        <div class="service-question">
           <span class="services-kicker">Three ways we can help</span>
-          <h2 class="section-title">Pick the mess.<br/><em>We sort it.</em></h2>
+          <h2 class="section-title">Which situation<br/>sounds like yours?</h2>
+          <p class="section-sub">
+            Start with the problem you recognize. The engagement on the right shows where we would begin.
+          </p>
+
+          <div class="service-choices" role="tablist" aria-label="Choose the problem that sounds familiar">
+            <button class="service-choice" type="button" role="tab" id="service-tab-ai" aria-controls="service-panel-ai" aria-selected="true">
+              <span class="service-choice-index">01</span>
+              <span class="service-choice-label">AI stack is chaos</span>
+            </button>
+            <button class="service-choice" type="button" role="tab" id="service-tab-ops" aria-controls="service-panel-ops" aria-selected="false" tabindex="-1">
+              <span class="service-choice-index">02</span>
+              <span class="service-choice-label">Ops runs manually</span>
+            </button>
+            <button class="service-choice" type="button" role="tab" id="service-tab-legacy" aria-controls="service-panel-legacy" aria-selected="false" tabindex="-1">
+              <span class="service-choice-index">03</span>
+              <span class="service-choice-label">Releases feel risky</span>
+            </button>
+          </div>
+
+          <p class="service-question-foot">Not sure? Show us the system. We will tell you where to start and what can wait.</p>
         </div>
-        <p class="section-sub">
-          Every engagement has a defined scope and delivery plan. You own the code from day one. No retainer, no lock in.
-        </p>
-      </div>
 
-      <div class="services-register">
-        <article class="service-row">
-          <span class="service-index">01</span>
-          <div class="service-summary">
-            <span class="service-label">AI Stack Audit, 14 days</span>
-            <h3 class="service-name">We sort the <em>AI mess.</em></h3>
-            <p class="service-pitch">
-            Your prompts live in Notion, Google Doc, Slack, and someone's laptop. ChatGPT Plus, Claude Pro, and Jasper subscriptions stacked on top of each other. Nobody knows which prompt is canonical.
+        <div class="service-answer">
+          <article class="service-panel" role="tabpanel" id="service-panel-ai" aria-labelledby="service-tab-ai">
+            <div class="service-panel-meta">
+              <span class="service-panel-number">01</span>
+              <span>AI Stack Audit · 14 days</span>
+            </div>
+            <h3>We sort the AI mess.</h3>
+            <p class="service-panel-pitch">
+              Your prompts live in Notion, Google Doc, Slack, and someone's laptop. ChatGPT Plus, Claude Pro, and Jasper subscriptions stack on top of each other. Nobody knows which prompt is canonical.
             </p>
-          </div>
-          <ul class="service-includes">
-            <li>Stack audit and subscription cut-list</li>
-            <li>Versioned prompt library, one source of truth</li>
-            <li>Hallucination eval suite</li>
-            <li>Internal tools to replace bloated AI SaaS</li>
-          </ul>
-        </article>
+            <ul class="service-deliverables">
+              <li>Stack audit and subscription cut-list</li>
+              <li>Versioned prompt library, one source of truth</li>
+              <li>Hallucination eval suite</li>
+              <li>Internal tools to replace bloated AI SaaS</li>
+            </ul>
+            <div class="service-panel-action">
+              <p>Defined scope. Code in your GitHub from day one. No retainer.</p>
+              <a
+                href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+                target="_blank"
+                rel="noopener"
+                class="btn-primary"
+                data-cal-link="pillexislabs/pillexis-labs-intro-call"
+                data-cal-namespace="pillexis-labs-intro-call"
+                data-cal-config='{"layout":"month_view"}'
+                data-book-call="services_ai"
+              >Discuss the AI audit →</a>
+            </div>
+          </article>
 
-        <article class="service-row">
-          <span class="service-index">02</span>
-          <div class="service-summary">
-            <span class="service-label">Ops Automation, 30 days</span>
-            <h3 class="service-name">We sort the <em>ops mess.</em></h3>
-            <p class="service-pitch">
-            Tuesday, 11pm. Manual CRM export. Typeform Pro for one form. AiSensy, Interakt, and Wati for the same WhatsApp messages. Zapier renewals climbing every year.
+          <article class="service-panel" role="tabpanel" id="service-panel-ops" aria-labelledby="service-tab-ops" hidden>
+            <div class="service-panel-meta">
+              <span class="service-panel-number">02</span>
+              <span>Ops Automation · 30 days</span>
+            </div>
+            <h3>We sort the ops mess.</h3>
+            <p class="service-panel-pitch">
+              Tuesday, 11pm. Manual CRM export. Typeform Pro for one form. AiSensy, Interakt, and Wati for the same WhatsApp messages. Zapier renewals climb every year.
             </p>
-          </div>
-          <ul class="service-includes">
-            <li>Replace bloated SaaS with internal tools your team owns</li>
-            <li>Rebuild Zapier chains in n8n, Make, or plain Node</li>
-            <li>WhatsApp automation and WhatsApp CRM workflows</li>
-            <li>Custom CRM, admin panels, and ops dashboards</li>
-            <li>Ownership handover with docs and runbooks</li>
-          </ul>
-        </article>
+            <ul class="service-deliverables">
+              <li>Internal tools your team owns</li>
+              <li>Zapier chains rebuilt in n8n, Make, or Node</li>
+              <li>WhatsApp automation and CRM workflows</li>
+              <li>Custom CRM, admin panels, and ops dashboards</li>
+              <li>Ownership handover with docs and runbooks</li>
+            </ul>
+            <div class="service-panel-action">
+              <p>Defined scope. Code in your GitHub from day one. No retainer.</p>
+              <a
+                href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+                target="_blank"
+                rel="noopener"
+                class="btn-primary"
+                data-cal-link="pillexislabs/pillexis-labs-intro-call"
+                data-cal-namespace="pillexis-labs-intro-call"
+                data-cal-config='{"layout":"month_view"}'
+                data-book-call="services_ops"
+              >Discuss ops automation →</a>
+            </div>
+          </article>
 
-        <article class="service-row">
-          <span class="service-index">03</span>
-          <div class="service-summary">
-            <span class="service-label">Legacy Code Migration, scoped rollout</span>
-            <h3 class="service-name">Legacy code migration.</h3>
-            <p class="service-pitch">
-              Unsupported frameworks, fragile integrations, and undocumented business rules make every release risky. We replace the highest risk parts in stages while the current system keeps running.
+          <article class="service-panel" role="tabpanel" id="service-panel-legacy" aria-labelledby="service-tab-legacy" hidden>
+            <div class="service-panel-meta">
+              <span class="service-panel-number">03</span>
+              <span>Legacy Code Migration · Scoped rollout</span>
+            </div>
+            <h3>Replace the risk in stages.</h3>
+            <p class="service-panel-pitch">
+              Unsupported frameworks, fragile integrations, and undocumented business rules make every release risky. We replace the highest risk parts while the current system keeps running.
             </p>
-          </div>
-          <ul class="service-includes">
-            <li>Dependency and architecture risk map</li>
-            <li>Characterization tests that preserve current behavior</li>
-            <li>Incremental module replacement and data migration</li>
-            <li>Controlled cutover, rollback plan, and handover docs</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="services-cta">
-        <div>
-          <strong>Not sure which engagement fits?</strong>
-          <p>Show us the system. We will tell you where to start and what can wait.</p>
+            <ul class="service-deliverables">
+              <li>Dependency and architecture risk map</li>
+              <li>Tests that preserve current behavior</li>
+              <li>Incremental module replacement and data migration</li>
+              <li>Controlled cutover, rollback plan, and handover docs</li>
+            </ul>
+            <div class="service-panel-action">
+              <p>Defined scope. Controlled rollout. No forced rewrite.</p>
+              <a
+                href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+                target="_blank"
+                rel="noopener"
+                class="btn-primary"
+                data-cal-link="pillexislabs/pillexis-labs-intro-call"
+                data-cal-namespace="pillexis-labs-intro-call"
+                data-cal-config='{"layout":"month_view"}'
+                data-book-call="services_legacy"
+              >Discuss the migration →</a>
+            </div>
+          </article>
         </div>
-        <a
-          href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
-          target="_blank"
-          rel="noopener"
-          class="btn-primary"
-          data-cal-link="pillexislabs/pillexis-labs-intro-call"
-          data-cal-namespace="pillexis-labs-intro-call"
-          data-cal-config='{"layout":"month_view"}'
-          data-book-call="services_shared"
-        >Book a 20-min call →</a>
       </div>
     </div>
   </section>
@@ -1548,10 +1632,6 @@ const jsonLd = {
           Pillexis Labs
         </div>
         <p>&copy; 2026 Pillexis Labs Pvt Ltd</p>
-        <div class="footer-theme">
-          <span>Appearance</span>
-          <ThemeToggle />
-        </div>
       </div>
       <div class="footer-links">
         <div class="footer-col">
@@ -1586,13 +1666,29 @@ const jsonLd = {
   </footer>
 
   <script>
-    document.querySelectorAll('.case-read-more').forEach(button => {
-      button.addEventListener('click', () => {
-        const card = button.closest('.receipts-card');
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        button.setAttribute('aria-expanded', String(!expanded));
-        button.textContent = expanded ? 'Read more' : 'Read less';
-        card?.setAttribute('data-expanded', String(!expanded));
+    const serviceTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"][aria-controls^="service-panel-"]'));
+    const selectService = (tab: HTMLButtonElement) => {
+      serviceTabs.forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+        const panel = document.getElementById(item.getAttribute('aria-controls') || '');
+        if (panel) panel.hidden = !selected;
+      });
+    };
+
+    serviceTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectService(tab));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowDown') next = (index + 1) % serviceTabs.length;
+        if (event.key === 'ArrowUp') next = (index - 1 + serviceTabs.length) % serviceTabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = serviceTabs.length - 1;
+        selectService(serviceTabs[next]);
+        serviceTabs[next].focus();
       });
     });
 
