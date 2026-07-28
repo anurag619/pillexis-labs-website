@@ -21,7 +21,7 @@ const downloadPath = '/downloads/Tether.zip';
     }
 
     .tether-shell {
-      width: min(1120px, calc(100% - 3rem));
+      width: min(var(--layout-max), calc(100% - 3rem));
       margin: 0 auto;
     }
 
@@ -391,7 +391,7 @@ const downloadPath = '/downloads/Tether.zip';
     }
 
     @media (max-width: 640px) {
-      .tether-shell { width: min(100% - 2.5rem, 1120px); }
+      .tether-shell { width: min(100% - 2.5rem, var(--layout-max)); }
       .tether-hero { padding: 6.25rem 0 3.5rem; gap: 2.5rem; }
       .tether-hero h1 { font-size: clamp(2.7rem, 13.5vw, 3.75rem); }
       .tether-download { width: 100%; }

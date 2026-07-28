@@ -35,6 +35,10 @@
   --r-lg: 14px;
   --r-xl: 20px;
 
+  --layout-max: 1200px;
+  --layout-gutter: 1.5rem;
+  --reading-max: 720px;
+
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 10px 30px rgba(55, 36, 42, 0.08);
   --glow-red: 0 0 70px 0 rgba(217, 72, 80, 0.18);
   --glow-red-soft: 0 0 35px 0 rgba(217, 72, 80, 0.12);
@@ -202,7 +206,7 @@ a { color: var(--text); text-decoration: none; }
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom: 1px solid var(--hairline);
 }
-.site-nav__inner { max-width: 1200px; min-height: 40px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.site-nav__inner { max-width: var(--layout-max); min-height: 40px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .site-nav__logo { display: inline-flex; align-items: center; gap: 0.65rem; min-width: 0; font-size: 0.98rem; font-weight: 650; letter-spacing: -0.01em; white-space: nowrap; }
 .site-nav__logo img { width: 24px; height: 24px; display: block; filter: drop-shadow(0 0 10px rgba(255, 99, 99, 0.26)); }
 .site-nav__desktop-links { display: flex; align-items: center; gap: 1.75rem; margin-left: auto; }
@@ -215,7 +219,7 @@ a { color: var(--text); text-decoration: none; }
 .site-nav__menu-button span { display: block; width: 16px; height: 1.5px; margin: 4px auto; border-radius: 2px; background: currentColor; transition: transform 0.18s; }
 .site-nav[data-menu-open] .site-nav__menu-button span:first-child { transform: translateY(2.75px) rotate(45deg); }
 .site-nav[data-menu-open] .site-nav__menu-button span:last-child { transform: translateY(-2.75px) rotate(-45deg); }
-.site-nav__mobile-menu { max-width: 1200px; margin: 0.65rem auto 0; }
+.site-nav__mobile-menu { max-width: var(--layout-max); margin: 0.65rem auto 0; }
 .site-nav__mobile-menu[hidden] { display: none; }
 .site-nav__mobile-links { display: grid; gap: 0.25rem; padding: 0.65rem; border: 1px solid var(--hairline); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow-card); }
 .site-nav__mobile-links > a:not(.site-nav__cta) { padding: 0.72rem 0.8rem; color: var(--text-muted); font-size: 0.92rem; font-weight: 550; white-space: nowrap; }
