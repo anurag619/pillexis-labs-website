@@ -3,6 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
 import SiteNav from '../components/SiteNav.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import {
+  MIGRAINE_LOGS_APP_STORE_URL,
+  MIGRAINE_LOGS_GOOGLE_PLAY_URL,
+  MIGRAINE_LOGS_URL,
+} from '../lib/products';
 
 const title = "Pillexis Labs · Finding what AI can't build";
 const description = "A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.";
@@ -529,6 +534,14 @@ const jsonLd = {
       margin: 0;
       transition: color 0.28s;
     }
+    .showcase-card h3 a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .showcase-card h3 a:focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
 
     .showcase-card .tagline {
       font: 500 .72rem/1 var(--mono);
@@ -574,6 +587,24 @@ const jsonLd = {
       box-shadow: 0 0 8px #f59e0b;
       animation: lab-signal-pulse 3.2s ease-out infinite;
     }
+    .showcase-store-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+    .showcase-store-links a {
+      color: var(--red);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+    .showcase-store-links a:hover { color: var(--red-hot); }
+    .showcase-store-links a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+    .showcase-store-links a:active { color: var(--text); }
 
     /* Motion is progressively enabled by the inline observer below. Content
        remains visible when JavaScript is unavailable. */
@@ -2324,15 +2355,19 @@ const jsonLd = {
             <span>Live on iOS</span>
           </span>
         </a>
-        <a href="https://migrainelogs.com" target="_blank" rel="noopener" class="showcase-card">
+        <article class="showcase-card">
           <span class="showcase-preview showcase-preview--migraine" aria-hidden="true"><img src="/products/migrainelogs.webp" alt="" loading="lazy" /></span>
-          <h3>Migraine Logs</h3>
+          <h3><a href={MIGRAINE_LOGS_URL} target="_blank" rel="noopener">Migraine Logs</a></h3>
           <span class="tagline">Voice-first migraine tracking</span>
-          <span class="showcase-foot muted">
-            <span class="dot"></span>
-            <span>Coming soon, iOS + Android</span>
+          <span class="showcase-store-links">
+            <a href={MIGRAINE_LOGS_APP_STORE_URL} target="_blank" rel="noopener">App Store</a>
+            <a href={MIGRAINE_LOGS_GOOGLE_PLAY_URL} target="_blank" rel="noopener">Google Play</a>
           </span>
-        </a>
+          <span class="showcase-foot live">
+            <span class="dot"></span>
+            <span>Live on iOS + Android</span>
+          </span>
+        </article>
         <a href="/forge" class="showcase-card">
           <span class="showcase-preview showcase-preview--forge" aria-hidden="true">
             <svg viewBox="0 0 240 100">
@@ -2676,7 +2711,7 @@ const jsonLd = {
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Five products at different stages. Productlogz is a live SaaS feedback platform. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a voice-first migraine tracker for iOS and Android, currently pre-launch. Forge is a small macOS app that gives engineering teams one morning brief across GitHub, Slack, Linear, and Notion. Tether is a live macOS menu-bar utility that keeps a Mac awake and remotely reachable during remote work sessions.
+              Five products at different stages. Productlogz is a live SaaS feedback platform. Quotesmatic is a daily mindset practice on iOS for becoming the person you're working toward. Migraine Logs is a live voice-first migraine tracker for iOS and Android. Forge is a small macOS app that gives engineering teams one morning brief across GitHub, Slack, Linear, and Notion. Tether is a live macOS menu-bar utility that keeps a Mac awake and remotely reachable during remote work sessions.
             </div>
           </div>
         </div>
@@ -2749,7 +2784,9 @@ const jsonLd = {
           <h4>Products</h4>
           <a href="https://productlogz.com" target="_blank">Productlogz <span class="footer-status">Live</span></a>
           <a href="https://quotesmatic.com" target="_blank" rel="noopener">Quotesmatic <span class="footer-status">Live</span></a>
-          <a href="https://migrainelogs.com" target="_blank" rel="noopener">Migraine Logs <span class="footer-status">Coming soon</span></a>
+          <a href={MIGRAINE_LOGS_URL} target="_blank" rel="noopener">Migraine Logs <span class="footer-status">Live</span></a>
+          <a href={MIGRAINE_LOGS_APP_STORE_URL} target="_blank" rel="noopener">Migraine Logs on App Store</a>
+          <a href={MIGRAINE_LOGS_GOOGLE_PLAY_URL} target="_blank" rel="noopener">Migraine Logs on Google Play</a>
           <a href="/forge">Forge <span class="footer-status">Experimental</span></a>
           <a href="/tether">Tether <span class="footer-status">Live</span></a>
         </div>
