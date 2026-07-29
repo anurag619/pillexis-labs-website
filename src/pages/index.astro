@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
 import SiteNav from '../components/SiteNav.astro';
+import {
+  MIGRAINE_LOGS_APP_STORE_URL,
+  MIGRAINE_LOGS_GOOGLE_PLAY_URL,
+  MIGRAINE_LOGS_URL,
+} from '../lib/products';
 
 const title = "Work with us · Pillexis Labs";
 const description = "Three focused engagements. One operator. We sort the AI mess, the ops mess, and legacy code for Indian D2C teams who've outgrown their stack.";
@@ -626,6 +631,26 @@ const jsonLd = {
       padding: 0.3rem 0;
       border-bottom: 1px solid var(--hairline);
     }
+    .own-product-store-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      width: 100%;
+      margin-top: 0.45rem;
+    }
+    .own-product-store-link {
+      color: var(--red);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+    .own-product-store-link:hover { color: var(--red-hot); }
+    .own-product-store-link:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+    .own-product-store-link:active { color: var(--text); }
 
     /* Hallmark · component: service decision canvas · genre: modern-minimal · theme: Pillexis light
        states: default · hover · focus · active · disabled · selected · loading · error · success
@@ -1449,11 +1474,11 @@ const jsonLd = {
           </div>
         </a>
 
-        <a href="https://migrainelogs.com" target="_blank" rel="noopener" class="own-product-card">
+        <article class="own-product-card">
           <span class="own-product-preview own-product-preview--migraine" aria-hidden="true"><img src="/products/migrainelogs.webp" alt="" loading="lazy" /></span>
           <div class="own-product-meta">
-            <span class="own-product-status muted"><span class="dot"></span>Coming soon</span>
-            <span class="own-product-host">migrainelogs.com</span>
+            <span class="own-product-status live"><span class="dot"></span>Live · iOS + Android</span>
+            <a class="own-product-host" href={MIGRAINE_LOGS_URL} target="_blank" rel="noopener">migrainelogs.com</a>
           </div>
           <h3 class="own-product-name">Migraine Logs</h3>
           <p class="own-product-outcome">
@@ -1464,8 +1489,12 @@ const jsonLd = {
             <span>Weather + sleep auto-attached</span>
             <span>Doctor-ready summary</span>
             <span>iOS + Android</span>
+            <div class="own-product-store-links">
+              <a class="own-product-store-link" href={MIGRAINE_LOGS_APP_STORE_URL} target="_blank" rel="noopener">App Store</a>
+              <a class="own-product-store-link" href={MIGRAINE_LOGS_GOOGLE_PLAY_URL} target="_blank" rel="noopener">Google Play</a>
+            </div>
           </div>
-        </a>
+        </article>
 
         <a href="/forge" class="own-product-card">
           <span class="own-product-preview own-product-preview--forge" aria-hidden="true">
