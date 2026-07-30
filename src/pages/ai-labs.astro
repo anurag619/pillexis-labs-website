@@ -2096,8 +2096,69 @@ const jsonLd = {
       stroke-linejoin: round;
     }
 
+    /* ── VOICES ── */
+    .voices-intro {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 620px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    .voices-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .voice-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.75rem;
+      margin: 0;
+    }
+    .voice-card blockquote {
+      margin: 0 0 1.25rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .voice-card figcaption {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .voice-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--red-dim);
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: var(--mono);
+      flex-shrink: 0;
+    }
+    .voice-who {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+    .voice-who strong { font-size: 0.95rem; color: var(--text); }
+    .voice-who span { font-size: 0.8rem; color: var(--text-dim); }
+    .voices-close {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
+      .voices-grid { grid-template-columns: 1fr; }
       .hero {
         padding: 6rem 1.25rem 3rem;
         text-align: left;
@@ -2606,6 +2667,34 @@ const jsonLd = {
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- WHAT BUILDERS ARE SAYING -->
+  <section class="voices" id="voices">
+    <div class="container">
+      <span class="badge">The discourse</span>
+      <h2 class="section-title">The people building with AI<br>are drawing the <em>same line.</em></h2>
+      <p class="voices-intro">Cheap to build, expensive to own well. The builders shipping fastest are the first to say it out loud.</p>
+
+      <div class="voices-grid">
+        <figure class="voice-card">
+          <blockquote>"I've already seen Wispr Flow, Granola and WHOOP all reverse-engineered and open-sourced with a fully free version... the question is how companies will react and pivot."</blockquote>
+          <figcaption>
+            <span class="voice-avatar">PL</span>
+            <span class="voice-who"><strong>Pieter Levels</strong><span>@levelsio · on X</span></span>
+          </figcaption>
+        </figure>
+        <figure class="voice-card">
+          <blockquote>"Tests give you feedback in seconds, but the cost of bad architecture is measured in weeks or months. Lights-off AI factories rot the codebase. The leverage is human planning."</blockquote>
+          <figcaption>
+            <span class="voice-avatar">DH</span>
+            <span class="voice-who"><strong>Dex Horthy</strong><span>HumanLayer · "Why Software Factories Fail"</span></span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="voices-close">That's the whole thesis of this lab: find the parts AI can't do alone, and build there.</p>
     </div>
   </section>
 
