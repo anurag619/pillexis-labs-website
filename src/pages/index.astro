@@ -159,6 +159,47 @@ const jsonLd = {
       margin-bottom: 2rem;
     }
 
+    /* ── AI SHIFT ── */
+    .ai-shift { background: var(--bg); }
+    .ai-shift-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .ai-stat {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+    }
+    .ai-stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .ai-stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.55rem;
+      line-height: 1.45;
+    }
+    .ai-shift-src {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 1.75rem;
+    }
+    .ai-shift-close {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+    .ai-shift-close strong { color: var(--text); }
+
     /* ── HERO ── */
     .hero {
       padding: 8rem 2rem 4.5rem;
@@ -1119,6 +1160,7 @@ const jsonLd = {
       .ownership-handover { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; }
       .ownership-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 0; }
       .ownership-step:nth-child(3) { padding-left: 0; border-left: 0; }
+      .ai-shift-stats { grid-template-columns: 1fr; }
       .own-products-grid { grid-template-columns: 1fr; }
       .own-product-card {
         grid-template-columns: 1fr;
@@ -1229,6 +1271,47 @@ const jsonLd = {
           <figcaption><span>The mess</span><span>Your system</span></figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- THE AI SHIFT -->
+  <section class="ai-shift" id="ai-shift" data-analytics-section="ai_shift">
+    <div class="container">
+      <p class="eyebrow">The 2026 reality</p>
+      <h2 class="section-title">AI can clone your app in a weekend.<br/>It can't keep it from <em>breaking.</em></h2>
+      <p class="section-sub">
+        Building a feature is cheap now, anyone can. The value moved to the parts AI can't do alone: getting the design right up front, and keeping it maintainable once real users hit it.
+      </p>
+
+      <div class="ai-shift-stats">
+        <div class="ai-stat">
+          <div class="ai-stat-num">+242%</div>
+          <div class="ai-stat-label">production incidents per PR, since AI-coding adoption</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-num">+54%</div>
+          <div class="ai-stat-label">bugs per developer over the same period</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-num">25–50%</div>
+          <div class="ai-stat-label">of shipping a feature is writing code, the rest is judgment</div>
+        </div>
+      </div>
+
+      <p class="ai-shift-src">Sources: Faros AI developer-productivity report (2025); “Why Software Factories Fail,” Dex Horthy (2025).</p>
+
+      <p class="ai-shift-close"><strong>That gap is the whole job.</strong> We place the senior human leverage AI can't: plan it right, build it in reviewed slices, keep it clean, and you own every line of the result.</p>
+
+      <a
+        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary"
+        data-cal-link="pillexislabs/pillexis-labs-intro-call"
+        data-cal-namespace="pillexis-labs-intro-call"
+        data-cal-config='{"layout":"month_view"}'
+        data-book-call="ai_shift"
+      >Book a 20-min call →</a>
     </div>
   </section>
 
