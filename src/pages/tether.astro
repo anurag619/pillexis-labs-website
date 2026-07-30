@@ -525,6 +525,8 @@ const downloadPath = '/downloads/Tether.zip';
       border-radius: 8px;
       background: var(--surface);
       color: var(--text-muted);
+      cursor: pointer;
+      font-family: inherit;
       font-size: 0.9rem;
       font-weight: 500;
       transition: background 0.18s, border-color 0.18s, color 0.18s;
@@ -557,6 +559,58 @@ const downloadPath = '/downloads/Tether.zip';
     .tether-proofline div:last-child { border-inline-end: 0; }
     .tether-proofline strong { display: block; font-size: 0.9rem; }
     .tether-proofline span { display: block; margin-block-start: 0.25rem; color: var(--text-dim); font-size: 0.78rem; }
+
+    .tether-promo-dialog {
+      width: min(1100px, calc(100% - 2rem));
+      max-width: none;
+      margin: auto;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--r-lg);
+      background: #08101f;
+      box-shadow: 0 30px 100px rgba(8, 16, 31, 0.45);
+      color: #fff;
+    }
+    .tether-promo-dialog::backdrop {
+      background: rgba(8, 16, 31, 0.72);
+      backdrop-filter: blur(10px);
+    }
+    .tether-promo-dialog__frame {
+      position: relative;
+      overflow: clip;
+      margin: 0;
+      border-radius: inherit;
+    }
+    .tether-promo-dialog video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #08101f;
+      object-fit: cover;
+    }
+    .tether-promo-dialog__close {
+      position: absolute;
+      inset: 0.85rem 0.85rem auto auto;
+      z-index: 2;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      place-items: center;
+      background: rgba(8, 16, 31, 0.78);
+      color: #fff;
+      font-size: 1.45rem;
+      line-height: 1;
+      transition: background 0.18s, transform 0.18s;
+      backdrop-filter: blur(10px);
+    }
+    .tether-promo-dialog__close:hover {
+      background: rgba(8, 16, 31, 0.92);
+      transform: scale(1.05);
+    }
+    .tether-promo-dialog__close:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 
     .tether-story { padding-block: 7rem; border-block-start: 1px solid var(--hairline); }
     .tether-story__grid {
@@ -921,7 +975,7 @@ const downloadPath = '/downloads/Tether.zip';
           <p>A lightweight menu bar utility for remote work, long running tasks, and the moments when macOS sleep would interrupt both.</p>
           <div class="tether-story-hero__actions">
             <a class="tether-download" href={downloadPath} download>Download for macOS</a>
-            <a class="tether-secondary-action" href="#features">See every feature ↓</a>
+            <button class="tether-secondary-action" type="button" data-tether-promo-open>Watch video</button>
             <p class="tether-meta">Version 1.0 · macOS 13 or later · Apple silicon and Intel</p>
           </div>
         </div>
@@ -1074,6 +1128,22 @@ const downloadPath = '/downloads/Tether.zip';
       </section>
     </main>
 
+    <dialog class="tether-promo-dialog" data-tether-promo aria-label="Tether promo video">
+      <figure class="tether-promo-dialog__frame">
+        <video
+          data-tether-promo-video
+          controls
+          playsinline
+          preload="metadata"
+          poster="/products/tether/tether-website-hero.jpg"
+        >
+          <source src="/products/tether/tether-glass-wide.mp4" type="video/mp4" />
+          <a href="/products/tether/tether-glass-wide.mp4">Download the Tether promo video</a>
+        </video>
+        <button class="tether-promo-dialog__close" type="button" data-tether-promo-close aria-label="Close the Tether promo video">×</button>
+      </figure>
+    </dialog>
+
     <footer class="tether-footer">
       <div class="tether-shell tether-footer-inner">
         <div>
@@ -1086,5 +1156,39 @@ const downloadPath = '/downloads/Tether.zip';
         </div>
       </div>
     </footer>
+    <script>
+      const promoDialog = document.querySelector('[data-tether-promo]');
+      const promoOpen = document.querySelector('[data-tether-promo-open]');
+      const promoClose = document.querySelector('[data-tether-promo-close]');
+      const promoVideo = document.querySelector('[data-tether-promo-video]');
+
+      if (
+        promoDialog instanceof HTMLDialogElement
+        && promoOpen instanceof HTMLButtonElement
+        && promoClose instanceof HTMLButtonElement
+        && promoVideo instanceof HTMLVideoElement
+      ) {
+        promoOpen.addEventListener('click', async () => {
+          promoDialog.showModal();
+          try {
+            await promoVideo.play();
+          } catch {
+            promoVideo.controls = true;
+          }
+        });
+        promoClose.addEventListener('click', () => {
+          promoDialog.close();
+        });
+        promoDialog.addEventListener('click', (event) => {
+          if (event.target === promoDialog) {
+            promoDialog.close();
+          }
+        });
+        promoDialog.addEventListener('close', () => {
+          promoVideo.pause();
+          promoVideo.currentTime = 0;
+        });
+      }
+    </script>
   </div>
 </BaseLayout>

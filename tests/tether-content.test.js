@@ -47,6 +47,30 @@ test('Tether product artwork exists and is a non-empty WebP image', async () => 
   assert.equal(header.subarray(8, 12).toString(), 'WEBP');
 });
 
+test('Tether page provides a web-ready promo video modal with its poster', async () => {
+  const source = await read('src/pages/tether.astro');
+  const videoURL = new URL('public/products/tether/tether-glass-wide.mp4', projectRoot);
+  const posterURL = new URL('public/products/tether/tether-website-hero.jpg', projectRoot);
+  const [videoStat, posterStat, videoHeader, posterHeader] = await Promise.all([
+    stat(videoURL),
+    stat(posterURL),
+    readFile(videoURL).then((file) => file.subarray(0, 12)),
+    readFile(posterURL).then((file) => file.subarray(0, 2)),
+  ]);
+
+  assert.match(source, /preload="metadata"/);
+  assert.match(source, /poster="\/products\/tether\/tether-website-hero\.jpg"/);
+  assert.match(source, /src="\/products\/tether\/tether-glass-wide\.mp4" type="video\/mp4"/);
+  assert.match(source, /data-tether-promo-open>Watch video<\/button>/);
+  assert.match(source, /<dialog class="tether-promo-dialog" data-tether-promo/);
+  assert.doesNotMatch(source, /Watch the 35 sec demo ↓/);
+  assert.doesNotMatch(source, /See Tether in motion/);
+  assert.ok(videoStat.size > 1_000_000, 'Tether product demo should not be an empty placeholder');
+  assert.ok(posterStat.size > 100_000, 'Tether video poster should not be an empty placeholder');
+  assert.equal(videoHeader.subarray(4, 8).toString(), 'ftyp');
+  assert.deepEqual([...posterHeader], [0xff, 0xd8]);
+});
+
 test('homepage presents three services with one shared booking action', async () => {
   const source = await read('src/pages/index.astro');
 
