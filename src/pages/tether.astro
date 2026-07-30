@@ -496,37 +496,46 @@ const downloadPath = '/downloads/Tether.zip';
       line-height: 1.65;
     }
     .tether-story-hero__actions {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.5rem;
+      display: grid;
+      grid-template-columns: max-content max-content;
+      align-items: center;
+      gap: 0.7rem 0.85rem;
       margin-block-start: 1.75rem;
-      flex-wrap: wrap;
     }
-    .tether-story-hero__download {
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-    .tether-story-hero__download .tether-meta {
-      margin: 0;
-    }
-    .tether-story-hero__download .tether-download {
+    .tether-story-hero__actions .tether-download {
       margin-block-start: 0;
     }
+    .tether-story-hero__actions .tether-meta {
+      grid-column: 1 / -1;
+      margin: 0;
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
     .tether-download,
-    .tether-text-link {
+    .tether-secondary-action {
       white-space: nowrap;
     }
-    .tether-text-link {
-      margin-block-start: 0.9rem;
+    .tether-secondary-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0.78rem 1.15rem;
+      border: 1px solid var(--hairline-strong);
+      border-radius: 8px;
+      background: var(--surface);
       color: var(--text-muted);
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 500;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
     }
-    .tether-text-link:hover { color: var(--text); }
-    .tether-text-link:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
-    .tether-text-link:active { color: var(--red-hot); }
+    .tether-secondary-action:hover {
+      border-color: var(--hairline-strong);
+      background: var(--bg-elev);
+      color: var(--text);
+    }
+    .tether-secondary-action:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .tether-secondary-action:active { color: var(--red-hot); }
     .tether-story-hero__media {
       overflow: clip;
       border: 1px solid var(--hairline-strong);
@@ -685,10 +694,14 @@ const downloadPath = '/downloads/Tether.zip';
       .tether-story-hero { padding-block: 6.5rem 3.5rem; }
       .tether-story-hero__head { margin-block-end: 2rem; }
       .tether-story-hero h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
-      .tether-story-hero__actions { align-items: stretch; flex-direction: column; }
-      .tether-story-hero__download { width: 100%; }
-      .tether-download { width: 100%; }
-      .tether-text-link { align-self: flex-start; margin-block-start: 0; }
+      .tether-story-hero__actions {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 1rem;
+      }
+      .tether-story-hero__actions .tether-meta { grid-column: 1; }
+      .tether-download,
+      .tether-secondary-action { width: 100%; }
       .tether-proofline { grid-template-columns: minmax(0, 1fr); }
       .tether-proofline div,
       .tether-proofline div:nth-child(2) { border-inline-end: 0; border-block-end: 1px solid var(--hairline-strong); }
@@ -711,11 +724,11 @@ const downloadPath = '/downloads/Tether.zip';
   <style is:global>
     /* Tether correction · definite hero + cropped product UI + varied feature rhythm */
     .tether-story-hero {
-      min-height: 720px;
-      padding-block: 7.5rem 5.5rem;
+      min-height: 680px;
+      padding-block: 7.5rem 4.5rem;
       display: grid;
-      grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
-      gap: clamp(3rem, 7vw, 6.5rem);
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
+      gap: clamp(3rem, 6vw, 5rem);
       align-items: center;
     }
     .tether-story-hero__copy { padding: 0; }
@@ -729,8 +742,10 @@ const downloadPath = '/downloads/Tether.zip';
     }
     .tether-story-hero__media {
       position: relative;
-      height: 560px;
+      width: min(100%, 500px);
+      height: 470px;
       margin: 0;
+      justify-self: end;
     }
     .tether-story-hero__media img {
       position: absolute;
@@ -739,10 +754,10 @@ const downloadPath = '/downloads/Tether.zip';
       height: 100%;
       object-fit: cover;
       object-position: right center;
-      transform: scale(1.22);
+      transform: scale(1.06);
       transform-origin: right center;
     }
-    .tether-proofline { margin-block-end: 0; }
+    .tether-proofline { margin-block-end: clamp(2.5rem, 5vw, 4.5rem); }
 
     .tether-story { padding-block: 6.5rem; }
     .tether-story__grid {
@@ -832,9 +847,10 @@ const downloadPath = '/downloads/Tether.zip';
         padding-block: 7rem 4rem;
       }
       .tether-story-hero__media {
-        width: min(100%, 620px);
+        width: min(100%, 520px);
         height: auto;
         aspect-ratio: 5 / 4;
+        justify-self: start;
       }
       .tether-story--session .tether-story__grid,
       .tether-story--trigger .tether-story__grid,
@@ -904,11 +920,9 @@ const downloadPath = '/downloads/Tether.zip';
           </h1>
           <p>A lightweight menu bar utility for remote work, long running tasks, and the moments when macOS sleep would interrupt both.</p>
           <div class="tether-story-hero__actions">
-            <div class="tether-story-hero__download">
-              <a class="tether-download" href={downloadPath} download>Download for macOS</a>
-              <p class="tether-meta">Version 1.0 · macOS 13 or later · Apple silicon and Intel</p>
-            </div>
-            <a class="tether-text-link" href="#features">See every feature</a>
+            <a class="tether-download" href={downloadPath} download>Download for macOS</a>
+            <a class="tether-secondary-action" href="#features">See every feature ↓</a>
+            <p class="tether-meta">Version 1.0 · macOS 13 or later · Apple silicon and Intel</p>
           </div>
         </div>
 
