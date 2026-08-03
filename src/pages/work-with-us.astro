@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
 import SiteNav from '../components/SiteNav.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 import {
   MIGRAINE_LOGS_APP_STORE_URL,
   MIGRAINE_LOGS_GOOGLE_PLAY_URL,
@@ -170,15 +169,7 @@ const jsonLd = {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at top right, rgba(255, 99, 99, 0.35), transparent 60%),
-        radial-gradient(circle at 30% 80%, rgba(255, 140, 80, 0.12), transparent 55%);
-    }
-    .grid-bg {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
-      background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
-      background-size: 24px 24px;
-      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+      background: radial-gradient(circle at top right, rgba(255, 99, 99, 0.18), transparent 60%);
     }
     .hero-inner { position: relative; max-width: var(--layout-max); margin: 0 auto; }
 
@@ -748,15 +739,6 @@ const jsonLd = {
       position: relative;
       overflow: hidden;
     }
-    .cta-final::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
-    }
     .cta-final-inner {
       position: relative; z-index: 1;
       max-width: 800px; margin: 0 auto;
@@ -828,15 +810,6 @@ const jsonLd = {
       background: var(--bg);
       position: relative;
       overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
     }
     .cta-inner {
       position: relative;
@@ -950,11 +923,10 @@ const jsonLd = {
 
   <!-- HERO -->
   <section class="hero">
-    <div class="grid-bg"></div>
     <div class="hero-inner">
       <h1>We build the stack<br/>your team <em>actually owns.</em></h1>
       <p class="hero-sub">
-        We audit the AI stack, automate the ops workflows, and replace bloated SaaS with internal tools your team owns. Two fixed-price sprints. Code in your GitHub from day one.
+        We audit the AI stack, automate the ops workflows, and replace bloated SaaS with internal tools your team owns. Both sprints are fixed price, and the code sits in your GitHub from day one.
       </p>
       <div class="hero-cta-row">
         <a
@@ -1171,7 +1143,7 @@ const jsonLd = {
   <!-- OUR OWN PRODUCTS -->
   <section class="own-products" id="our-products">
     <div class="container">
-      <h2 class="section-title">We don't just consult on shipping.<br/><em>We ship.</em></h2>
+      <h2 class="section-title">We run the same playbook on our own products.</h2>
       <p class="section-sub">
         Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
       </p>
@@ -1390,10 +1362,6 @@ const jsonLd = {
           Pillexis Labs
         </div>
         <p>&copy; 2026 Pillexis Labs Pvt Ltd</p>
-        <div class="footer-theme">
-          <span>Appearance</span>
-          <ThemeToggle />
-        </div>
       </div>
       <div class="footer-links">
         <div class="footer-col">

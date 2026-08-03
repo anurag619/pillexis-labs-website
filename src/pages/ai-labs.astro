@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookingScripts from '../components/BookingScripts.astro';
 import SiteNav from '../components/SiteNav.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 import {
   MIGRAINE_LOGS_APP_STORE_URL,
   MIGRAINE_LOGS_GOOGLE_PLAY_URL,
@@ -255,30 +254,13 @@ const jsonLd = {
       border: 0;
     }
 
-    /* dotted grid overlay helper */
-    .grid-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
-      background-size: 24px 24px;
-      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
-      animation: lab-grid-drift 22s linear infinite;
-    }
-
-    /* aurora bloom (applied via .aurora on sections) */
+    /* soft hero bloom (applied via .aurora on sections) */
     .aurora::before {
       content: '';
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 99, 99, 0.35), transparent 60%),
-        radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255, 140, 80, 0.22), transparent 70%),
-        radial-gradient(ellipse 50% 30% at 20% 60%, rgba(255, 99, 99, 0.12), transparent 70%);
-      transform-origin: 50% 25%;
-      animation: lab-aurora-breathe 10s ease-in-out infinite alternate;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 99, 99, 0.16), transparent 60%);
     }
 
     .aurora::after {
@@ -620,13 +602,6 @@ const jsonLd = {
     .hero-copy { animation: lab-enter-copy 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
     .hero-visual { animation: lab-enter-visual 0.95s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-    @keyframes lab-grid-drift {
-      to { background-position: 24px 24px; }
-    }
-    @keyframes lab-aurora-breathe {
-      from { opacity: 0.72; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1.04); }
-    }
     @keyframes lab-frame-calibrate {
       0%, 100% { transform: translate(0, 0); opacity: 0.65; }
       50% { transform: translate(4px, -4px); opacity: 1; }
@@ -651,8 +626,6 @@ const jsonLd = {
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .grid-bg,
-      .aurora::before,
       .hero-copy,
       .hero-visual,
       .hero-visual::before,
@@ -930,7 +903,7 @@ const jsonLd = {
       box-shadow: var(--glow-red-soft);
     }
 
-    .bento-card>*:not(.grid-bg) {
+    .bento-card>* {
       position: relative;
       z-index: 1;
     }
@@ -981,17 +954,6 @@ const jsonLd = {
       margin-bottom: 0.6rem;
     }
 
-    .bento-card.bento-feature::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      right: -25%;
-      width: 80%;
-      height: 130%;
-      background: radial-gradient(circle at top right, rgba(255, 99, 99, 0.4), transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-    }
 
     /* ── PRODUCTS ── */
     .products-section {
@@ -1656,16 +1618,6 @@ const jsonLd = {
       box-shadow: var(--glow-red-soft);
     }
 
-    .phil-card.tall::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 99, 99, 0.3), transparent 60%),
-        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255, 140, 80, 0.15), transparent 70%);
-      pointer-events: none;
-    }
-
     .phil-card.tall>* {
       position: relative;
       z-index: 1;
@@ -1905,16 +1857,6 @@ const jsonLd = {
       background: var(--bg);
       position: relative;
       overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
     }
 
     .cta-inner {
@@ -2359,7 +2301,6 @@ const jsonLd = {
 
   <!-- HERO -->
   <section class="hero aurora">
-    <div class="grid-bg"></div>
     <div class="hero-grid">
       <div class="hero-copy">
         <h1>AI builds almost everything.<br>We find what it <em>can't.</em></h1>
@@ -2635,7 +2576,7 @@ const jsonLd = {
       <div class="philosophy-inner">
         <div class="philosophy-text">
           <span class="badge">Our Thesis</span>
-          <h2 class="section-title">We don't <em>predict.</em><br>We <em>find out.</em></h2>
+          <h2 class="section-title">We learn what AI can't do by shipping real products.</h2>
           <p>Every founder is asking the same question right now: when AI can build almost anything, what's still worth
             building? Most try to guess. We ship things and watch what happens.</p>
           <p>The parts of the work where humans still hold the line, that's the next generation of software. That's
@@ -2863,10 +2804,6 @@ const jsonLd = {
           Pillexis Labs
         </div>
         <p>&copy; 2026 Pillexis Labs Pvt Ltd</p>
-        <div class="footer-theme">
-          <span>Appearance</span>
-          <ThemeToggle />
-        </div>
       </div>
       <div class="footer-links">
         <div class="footer-col">
