@@ -159,6 +159,47 @@ const jsonLd = {
       margin-bottom: 2rem;
     }
 
+    /* ── AI SHIFT ── */
+    .ai-shift { background: var(--bg); }
+    .ai-shift-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .ai-stat {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+    }
+    .ai-stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .ai-stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.55rem;
+      line-height: 1.45;
+    }
+    .ai-shift-src {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 1.75rem;
+    }
+    .ai-shift-close {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+    .ai-shift-close strong { color: var(--text); }
+
     /* ── HERO ── */
     .hero {
       padding: 8rem 2rem 4.5rem;
@@ -170,15 +211,7 @@ const jsonLd = {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 72% 18%, rgba(255, 99, 99, 0.14), transparent 42%),
-        radial-gradient(circle at 30% 80%, rgba(255, 140, 80, 0.08), transparent 55%);
-    }
-    .grid-bg {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
-      background-image: radial-gradient(var(--hairline) 1px, transparent 1px);
-      background-size: 24px 24px;
-      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+      background: radial-gradient(circle at 72% 18%, rgba(255, 99, 99, 0.12), transparent 42%);
     }
     .hero-inner {
       position: relative;
@@ -296,9 +329,6 @@ const jsonLd = {
       text-transform: uppercase;
     }
 
-    /* Hallmark · component: ownership ledger · genre: modern-minimal · theme: Pillexis light
-       states: default · hover · focus · active · disabled · loading · error · success
-       contrast: pass · pre-emit critique: P5 H5 E5 S5 R5 V5 */
     .receipts { background: var(--bg); }
     .ownership-head {
       display: grid;
@@ -652,9 +682,6 @@ const jsonLd = {
     .own-product-store-link:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
     .own-product-store-link:active { color: var(--text); }
 
-    /* Hallmark · component: service decision canvas · genre: modern-minimal · theme: Pillexis light
-       states: default · hover · focus · active · disabled · selected · loading · error · success
-       contrast: pass · pre-emit critique: P5 H5 E5 S5 R5 V5 */
     .sprints {
       background: var(--bg-elev);
     }
@@ -927,15 +954,6 @@ const jsonLd = {
       position: relative;
       overflow: hidden;
     }
-    .cta-final::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 50% 50% at 30% 50%, rgba(255, 99, 99, 0.18), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 30% 50%, rgba(255, 140, 80, 0.08), transparent 75%);
-    }
     .cta-final-inner {
       position: relative; z-index: 1;
       max-width: var(--layout-max); margin: 0 auto;
@@ -1008,15 +1026,6 @@ const jsonLd = {
       background: var(--bg);
       position: relative;
       overflow: hidden;
-    }
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 99, 99, 0.26), transparent 65%),
-        radial-gradient(ellipse 70% 40% at 50% 50%, rgba(255, 140, 80, 0.10), transparent 75%);
     }
     .cta-inner {
       position: relative;
@@ -1119,6 +1128,7 @@ const jsonLd = {
       .ownership-handover { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; }
       .ownership-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 0; }
       .ownership-step:nth-child(3) { padding-left: 0; border-left: 0; }
+      .ai-shift-stats { grid-template-columns: 1fr; }
       .own-products-grid { grid-template-columns: 1fr; }
       .own-product-card {
         grid-template-columns: 1fr;
@@ -1180,12 +1190,11 @@ const jsonLd = {
 
   <!-- HERO -->
   <section class="hero" data-analytics-section="hero">
-    <div class="grid-bg"></div>
     <div class="hero-inner">
       <div class="hero-copy">
         <h1>We build the stack your team <em>actually owns.</em></h1>
         <p class="hero-sub">
-          We audit the AI stack, automate ops workflows, migrate legacy code, and replace bloated SaaS with internal tools your team owns. Fixed scope. Code in your GitHub from day one.
+          We audit the AI stack, automate ops workflows, migrate legacy code, and replace bloated SaaS with internal tools your team owns. Every engagement is fixed scope, and the code sits in your GitHub from day one.
         </p>
         <div class="hero-cta-row">
           <a
@@ -1232,13 +1241,54 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- THE AI SHIFT -->
+  <section class="ai-shift" id="ai-shift" data-analytics-section="ai_shift">
+    <div class="container">
+      <p class="eyebrow">The 2026 reality</p>
+      <h2 class="section-title">So why do AI-built apps keep breaking in production?</h2>
+      <p class="section-sub">
+        Building a feature is cheap now, anyone can. The value moved to the parts AI can't do alone: getting the design right up front, and keeping it maintainable once real users hit it.
+      </p>
+
+      <div class="ai-shift-stats">
+        <div class="ai-stat">
+          <div class="ai-stat-num">+242%</div>
+          <div class="ai-stat-label">production incidents per PR, since AI-coding adoption</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-num">+54%</div>
+          <div class="ai-stat-label">bugs per developer over the same period</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-num">25–50%</div>
+          <div class="ai-stat-label">of shipping a feature is writing code, the rest is judgment</div>
+        </div>
+      </div>
+
+      <p class="ai-shift-src">Sources: Faros AI developer-productivity report (2025); “Why Software Factories Fail,” Dex Horthy (2025).</p>
+
+      <p class="ai-shift-close"><strong>That gap is where we work.</strong> We bring the senior judgment AI can't: planning the build right, shipping it in reviewed slices, and keeping it clean, so you own every line of the result.</p>
+
+      <a
+        href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary"
+        data-cal-link="pillexislabs/pillexis-labs-intro-call"
+        data-cal-namespace="pillexis-labs-intro-call"
+        data-cal-config='{"layout":"month_view"}'
+        data-book-call="ai_shift"
+      >Book a 20-min call →</a>
+    </div>
+  </section>
+
   <!-- OWNERSHIP LEDGER -->
   <section class="receipts" data-analytics-section="proof">
     <div class="container">
       <header class="ownership-head">
-        <h2 class="ownership-title">The system ships.<br/><span>The dependency ends.</span></h2>
+        <h2 class="ownership-title">Everything we build is yours <span>from the first commit.</span></h2>
         <p class="ownership-intro">
-          You leave with working software, the source code, and a clear way to run it. No mystery layer. No permanent retainer.
+          You leave with working software, the source code, and a clear way to run it, with no mystery layer and no permanent retainer.
         </p>
       </header>
 
@@ -1350,7 +1400,7 @@ const jsonLd = {
               <li>Internal tools to replace bloated AI SaaS</li>
             </ul>
             <div class="service-panel-action">
-              <p>Defined scope. Code in your GitHub from day one. No retainer.</p>
+              <p>A defined scope, with the code in your GitHub from day one and no retainer at the end.</p>
               <a
                 href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
                 target="_blank"
@@ -1371,7 +1421,7 @@ const jsonLd = {
             </div>
             <h3>We sort the ops mess.</h3>
             <p class="service-panel-pitch">
-              Tuesday, 11pm. Manual CRM export. Typeform Pro for one form. AiSensy, Interakt, and Wati for the same WhatsApp messages. Zapier renewals climb every year.
+              Someone on your team is still exporting the CRM by hand at 11pm. You keep Typeform Pro around for one form, run AiSensy, Interakt, and Wati for the same WhatsApp messages, and the Zapier renewal climbs every year.
             </p>
             <ul class="service-deliverables">
               <li>Internal tools your team owns</li>
@@ -1381,7 +1431,7 @@ const jsonLd = {
               <li>Ownership handover with docs and runbooks</li>
             </ul>
             <div class="service-panel-action">
-              <p>Defined scope. Code in your GitHub from day one. No retainer.</p>
+              <p>Fixed scope and timeline, handed over fully when the sprint ends.</p>
               <a
                 href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
                 target="_blank"
@@ -1411,7 +1461,7 @@ const jsonLd = {
               <li>Controlled cutover, rollback plan, and handover docs</li>
             </ul>
             <div class="service-panel-action">
-              <p>Defined scope. Controlled rollout. No forced rewrite.</p>
+              <p>A defined scope and a controlled rollout, with no forced rewrite.</p>
               <a
                 href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
                 target="_blank"
@@ -1432,9 +1482,9 @@ const jsonLd = {
   <!-- OUR OWN PRODUCTS -->
   <section class="own-products" id="our-products" data-analytics-section="products">
     <div class="container">
-      <h2 class="section-title">We don't just consult on shipping.<br/><em>We ship.</em></h2>
+      <h2 class="section-title">We run the same playbook on our own products.</h2>
       <p class="section-sub">
-        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
+        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it comes from shipping our own.
       </p>
 
       <div class="own-products-grid">
@@ -1544,7 +1594,7 @@ const jsonLd = {
   <!-- EXPLORE PRODUCTS CTA -->
   <section class="cta-section" data-analytics-section="labs_cta">
     <div class="cta-inner">
-      <h2>Find what's <em>worth</em><br>building.</h2>
+      <h2>Find what's worth building.</h2>
       <p>Follow our products, and the questions they're answering about what AI can and can't do.</p>
       <a href="/ai-labs#products" class="cta-btn">
         Explore Our Products
@@ -1558,7 +1608,7 @@ const jsonLd = {
   <!-- HOW IT WORKS -->
   <section class="how" id="how" data-analytics-section="process">
     <div class="container">
-      <h2 class="section-title">Three steps from <em>mess to shipped.</em></h2>
+      <h2 class="section-title">How an engagement runs</h2>
 
       <div class="how-grid">
         <div class="how-step">
@@ -1583,7 +1633,7 @@ const jsonLd = {
   <!-- FAQ -->
   <section class="faq" id="faq" data-analytics-section="faq">
     <div class="container" style="max-width: 800px;">
-      <h2 class="section-title">The honest <em>answers.</em></h2>
+      <h2 class="section-title">Questions we get on every call</h2>
 
       <div class="faq-list">
         <div class="faq-item">
@@ -1613,7 +1663,7 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">We're in healthtech / mental wellness. Can you help?</button>
           <div class="faq-answer">
-            Sorry, no. We have an existing exclusive engagement in that space. Most other Indian D2C verticals are open.
+            Sorry, no. We have an existing exclusive engagement in that space. Most other Indian D2C verticals are open. If you're not sure where you fall, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
           </div>
         </div>
         <div class="faq-item">
@@ -1629,9 +1679,9 @@ const jsonLd = {
   <!-- FINAL CTA -->
   <section class="cta-final" id="book" data-analytics-section="final_cta">
     <div class="cta-final-inner">
-      <h2>Tell us where the <em>mess is.</em></h2>
+      <h2>Tell us where the mess is.</h2>
       <p>
-        Pick a slot. Twenty minutes. By the end of the call, you'll know whether an engagement fits, what it'll cost, and what the first delivery window looks like.
+        Pick a slot for a twenty-minute call. By the end of it, you'll know whether an engagement fits, what it'll cost, and when the first delivery could land.
       </p>
       <a
         href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
