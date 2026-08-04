@@ -2091,6 +2091,19 @@ const jsonLd = {
     }
     .voice-who strong { font-size: 0.95rem; color: var(--text); }
     .voice-who span { font-size: 0.8rem; color: var(--text-dim); }
+    .voice-source {
+      margin-left: auto;
+      flex-shrink: 0;
+      align-self: center;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--red);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .voice-source:hover { color: var(--red-hot); }
+    .voice-source:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
     .voices-close {
       font-size: 1.05rem;
       color: var(--text-muted);
@@ -2624,6 +2637,7 @@ const jsonLd = {
           <figcaption>
             <span class="voice-avatar">PL</span>
             <span class="voice-who"><strong>Pieter Levels</strong><span>@levelsio · on X</span></span>
+            <a class="voice-source" href="https://x.com/levelsio/status/2082477538966675867" target="_blank" rel="noopener noreferrer">View on X →</a>
           </figcaption>
         </figure>
         <figure class="voice-card">
@@ -2631,6 +2645,7 @@ const jsonLd = {
           <figcaption>
             <span class="voice-avatar">DH</span>
             <span class="voice-who"><strong>Dex Horthy</strong><span>HumanLayer · "Why Software Factories Fail"</span></span>
+            <a class="voice-source" href="https://www.youtube.com/watch?v=Ib5GBkD555M" target="_blank" rel="noopener noreferrer">Watch talk →</a>
           </figcaption>
         </figure>
       </div>
