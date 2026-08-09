@@ -7,22 +7,23 @@ import {
   MIGRAINE_LOGS_GOOGLE_PLAY_URL,
   MIGRAINE_LOGS_URL,
 } from '../lib/products';
+import { COMPANY_DESCRIPTION } from '../lib/brand';
 
 const title = "Work with us · Pillexis Labs";
-const description = "Two sprints. One operator. We sort the AI mess and the ops mess for Indian D2C teams who've outgrown their stack.";
+const description = COMPANY_DESCRIPTION;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Pillexis Labs · Sprint engagements',
+  name: 'Pillexis Labs · Product and engineering engagements',
   description,
-  url: 'https://pillexislabs.com/',
+  url: 'https://pillexislabs.com/work-with-us',
   provider: {
     '@type': 'Organization',
     name: 'Pillexis Labs',
     url: 'https://pillexislabs.com',
   },
-  serviceType: 'AI & Operations consulting sprints',
+  serviceType: 'AI, operations, and custom software engineering engagements',
   areaServed: { '@type': 'Country', name: 'India' },
   potentialAction: {
     '@type': 'ReserveAction',
@@ -32,7 +33,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={title} description={description} path="/" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} path="/work-with-us" jsonLd={jsonLd}>
   <style is:global>
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -925,9 +926,7 @@ const jsonLd = {
   <section class="hero">
     <div class="hero-inner">
       <h1>We build the stack<br/>your team <em>actually owns.</em></h1>
-      <p class="hero-sub">
-        We audit the AI stack, automate the ops workflows, and replace bloated SaaS with internal tools your team owns. Both sprints are fixed price, and the code sits in your GitHub from day one.
-      </p>
+      <p class="hero-sub">{COMPANY_DESCRIPTION}</p>
       <div class="hero-cta-row">
         <a
           href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
@@ -1085,7 +1084,7 @@ const jsonLd = {
     <div class="container">
       <h2 class="section-title">Pick the mess.<br/><em>We sort it.</em></h2>
       <p class="section-sub">
-        Each sprint is fixed in scope and window. You own the code from day one. End of sprint, we hand over the keys. No retainer, no lock-in.
+        Each engagement is fixed in scope and timeline. You own the code from day one. After delivery, we hand over the keys. No retainer, no lock-in.
       </p>
 
       <div class="sprints-grid">
@@ -1145,7 +1144,7 @@ const jsonLd = {
     <div class="container">
       <h2 class="section-title">We run the same playbook on our own products.</h2>
       <p class="section-sub">
-        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it's not from a book. It's from shipping our own.
+        Five products across five domains, built by the same team that does the client work. When we tell you what works in an engagement, it is not from a book. It comes from shipping our own.
       </p>
 
       <div class="own-products-grid">
@@ -1265,7 +1264,7 @@ const jsonLd = {
         <div class="how-step">
           <span class="num">Step 01</span>
           <h3>20-minute call</h3>
-          <p>You describe the mess. We ask 4 questions. By the end of the call, you'll know whether a sprint fits and roughly what it'll cost.</p>
+          <p>You describe the mess. We ask 4 questions. By the end of the call, you'll know whether an engagement fits and roughly what it'll cost.</p>
         </div>
         <div class="how-step">
           <span class="num">Step 02</span>
@@ -1274,8 +1273,8 @@ const jsonLd = {
         </div>
         <div class="how-step">
           <span class="num">Step 03</span>
-          <h3>Sprint &amp; ship</h3>
-          <p>We build in your GitHub from day 1. Weekly demos. Async Slack. End of sprint: you own everything. We can leave or stick around for handover.</p>
+          <h3>Build and ship</h3>
+          <p>We build in your GitHub from day one. Weekly demos. Async Slack. After delivery, you own everything. We can leave or stick around for handover.</p>
         </div>
       </div>
     </div>
@@ -1290,7 +1289,7 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">What if the work doesn't move the metric?</button>
           <div class="faq-answer">
-            We scope the metric upfront: daily ops hours, subscription spend, prompt eval pass rate, whatever's bleeding. If we miss the target by day 30, we refund the final milestone (typically 30% of the sprint). We've never had to.
+            We scope the metric upfront: daily ops hours, subscription spend, prompt eval pass rate, whatever's bleeding. If we miss the target by day 30, we refund the final milestone, typically 30% of the engagement. We've never had to.
           </div>
         </div>
         <div class="faq-item">
@@ -1302,25 +1301,25 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">Who actually does the work?</button>
           <div class="faq-answer">
-            Anurag (founder) is on every project. Depending on scope, 1–2 engineers and a designer join. No offshore handoff, no junior overload, no agency-style staff swaps mid-sprint.
+            Anurag (founder) is on every project. Depending on scope, 1–2 engineers and a designer join. No offshore handoff, no junior overload, no agency-style staff swaps mid-engagement.
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Why two sprints instead of a retainer?</button>
+          <button class="faq-question">Why fixed scope engagements instead of a retainer?</button>
           <div class="faq-answer">
-            Retainers reward keeping you on retainer. Fixed-scope sprints reward shipping. After delivery, you can hire us for another sprint or vanish. We'll never DM you about renewal.
+            Retainers reward keeping you on retainer. Fixed scope engagements reward shipping. After delivery, you can hire us for another engagement or vanish. We'll never DM you about renewal.
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question">We're in healthtech / mental wellness. Can you help?</button>
           <div class="faq-answer">
-            Sorry, no. We have an existing exclusive engagement in that space. Most other Indian D2C verticals are open.
+            Sorry, no. We have an existing exclusive engagement in that space. Most other industries are open.
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question">Do you take international clients?</button>
           <div class="faq-answer">
-            Right now we're focused on Indian D2C brands ₹50L–₹10Cr ARR. If you're outside that band, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
+            Right now we're focused on businesses in India. If you're outside India, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
           </div>
         </div>
       </div>
@@ -1332,7 +1331,7 @@ const jsonLd = {
     <div class="cta-final-inner">
       <h2>Tell us where the <em>mess is.</em></h2>
       <p>
-        Pick a slot. Twenty minutes. By the end of the call, you'll know whether a sprint fits, what it'll cost, and what changes inside thirty days.
+        Pick a slot. Twenty minutes. By the end of the call, you'll know whether an engagement fits, what it'll cost, and what changes inside thirty days.
       </p>
       <a
         href="https://cal.com/pillexislabs/pillexis-labs-intro-call"

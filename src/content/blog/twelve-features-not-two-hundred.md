@@ -69,7 +69,7 @@ The argument isn't "build everything." There are categories where buying still w
 
 **Compliance and regulation.** Payroll. Tax filing. SOC 2 audit logging. Buy. Always.
 
-**Feature velocity you can't match.** Best-in-class search, fraud detection, anti-spam. Tools where the vendor has 50 engineers improving the model every week. You won't catch up. Buy.
+**Features you can't match.** Search, fraud detection, anti-spam. Tools where the vendor has 50 engineers improving the model every week. You won't catch up. Buy.
 
 The discipline is in the cut. The temptation, once you discover you can build narrow workflow tools cheaply, is to try to build everything. Don't. Most companies should build maybe 3 to 5 custom internal tools and buy the rest.
 
@@ -85,7 +85,7 @@ Then ask the harder question: are any of these tools eating more than $500/month
 
 If yes, you have a build candidate.
 
-We do this work for Indian D2C teams who've outgrown their stack. If the audit you just ran turned up something painful, [talk to us](/). We'll help you scope which tools are real build candidates and which to leave alone.
+We do this work for businesses whose operations have outgrown their tools. If the audit you just ran turned up something painful, [talk to us](/). We'll help you scope which tools are real build candidates and which to leave alone.
 
 In the next post in this series, I'll walk through what the actual build looks like, using the example of a custom CRM. The pattern is the same for almost every workflow tool: PRD first, hard-code what your team actually does, milestone the build, let AI do the typing.
 

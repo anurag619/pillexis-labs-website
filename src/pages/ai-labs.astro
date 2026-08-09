@@ -7,6 +7,7 @@ import {
   MIGRAINE_LOGS_GOOGLE_PLAY_URL,
   MIGRAINE_LOGS_URL,
 } from '../lib/products';
+import { COMPANY_DESCRIPTION } from '../lib/brand';
 
 const title = "Pillexis Labs · Finding what AI can't build";
 const description = "A research-driven product studio. We ship AI-built apps end-to-end, watch where they break, and turn the gaps into our next product. Right now, we're studying distribution.";
@@ -16,7 +17,7 @@ const jsonLd = {
   '@type': 'Organization',
   name: 'Pillexis Labs',
   url: 'https://pillexislabs.com',
-  description,
+  description: COMPANY_DESCRIPTION,
   sameAs: ['https://productlogz.com'],
 };
 ---
@@ -2726,9 +2727,8 @@ const jsonLd = {
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Pillexis Labs is a research-driven product studio. We ship apps and SaaS built with AI end-to-end to study
-              what AI still can't do, then build the tools that close those gaps. Every product is real software and a
-              field experiment.
+              {COMPANY_DESCRIPTION} AI Labs is where we ship our own apps and SaaS to study what AI still can't do,
+              then build the tools that close those gaps.
             </div>
           </div>
         </div>

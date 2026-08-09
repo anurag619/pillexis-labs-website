@@ -100,6 +100,6 @@ For the ones that come out on the wrong side, the cost of staying on the SaaS is
 
 For the ones that come out as build candidates, the cost has genuinely fallen by an order of magnitude. The conversation worth having is which one to start with.
 
-If you'd like help running that audit on your stack, [reach out](/). It's the first half of one of our two-sprint engagements, and most teams come out with a list of two or three real build candidates and a clearer story for the rest of the stack.
+If you'd like help running that audit on your stack, [reach out](/). It is the first step in one of our fixed scope engagements, and most teams come out with a list of two or three real build candidates and a clearer story for the rest of the stack.
 
 Three posts in, the thesis is simple. Most teams are paying for a lot of software they don't really use. AI didn't change which features they need. It changed which features they can now afford to build.
