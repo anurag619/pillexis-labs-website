@@ -7,14 +7,15 @@ import {
   MIGRAINE_LOGS_GOOGLE_PLAY_URL,
   MIGRAINE_LOGS_URL,
 } from '../lib/products';
+import { COMPANY_DESCRIPTION } from '../lib/brand';
 
 const title = "Work with us · Pillexis Labs";
-const description = "Three focused engagements. One operator. We sort the AI mess, the ops mess, and legacy code for Indian D2C teams who've outgrown their stack.";
+const description = COMPANY_DESCRIPTION;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Pillexis Labs · Sprint engagements',
+  name: 'Pillexis Labs · Product and engineering engagements',
   description,
   url: 'https://pillexislabs.com/',
   provider: {
@@ -22,7 +23,7 @@ const jsonLd = {
     name: 'Pillexis Labs',
     url: 'https://pillexislabs.com',
   },
-  serviceType: 'AI, operations, and legacy application modernization engagements',
+  serviceType: 'AI, operations, legacy modernization, and custom software engineering engagements',
   areaServed: { '@type': 'Country', name: 'India' },
   potentialAction: {
     '@type': 'ReserveAction',
@@ -1193,9 +1194,7 @@ const jsonLd = {
     <div class="hero-inner">
       <div class="hero-copy">
         <h1>We build the stack your team <em>actually owns.</em></h1>
-        <p class="hero-sub">
-          We audit the AI stack, automate ops workflows, migrate legacy code, and replace bloated SaaS with internal tools your team owns. Every engagement is fixed scope, and the code sits in your GitHub from day one.
-        </p>
+        <p class="hero-sub">{COMPANY_DESCRIPTION}</p>
         <div class="hero-cta-row">
           <a
             href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
@@ -1431,7 +1430,7 @@ const jsonLd = {
               <li>Ownership handover with docs and runbooks</li>
             </ul>
             <div class="service-panel-action">
-              <p>Fixed scope and timeline, handed over fully when the sprint ends.</p>
+              <p>Fixed scope and timeline, handed over fully when the engagement ends.</p>
               <a
                 href="https://cal.com/pillexislabs/pillexis-labs-intro-call"
                 target="_blank"
@@ -1484,7 +1483,7 @@ const jsonLd = {
     <div class="container">
       <h2 class="section-title">We run the same playbook on our own products.</h2>
       <p class="section-sub">
-        Five products across five domains, built by the same team that does the client work. When we tell you what works in a sprint, it comes from shipping our own.
+        Five products across five domains, built by the same team that does the client work. When we tell you what works in an engagement, it comes from shipping our own.
       </p>
 
       <div class="own-products-grid">
@@ -1663,13 +1662,13 @@ const jsonLd = {
         <div class="faq-item">
           <button class="faq-question">We're in healthtech / mental wellness. Can you help?</button>
           <div class="faq-answer">
-            Sorry, no. We have an existing exclusive engagement in that space. Most other Indian D2C verticals are open. If you're not sure where you fall, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
+            Sorry, no. We have an existing exclusive engagement in that space. Most other industries are open. If you're not sure where you fall, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question">Do you take international clients?</button>
           <div class="faq-answer">
-            Right now we're focused on Indian D2C brands ₹50L–₹10Cr ARR. If you're outside that band, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
+            Right now we're focused on businesses in India. If you're outside India, write to <a href="mailto:contact@pillexislabs.com" style="color:var(--red);">contact@pillexislabs.com</a> and we'll tell you honestly whether we're a fit.
           </div>
         </div>
       </div>

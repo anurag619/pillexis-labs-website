@@ -13,7 +13,7 @@ The previous post in this series argued that most SaaS pricing pays for features
 
 This post is the how.
 
-The example is a custom CRM, because it's the most common one we get asked about. The same pattern works for a project tracker, an inventory tool, an internal dashboard, anything where the surface area is a handful of CRUD views and the value is in matching your team's workflow exactly.
+The example is a custom CRM, because it's the most common one we get asked about. The same pattern works for a project tracker, an inventory tool, or an internal dashboard, anything with a handful of CRUD views where the value comes from matching your team's workflow exactly.
 
 There's a great walkthrough of this approach by Brian Castle on YouTube ([build a custom CRM with AI](https://www.youtube.com/watch?v=s1iwU5OlIOE)) that covers the same ground from a slightly different angle. Worth watching as a companion piece.
 
@@ -108,4 +108,4 @@ For a 12-feature internal CRUD tool, those trade-offs are small. For a 60-featur
 
 The next post in the series gets into exactly that. The build vs buy decision, with the post-AI math.
 
-If you're thinking about replacing one of the bloated SaaS tools your team is currently paying for with something narrower and built for you, [talk to us](/). We do this work for D2C teams as one of our two-sprint engagements.
+If you're thinking about replacing one of the bloated SaaS tools your team is currently paying for with something narrower and built for you, [talk to us](/). We do this as a fixed scope engagement, with the code in your GitHub from day one.

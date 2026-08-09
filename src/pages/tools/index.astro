@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import aiReadiness from '../../data/tools/ai-build-readiness.json';
+import { COMPANY_DESCRIPTION } from '../../lib/brand';
 
 /**
  * Featured tool — the centerpiece of the hub.
@@ -241,10 +242,9 @@ const jsonLd = {
         Every tool is a slice of our <em>research</em>.
       </h2>
       <p class="why-body">
-        Pillexis Labs is a product studio. We ship AI-built apps end-to-end and
-        watch where they break. The gaps we find become two things: our next
-        product, and a free tool that helps other builders see the same gap
-        before they hit it.
+        {COMPANY_DESCRIPTION} We also ship our own apps with AI and watch where
+        they break. The gaps become our next product and free tools that help
+        other builders see the same problems earlier.
       </p>
       <div class="why-cta-row">
         <a href="/" class="btn-ghost-lg">

@@ -1,6 +1,6 @@
 # Pillexis Labs — website
 
-Astro static site for **Pillexis Labs Pvt Ltd**, a founder-led product and engineering studio. The homepage (`/`) sells the studio's two fixed-price sprints (AI Stack Audit + Ops Automation) to Indian D2C brands and funnels to a Cal.com call; `/ai-labs` carries the secondary "research-driven product studio" narrative across Productlogz, Quotesmatic, Migraine Logs, Forge, and Tether. Plus a blog and free AI tools. See the root [`CLAUDE.md`](../CLAUDE.md) for the full positioning.
+Astro static site for **Pillexis Labs Pvt Ltd**. Pillexis Labs is an AI native product and engineering studio that helps businesses turn complex operations and fragmented tools into custom software they own. The homepage (`/`) is the services money page and funnels to a Cal.com call. `/ai-labs` documents the studio's products and experiments. The site also includes a blog and free AI tools. See the root [`CLAUDE.md`](../CLAUDE.md) for the full positioning.
 
 ## Git repository boundary
 
@@ -38,7 +38,7 @@ src/
 │   └── tools/
 │       └── Quiz.astro         # JSON-driven assessment engine (island)
 ├── pages/
-│   ├── index.astro            # / — homepage (services for D2C)
+│   ├── index.astro            # / — homepage, services money page
 │   ├── work-with-us.astro     # /work-with-us — services + booking
 │   ├── ai-labs.astro          # /ai-labs — research-studio thesis page
 │   ├── forge.astro            # /forge — Forge product landing page
@@ -59,6 +59,7 @@ src/
 ├── data/tools/
 │   └── ai-build-readiness.json  # questions + tiers + share copy
 ├── lib/
+│   ├── brand.ts               # canonical company description
 │   ├── quiz.js                # encode / decode / score / pickTier
 │   └── analytics.js           # GA4 + Pixel event helpers
 └── styles/
