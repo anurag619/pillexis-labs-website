@@ -1,0 +1,128 @@
+---
+/**
+ * Terms of service. Required by Meta before the WhatsApp app can be
+ * published (App settings → Basic → Terms of Service URL). Plain-English
+ * terms for the website and the intro-call booking flow; client engagements
+ * are governed by their own signed agreements, not this page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const EFFECTIVE_DATE = 'August 12, 2026';
+---
+
+<BaseLayout
+  title="Terms of Service · Pillexis Labs"
+  description="The terms that apply when you use pillexislabs.com and book a call with Pillexis Labs."
+  path="/terms"
+>
+  <main class="terms">
+    <header class="topbar">
+      <a href="/" class="wordmark" aria-label="Pillexis Labs home">
+        <img src="/brand/wordmark-light.svg" alt="Pillexis Labs" height="20" />
+      </a>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Legal</p>
+      <h1>Terms of Service</h1>
+      <p class="sub">Effective {EFFECTIVE_DATE}. These terms apply when you use pillexislabs.com or book a call with us. By using the site, you accept them.</p>
+    </section>
+
+    <section class="body">
+      <h2>Who we are</h2>
+      <p>Pillexis Labs Pvt Ltd ("Pillexis Labs", "we") is a product and engineering studio based in Bengaluru, India. Contact: <a href="mailto:contact@pillexislabs.com">contact@pillexislabs.com</a>.</p>
+
+      <h2>The website and booking</h2>
+      <p>The site describes our services and lets you book an introduction call through Cal.com. Booking a call is free and creates no obligation on either side. Give accurate contact details when you book. If you give us a WhatsApp number, we send booking confirmations and reminders to it; reply STOP to end those messages.</p>
+
+      <h2>Client engagements</h2>
+      <p>Paid work is governed by the proposal or agreement we sign for that engagement, not by this page. If these terms and a signed agreement conflict, the signed agreement wins.</p>
+
+      <h2>Our content</h2>
+      <p>The content on this site, including text, graphics, logos, and case studies, belongs to Pillexis Labs or its licensors. You may not copy or reuse it commercially without our written permission. Our clients' names and marks belong to them.</p>
+
+      <h2>Acceptable use</h2>
+      <p>Do not misuse the site: no scraping at scale, no attempts to break or probe our systems, no unlawful content in bookings or messages.</p>
+
+      <h2>No warranties</h2>
+      <p>The site is provided "as is". We work to keep it accurate and available, but we do not guarantee that it is error-free or always online. Content on the site is general information, not professional advice for your specific situation.</p>
+
+      <h2>Limitation of liability</h2>
+      <p>To the extent the law allows, Pillexis Labs is not liable for indirect or consequential losses arising from your use of this website. Nothing here limits liability that cannot be limited by law.</p>
+
+      <h2>Third-party services</h2>
+      <p>Booking runs on Cal.com, and messaging runs on the WhatsApp Business Platform. Their own terms also apply to your use of those services.</p>
+
+      <h2>Governing law</h2>
+      <p>These terms are governed by the laws of India. Courts in Bengaluru, Karnataka have jurisdiction over disputes about this website.</p>
+
+      <h2>Changes</h2>
+      <p>If we change these terms, we will update this page and the effective date above.</p>
+    </section>
+
+    <footer class="foot">
+      <a href="/">← pillexislabs.com</a>
+      <a href="/privacy">Privacy Policy</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .terms {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .topbar {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+  }
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 8px;
+    border-bottom: 1px solid var(--hairline, rgba(32, 26, 28, 0.12));
+  }
+  .eyebrow {
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    margin: 0 0 12px;
+  }
+  .sub {
+    color: rgba(32, 26, 28, 0.7);
+    margin: 0 0 32px;
+    line-height: 1.6;
+  }
+  .body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 24px 40px;
+    line-height: 1.7;
+  }
+  .body h2 {
+    font-size: 1.15rem;
+    margin: 32px 0 8px;
+  }
+  .body p, .body li { color: rgba(32, 26, 28, 0.85); }
+  .body a { color: var(--red); }
+  .foot {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    display: flex;
+    gap: 20px;
+  }
+  .foot a { color: rgba(32, 26, 28, 0.6); text-decoration: none; }
+  @media (max-width: 768px) {
+    .hero { padding-top: 32px; }
+    .hero h1 { font-size: 1.6rem; }
+  }
+</style>

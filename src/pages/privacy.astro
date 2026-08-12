@@ -1,0 +1,131 @@
+---
+/**
+ * Privacy policy. Required by Meta before the WhatsApp app can be published
+ * (App settings → Basic → Privacy Policy URL) and good practice regardless.
+ * Content reflects what the site actually collects: booking form data,
+ * GA4 + Meta Pixel analytics, and WhatsApp messages once a lead opts in.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const EFFECTIVE_DATE = 'August 12, 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy · Pillexis Labs"
+  description="How Pillexis Labs collects, uses, and protects your information."
+  path="/privacy"
+>
+  <main class="privacy">
+    <header class="topbar">
+      <a href="/" class="wordmark" aria-label="Pillexis Labs home">
+        <img src="/brand/wordmark-light.svg" alt="Pillexis Labs" height="20" />
+      </a>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="sub">Effective {EFFECTIVE_DATE}. This policy explains what information Pillexis Labs Pvt Ltd collects, why we collect it, and the choices you have.</p>
+    </section>
+
+    <section class="body">
+      <h2>Who we are</h2>
+      <p>Pillexis Labs Pvt Ltd is a product and engineering studio based in Bengaluru, India. We operate pillexislabs.com and related tools. You can contact us at <a href="mailto:contact@pillexislabs.com">contact@pillexislabs.com</a>.</p>
+
+      <h2>Information we collect</h2>
+      <p><strong>Information you give us.</strong> When you book an intro call, you give us your name, email address, phone number, and your answers to the booking form questions. When you message us on WhatsApp or email, we receive the content of your messages.</p>
+      <p><strong>Information collected automatically.</strong> We use Google Analytics 4 and the Meta Pixel to understand how visitors use the site. These tools collect device information, pages visited, and cookie identifiers. If you arrive from an ad, cookies record which ad brought you here.</p>
+
+      <h2>How we use your information</h2>
+      <ul>
+        <li>To schedule and run the call you booked, and to send you reminders about it, including on WhatsApp when you give us your WhatsApp number.</li>
+        <li>To respond to your questions and prepare for our conversations.</li>
+        <li>To measure which pages and ads work. We send booking conversion events to Meta with hashed contact details, so ad measurement never receives your readable email or phone number.</li>
+        <li>To improve the site and our services.</li>
+      </ul>
+
+      <h2>WhatsApp messages</h2>
+      <p>If you give us your WhatsApp number when booking, we send you a booking confirmation and call reminders on WhatsApp through the WhatsApp Business Platform. Reply <strong>STOP</strong> at any time and we will not message you again. We do not use your number for marketing broadcasts.</p>
+
+      <h2>Who we share information with</h2>
+      <p>We do not sell your information. We share it only with the service providers that run our operations: Cal.com (scheduling), Google (analytics), Meta (ad measurement and WhatsApp messaging), and our hosting providers. Each processes your data to provide their service to us.</p>
+
+      <h2>How long we keep information</h2>
+      <p>We keep booking and conversation records for as long as we have a business relationship with you, or as long as the law requires. Analytics data is retained on the schedules set in Google Analytics and Meta.</p>
+
+      <h2 id="data-deletion">Your choices and rights</h2>
+      <ul>
+        <li>Ask us what information we hold about you.</li>
+        <li>Ask us to correct or delete your information.</li>
+        <li>Opt out of WhatsApp messages by replying STOP.</li>
+        <li>Block analytics cookies with your browser settings or extensions.</li>
+      </ul>
+      <p>To exercise any of these, email <a href="mailto:contact@pillexislabs.com">contact@pillexislabs.com</a>. We respond within 30 days.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>If we change this policy, we will update this page and the effective date above.</p>
+    </section>
+
+    <footer class="foot">
+      <a href="/">← pillexislabs.com</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .privacy {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .topbar {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+  }
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 8px;
+    border-bottom: 1px solid var(--hairline, rgba(32, 26, 28, 0.12));
+  }
+  .eyebrow {
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    margin: 0 0 12px;
+  }
+  .sub {
+    color: rgba(32, 26, 28, 0.7);
+    margin: 0 0 32px;
+    line-height: 1.6;
+  }
+  .body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 24px 40px;
+    line-height: 1.7;
+  }
+  .body h2 {
+    font-size: 1.15rem;
+    margin: 32px 0 8px;
+  }
+  .body p, .body li { color: rgba(32, 26, 28, 0.85); }
+  .body a { color: var(--red); }
+  .foot {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+  }
+  .foot a { color: rgba(32, 26, 28, 0.6); text-decoration: none; }
+  @media (max-width: 768px) {
+    .hero { padding-top: 32px; }
+    .hero h1 { font-size: 1.6rem; }
+  }
+</style>
